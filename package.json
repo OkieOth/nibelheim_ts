@@ -1,0 +1,16 @@
+{
+  "name": "nibelheim_ts",
+  "version": "1.0.0",
+  "description": "play around with typescript",
+  "directories": {
+    "doc": "docs"
+  },
+  "workspaces":[
+    "./types"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eiko Thomas",
+  "license": "MIT"
+}

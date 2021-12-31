@@ -1,0 +1,156 @@
+  {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Nibelheim Types",
+  "description": "General datamodel for the players in Nibelheim",
+  "definitions": {
+    "Mine": {
+      "description": "the place where you find all the gems",
+      "type": "object",
+      "properties": {
+        "rows": {
+          "description": "defines a two dimensional array as area of the mine",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MineSpotRow"
+          }
+        },
+        "dwarfs": {
+          "description": "list of dwarfs that are working currently in the mine",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dwarf"
+          }
+        },
+        "storage": {
+          "description": "storage for already digged gems and stuff",
+          "$ref": "#/definitions/Storage"
+        }
+      }
+    },
+    "MineSpotMaterial": {
+      "type": "string",
+      "enum": [
+        "MITHRIL",
+        "GOLD",
+        "SILVER",
+        "DIAMOND",
+        "IRON",
+        "CUPPER",
+        "ROCK"
+      ]
+    },
+    "MineSpot": {
+      "description": "Brick, from which the mine is built",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "material": {
+          "$ref": "#/definitions/MineSpotMaterial"
+        },
+        "initialAmountOfMaterial": {
+          "description": "how many material contained the spot in the beginning",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "currentAmountOfMaterial": {
+          "description": "how many material contains the spot in the moment",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "miningDifficulty": {
+          "description": "factor that describes how more complicated is the mining of the material is",
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 3.0
+        }
+      }
+    },
+    "MineSpotRow": {
+      "description": "One row of mine spots",
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MineSpot"
+          }
+        }
+      }
+    },
+    "Dwarf": {
+      "description": "A guy that runs around in the mine an dig for gems",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "pocket": {
+          "description": "small storage of mined material",
+          "$ref": "#/definitions/Storage"
+        },
+        "strongness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "currentStrongness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "hunger": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "healthiness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.0
+        },
+        "motivation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.0
+        },
+        "currentWay": {
+          "description": "ids of the minespots, from the entry/storage to the current spot",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    },
+    "Storage": {
+      "description": "A storage stores produced gems",
+      "type": "object",
+      "properties": {
+        "mithril": {
+          "type": "integer"
+        },
+        "gold": {
+          "type": "integer"
+        },
+        "silver":  {
+          "type": "integer"
+        }, 
+        "diamond": {
+          "type": "integer"
+        },
+        "iron":  {
+          "type": "integer"
+        },
+        "cupper":  {
+          "type": "integer"
+        } 
+      }
+    }
+  }
+}
