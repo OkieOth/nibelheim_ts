@@ -7,7 +7,25 @@
  the place where you find all the gems
 */
 export interface Mine {
+    name: string;
+    /**
+     defines a two dimensional array as area of the mine
+    */
+    rows?: MineSpotRow[];
 
+    /**
+     list of dwarfs that are working currently in the mine
+    */
+    dwarfs?: Dwarf[];
+
+    /**
+     storage for already digged gems and stuff
+    */
+    storage?: Storage;
+}
+
+export class MineClass implements Mine {
+    name: string;
     /**
      defines a two dimensional array as area of the mine
     */

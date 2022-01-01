@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "current test",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-r",
+                "ts-node/register",
+                "--timeout",
+                "999999",
+                "--colors",
+                "--exit",
+                "${file}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "protocol": "inspector",
+            "cwd": "${workspaceRoot}/packages/types"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "all tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-r",
+                "ts-node/register",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}/packages/**/*_test.ts",
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "protocol": "inspector"
+        }
+   ]
+}
