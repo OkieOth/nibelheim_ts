@@ -17,6 +17,7 @@ npm install typescript @types/node --save-dev
 
 # install testing dev dependencies on root level
 npm install --save-dev ts-node mocha @testdeck/mocha @types/mocha nyc chai ts-mockito
+npm install --save-dev faker @types/faker
 ```
 
 # Usage
@@ -26,6 +27,9 @@ npx lerna run tsc
 
 # run all tests
 npx lerna run test
+
+# run all tests with coverage
+node_modules/.bin/nyc npx lerna run test
 
 # run build for one package
 cd packages/types
