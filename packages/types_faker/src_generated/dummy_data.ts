@@ -4,36 +4,42 @@
 */
 import * as types from 'types';
 
+function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = Object.keys(anEnum);
+    const randomIndex = Math.floor(Math.random() * enumValues.length)
+    const randomEnumValue = enumValues[randomIndex]
+    return anEnum[randomEnumValue];
+}
 
-export function fakeMine(): types.Mine {
+export function fakeMine(randomizeOptionalAttribs = false): types.Mine {
     const ret: types.Mine = {
     }
     return ret;
 }
 
-export function fakeMineSpotRow(): types.MineSpotRow {
+export function fakeMineSpotRow(randomizeOptionalAttribs = false): types.MineSpotRow {
     const ret: types.MineSpotRow = {
     }
     return ret;
 }
 
-export function fakeDwarf(): types.Dwarf {
+export function fakeDwarf(randomizeOptionalAttribs = false): types.Dwarf {
     const ret: types.Dwarf = {
     }
     return ret;
 }
 
-export function fakeStorage(): types.Storage {
+export function fakeStorage(randomizeOptionalAttribs = false): types.Storage {
     const ret: types.Storage = {
     }
     return ret;
 }
 
 export function fakeMineSpotMaterial(): types.MineSpotMaterial {
-    return types.MineSpotMaterial.MITHRIL;
+    return randomEnum(types.MineSpotMaterial);
 }
 
-export function fakeMineSpot(): types.MineSpot {
+export function fakeMineSpot(randomizeOptionalAttribs = false): types.MineSpot {
     const ret: types.MineSpot = {
     }
     return ret;

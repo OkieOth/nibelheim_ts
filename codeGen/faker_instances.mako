@@ -42,16 +42,25 @@
 */
 import * as types from 'types';
 
+function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = Object.keys(anEnum);
+    const randomIndex = Math.floor(Math.random() * enumValues.length)
+    const randomEnumValue = enumValues[randomIndex]
+    return anEnum[randomEnumValue];
+}
 
 % for currentType in modelTypes:
-export function fake${currentType.name}(): types.${currentType.name} {
     % if modelFuncs.isEnumType(currentType):
-    return types.${currentType.name}.${currentType.values[0]};
+export function fake${currentType.name}(): types.${currentType.name} {
+    return randomEnum(types.${currentType.name});
+}
     % else:
+export function fake${currentType.name}(randomizeOptionalAttribs = false): types.${currentType.name} {
     const ret: types.${currentType.name} = {
+        // TODO
     }
     return ret;
-    % endif
 }
+    % endif
 
 % endfor

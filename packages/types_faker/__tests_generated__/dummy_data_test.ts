@@ -31,6 +31,17 @@ describe('Dummy data creation test suite', () => {
     it('test MineSpotMaterial', () => {
         const x = dummy.fakeMineSpotMaterial();
         assert.isNotNull(x, 'fakeMineSpotMaterial returns null');
+        // test that the enum is generated with different values
+        const x2 = dummy.fakeMineSpotMaterial();
+        assert.isNotNull(x2, 'fakeMineSpotMaterial returns null');
+        const x3 = dummy.fakeMineSpotMaterial();
+        assert.isNotNull(x3, 'fakeMineSpotMaterial returns null');
+        const x4 = dummy.fakeMineSpotMaterial();
+        assert.isNotNull(x4, 'fakeMineSpotMaterial returns null');
+        const x5 = dummy.fakeMineSpotMaterial();
+        assert.isNotNull(x5, 'fakeMineSpotMaterial returns null');
+        const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
+        assert.isNotTrue(valuesAreEqual, 'fakeMineSpotMaterial creates constant values')
     });
 
     it('test MineSpot', () => {
