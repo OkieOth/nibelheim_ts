@@ -3,6 +3,12 @@
 * Test project to play around with typescript and mono repos
 * Challenge the power of yacg
 
+```bash
+# kick off after a fresh clone
+git clone git@github.com:OkieOth/nibelheim_ts.git
+npx lerna bootstrap --hoist
+```
+
 # Setup Lerna
 ```bash
 npx lerna init
