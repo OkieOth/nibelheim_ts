@@ -12,12 +12,14 @@
 */
 import * as types from 'types';
 import * as dummy from '../src_generated/dummy_data';
+import { assert } from 'chai';
 
 
 describe('Dummy data creation test suite', () => {
 % for currentType in modelTypes:
     it('test ${currentType.name}', () => {
-        console.log("I will later test the creation of dummy data for ${currentType.name}");
+        const x = dummy.fake${currentType.name}();
+        assert.isNotNull(x, 'fake${currentType.name} returns null');
     });
 
 % endfor

@@ -4,31 +4,38 @@
 */
 import * as types from 'types';
 import * as dummy from '../src_generated/dummy_data';
+import { assert } from 'chai';
 
 
 describe('Dummy data creation test suite', () => {
     it('test Mine', () => {
-        console.log("I will later test the creation of dummy data for Mine");
+        const x = dummy.fakeMine();
+        assert.isNotNull(x, 'fakeMine returns null');
     });
 
     it('test MineSpotRow', () => {
-        console.log("I will later test the creation of dummy data for MineSpotRow");
+        const x = dummy.fakeMineSpotRow();
+        assert.isNotNull(x, 'fakeMineSpotRow returns null');
     });
 
     it('test Dwarf', () => {
-        console.log("I will later test the creation of dummy data for Dwarf");
+        const x = dummy.fakeDwarf();
+        assert.isNotNull(x, 'fakeDwarf returns null');
     });
 
     it('test Storage', () => {
-        console.log("I will later test the creation of dummy data for Storage");
+        const x = dummy.fakeStorage();
+        assert.isNotNull(x, 'fakeStorage returns null');
     });
 
     it('test MineSpotMaterial', () => {
-        console.log("I will later test the creation of dummy data for MineSpotMaterial");
+        const x = dummy.fakeMineSpotMaterial();
+        assert.isNotNull(x, 'fakeMineSpotMaterial returns null');
     });
 
     it('test MineSpot', () => {
-        console.log("I will later test the creation of dummy data for MineSpot");
+        const x = dummy.fakeMineSpot();
+        assert.isNotNull(x, 'fakeMineSpot returns null');
     });
 
 });

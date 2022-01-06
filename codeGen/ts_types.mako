@@ -47,7 +47,7 @@ ${templateHelper.addLineBreakToDescription(currentType.description,4)}
 */
     % endif
     % if isinstance(currentType, model.EnumType):
-export declare enum ${currentType.name} {
+export enum ${currentType.name} {
     % for value in currentType.values:
         ${value} = "${value}",
     % endfor

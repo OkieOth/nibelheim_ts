@@ -65,7 +65,7 @@ export interface Storage {
     cupper?: number;
 }
 
-export declare enum MineSpotMaterial {
+export enum MineSpotMaterial {
         MITHRIL = "MITHRIL",
         GOLD = "GOLD",
         SILVER = "SILVER",

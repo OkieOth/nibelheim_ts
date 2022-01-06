@@ -6,26 +6,36 @@ import * as types from 'types';
 
 
 export function fakeMine(): types.Mine {
-    return null;
+    const ret: types.Mine = {
+    }
+    return ret;
 }
 
 export function fakeMineSpotRow(): types.MineSpotRow {
-    return null;
+    const ret: types.MineSpotRow = {
+    }
+    return ret;
 }
 
 export function fakeDwarf(): types.Dwarf {
-    return null;
+    const ret: types.Dwarf = {
+    }
+    return ret;
 }
 
 export function fakeStorage(): types.Storage {
-    return null;
+    const ret: types.Storage = {
+    }
+    return ret;
 }
 
 export function fakeMineSpotMaterial(): types.MineSpotMaterial {
-    return null;
+    return types.MineSpotMaterial.MITHRIL;
 }
 
 export function fakeMineSpot(): types.MineSpot {
-    return null;
+    const ret: types.MineSpot = {
+    }
+    return ret;
 }
 
