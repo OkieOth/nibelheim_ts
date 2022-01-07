@@ -35,7 +35,7 @@ export interface MineSpotRow {
  A guy that runs around in the mine an dig for gems
 */
 export interface Dwarf {
-    name?: string;
+    name: string;
 
     /**
      small storage of mined material

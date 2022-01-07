@@ -126,7 +126,8 @@
             "format": "uuid"
           }
         }
-      }
+      },
+      "required":["name"]
     },
     "Storage": {
       "description": "A storage stores produced gems",

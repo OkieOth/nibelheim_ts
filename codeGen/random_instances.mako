@@ -7,47 +7,43 @@
     templateFile = 'random_instances.mako'
     templateVersion = '0.1.0'
 
-    def printTypescriptType(type):
+    def getRandomFactoryFunc(prop):
+        type = prop.type
         if type is None:
-            return 'unknown'
+            return '<<prop.type is None>>'
         elif isinstance(type, model.IntegerType):
-            return 'number'
+            return 'chance.integer()'
         elif isinstance(type, model.ObjectType):
-            return 'Object'
+            return 'null'
         elif isinstance(type, model.NumberType):
-            return 'number'
+            return 'chance.floating()'
         elif isinstance(type, model.BooleanType):
-            return 'boolean'
+            return 'chance.bool()'
         elif isinstance(type, model.StringType):
-            return 'string'
+            return 'chance.string()'
         elif isinstance(type, model.UuidType):
-            return 'string'
+            return 'chance.guid()'
         elif isinstance(type, model.EnumType):
-            return "{type}".format(type=type.name)
+            return "randomEnum({type})".format(type=type.name)
         elif isinstance(type, model.DateTimeType):
-            return 'Date'
+            return 'chance.date()'
         elif isinstance(type, model.DateType):
-            return 'Date'
+            return 'randomDate()'
         elif isinstance(type, model.BytesType):
-             return 'number[]'
+             return 'null'
         elif isinstance(type, model.DictionaryType):
-            return "Map<String, {}>".format(printTypescriptType(type.valueType))
+            return "{}"
         elif isinstance(type, model.ComplexType):
-            return "{type}".format(type=type.name)
+            return "random{type}()".format(type=type.name)
         else:
-            return type
+            return "<<unknown prop.type: {type}>>".format(type=type.name)
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
 */
 import * as types from 'types';
-
-function randomEnum<T>(anEnum: T): T[keyof T] {
-    const enumValues = Object.keys(anEnum);
-    const randomIndex = Math.floor(Math.random() * enumValues.length)
-    const randomEnumValue = enumValues[randomIndex]
-    return anEnum[randomEnumValue];
-}
+import { Chance } from 'chance'
+import { randomEnum } from '../src/randomFuncs';
 
 % for currentType in modelTypes:
     % if modelFuncs.isEnumType(currentType):
@@ -56,8 +52,13 @@ export function random${currentType.name}(): types.${currentType.name} {
 }
     % else:
 export function random${currentType.name}(randomizeOptionalAttribs = false): types.${currentType.name} {
+    const chance = new Chance();
     const ret: types.${currentType.name} = {
-        // TODO
+        % for prop in currentType.properties:
+            % if prop.required:
+        ${prop.name}: ${getRandomFactoryFunc(prop)},
+            % endif
+        % endfor
     }
     return ret;
 }
