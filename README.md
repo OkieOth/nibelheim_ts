@@ -23,7 +23,6 @@ npm install typescript @types/node --save-dev
 
 # install testing dev dependencies on root level
 npm install --save-dev ts-node mocha @testdeck/mocha @types/mocha nyc chai ts-mockito
-npm install --save-dev faker @types/faker
 ```
 
 # Usage

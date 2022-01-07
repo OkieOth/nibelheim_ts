@@ -1,6 +1,6 @@
 /**
     This file is generated.
-    Template: faker_instances.mako v0.1.0)
+    Template: random_instances.mako v0.1.0)
 */
 import * as types from 'types';
 
@@ -11,36 +11,41 @@ function randomEnum<T>(anEnum: T): T[keyof T] {
     return anEnum[randomEnumValue];
 }
 
-export function fakeMine(randomizeOptionalAttribs = false): types.Mine {
+export function randomMine(randomizeOptionalAttribs = false): types.Mine {
     const ret: types.Mine = {
+        // TODO
     }
     return ret;
 }
 
-export function fakeMineSpotRow(randomizeOptionalAttribs = false): types.MineSpotRow {
+export function randomMineSpotRow(randomizeOptionalAttribs = false): types.MineSpotRow {
     const ret: types.MineSpotRow = {
+        // TODO
     }
     return ret;
 }
 
-export function fakeDwarf(randomizeOptionalAttribs = false): types.Dwarf {
+export function randomDwarf(randomizeOptionalAttribs = false): types.Dwarf {
     const ret: types.Dwarf = {
+        // TODO
     }
     return ret;
 }
 
-export function fakeStorage(randomizeOptionalAttribs = false): types.Storage {
+export function randomStorage(randomizeOptionalAttribs = false): types.Storage {
     const ret: types.Storage = {
+        // TODO
     }
     return ret;
 }
 
-export function fakeMineSpotMaterial(): types.MineSpotMaterial {
+export function randomMineSpotMaterial(): types.MineSpotMaterial {
     return randomEnum(types.MineSpotMaterial);
 }
 
-export function fakeMineSpot(randomizeOptionalAttribs = false): types.MineSpot {
+export function randomMineSpot(randomizeOptionalAttribs = false): types.MineSpot {
     const ret: types.MineSpot = {
+        // TODO
     }
     return ret;
 }

@@ -1,11 +1,11 @@
-# `types_faker`
+# `types_random`
 
 > TODO: description
 
 ## Usage
 
 ```
-const typesFaker = require('types_faker');
+const typesRandom = require('types_random');
 
 // TODO: DEMONSTRATE API
 ```

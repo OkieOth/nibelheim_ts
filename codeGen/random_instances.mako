@@ -1,10 +1,10 @@
-## Template to create factory functions that create faker based random data
+## Template to create factory functions that creates random data
 <%
     import yacg.model.model as model
     import yacg.model.modelFuncs as modelFuncs
     import yacg.templateHelper as templateHelper
 
-    templateFile = 'faker_instances.mako'
+    templateFile = 'random_instances.mako'
     templateVersion = '0.1.0'
 
     def printTypescriptType(type):
@@ -51,11 +51,11 @@ function randomEnum<T>(anEnum: T): T[keyof T] {
 
 % for currentType in modelTypes:
     % if modelFuncs.isEnumType(currentType):
-export function fake${currentType.name}(): types.${currentType.name} {
+export function random${currentType.name}(): types.${currentType.name} {
     return randomEnum(types.${currentType.name});
 }
     % else:
-export function fake${currentType.name}(randomizeOptionalAttribs = false): types.${currentType.name} {
+export function random${currentType.name}(randomizeOptionalAttribs = false): types.${currentType.name} {
     const ret: types.${currentType.name} = {
         // TODO
     }
