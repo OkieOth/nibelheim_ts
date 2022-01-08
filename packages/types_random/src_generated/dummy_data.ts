@@ -13,15 +13,14 @@ const arrayMax = 10;
 export function randomMine(randomizeOptionalAttribs = false): types.Mine {
     const chance = new Chance();
     const ret: types.Mine = {
+        rows: [],
+        time: chance.date(),
     }
-
-    if ((!randomizeOptionalAttribs) || chance.bool()) {
-        ret.rows = [];
         const rowsCount = chance.integer({ min: 0, max: arrayMax });
         for (let i=0; i < rowsCount; i++) {
             ret.rows.push(randomMineSpotRow());
         }
-    };
+
     if ((!randomizeOptionalAttribs) || chance.bool()) {
         ret.dwarfs = [];
         const dwarfsCount = chance.integer({ min: 0, max: arrayMax });

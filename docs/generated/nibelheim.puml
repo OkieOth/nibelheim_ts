@@ -5,6 +5,7 @@ class Mine {
         MineSpotRow[] rows 
         Dwarf[] dwarfs 
         Storage storage 
+        DateTimeType time 
 }
 
 note top: the place where you find\nall the gems

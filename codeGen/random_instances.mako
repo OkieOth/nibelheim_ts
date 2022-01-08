@@ -62,7 +62,7 @@ export function random${currentType.name}(randomizeOptionalAttribs = false): typ
         % for prop in currentType.properties:
             % if prop.required:
                 % if prop.isArray:
-        ${prop.name} = [];
+        ${prop.name}: [],
                 % else:
         ${prop.name}: ${getRandomFactoryFunc(prop)},
                 % endif

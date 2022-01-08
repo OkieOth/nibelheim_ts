@@ -24,8 +24,14 @@
         "storage": {
           "description": "storage for already digged gems and stuff",
           "$ref": "#/definitions/Storage"
+        },
+        "time": {
+          "description": "current time in the Mine simulation",
+          "type": "string",
+          "format": "date-time"
         }
-      }
+      },
+      "required":["rows", "time"]
     },
     "MineSpotMaterial": {
       "type": "string",

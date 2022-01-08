@@ -11,7 +11,7 @@ export interface Mine {
     /**
      defines a two dimensional array as area of the mine
     */
-    rows?: MineSpotRow[];
+    rows: MineSpotRow[];
 
     /**
      list of dwarfs that are working currently in the mine
@@ -22,6 +22,11 @@ export interface Mine {
      storage for already digged gems and stuff
     */
     storage?: Storage;
+
+    /**
+     current time in the Mine simulation
+    */
+    time: Date;
 }
 
 /**
