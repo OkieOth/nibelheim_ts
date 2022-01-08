@@ -7,7 +7,7 @@ import * as dummy from '../src_generated/dummy_data';
 import { assert } from 'chai';
 
 
-describe('Dummy data creation test suite', () => {
+describe('Dummy data creation with random optional attributes', () => {
     it('test Mine', () => {
         const x = dummy.randomMine();
         assert.isNotNull(x, 'randomMine returns null');
@@ -31,6 +31,19 @@ describe('Dummy data creation test suite', () => {
     it('test MineSpotMaterial', () => {
         const x = dummy.randomMineSpotMaterial();
         assert.isNotNull(x, 'randomMineSpotMaterial returns null');
+    });
+
+    it('test MineSpot', () => {
+        const x = dummy.randomMineSpot();
+        assert.isNotNull(x, 'randomMineSpot returns null');
+    });
+
+});
+
+describe('Dummy data for enums create different values', () => {
+    it('random enum test MineSpotMaterial', () => {
+        const x = dummy.randomMineSpotMaterial();
+        assert.isNotNull(x, 'randomMineSpotMaterial returns null');
         // test that the enum is generated with different values
         const x2 = dummy.randomMineSpotMaterial();
         assert.isNotNull(x2, 'randomMineSpotMaterial returns null');
@@ -43,10 +56,27 @@ describe('Dummy data creation test suite', () => {
         const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
         assert.isNotTrue(valuesAreEqual, 'randomMineSpotMaterial creates constant values')
     });
+});
 
-    it('test MineSpot', () => {
-        const x = dummy.randomMineSpot();
-        assert.isNotNull(x, 'randomMineSpot returns null');
+describe('Dummy data creation with randomized optional attributes', () => {
+    it('test type (2) Mine', () => {
+        const x = dummy.randomMine(true);
+        assert.isNotNull(x, 'randomMine (2) returns null');
     });
-
+    it('test type (2) MineSpotRow', () => {
+        const x = dummy.randomMineSpotRow(true);
+        assert.isNotNull(x, 'randomMineSpotRow (2) returns null');
+    });
+    it('test type (2) Dwarf', () => {
+        const x = dummy.randomDwarf(true);
+        assert.isNotNull(x, 'randomDwarf (2) returns null');
+    });
+    it('test type (2) Storage', () => {
+        const x = dummy.randomStorage(true);
+        assert.isNotNull(x, 'randomStorage (2) returns null');
+    });
+    it('test type (2) MineSpot', () => {
+        const x = dummy.randomMineSpot(true);
+        assert.isNotNull(x, 'randomMineSpot (2) returns null');
+    });
 });

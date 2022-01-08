@@ -16,12 +16,22 @@ import * as dummy from '../src_generated/dummy_data';
 import { assert } from 'chai';
 
 
-describe('Dummy data creation test suite', () => {
+describe('Dummy data creation with random optional attributes', () => {
 % for currentType in modelTypes:
     it('test ${currentType.name}', () => {
         const x = dummy.random${currentType.name}();
         assert.isNotNull(x, 'random${currentType.name} returns null');
+    });
+
+% endfor
+});
+
+describe('Dummy data for enums create different values', () => {
+% for currentType in modelTypes:
     % if modelFuncs.isEnumType(currentType):
+    it('random enum test ${currentType.name}', () => {
+        const x = dummy.random${currentType.name}();
+        assert.isNotNull(x, 'random${currentType.name} returns null');
         // test that the enum is generated with different values
         const x2 = dummy.random${currentType.name}();
         assert.isNotNull(x2, 'random${currentType.name} returns null');
@@ -33,8 +43,18 @@ describe('Dummy data creation test suite', () => {
         assert.isNotNull(x5, 'random${currentType.name} returns null');
         const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
         assert.isNotTrue(valuesAreEqual, 'randomMineSpotMaterial creates constant values')
-    % endif
     });
+    % endif
+% endfor
+});
 
+describe('Dummy data creation with randomized optional attributes', () => {
+% for currentType in modelTypes:
+    % if not modelFuncs.isEnumType(currentType):
+    it('test type (2) ${currentType.name}', () => {
+        const x = dummy.random${currentType.name}(true);
+        assert.isNotNull(x, 'random${currentType.name} (2) returns null');
+    });
+    % endif
 % endfor
 });
