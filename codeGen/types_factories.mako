@@ -2,52 +2,53 @@
 <%
     import yacg.model.model as model
     import yacg.templateHelper as templateHelper
+    import yacg.model.modelFuncs as modelFuncs
 
     templateFile = 'types_factories.mako'
     templateVersion = '0.1.0'
 
-    def printTypescriptType(type):
-        if type is None:
-            return 'unknown'
-        elif isinstance(type, model.IntegerType):
-            return 'number'
+    def printBaseTypeTest(type):
+        if isinstance(type, model.IntegerType):
+            return 'typeof attrib === "number"'
         elif isinstance(type, model.ObjectType):
-            return 'Object'
+            return 'typeof attrib === "object"'
         elif isinstance(type, model.NumberType):
-            return 'number'
+            return 'typeof attrib === "number"'
         elif isinstance(type, model.BooleanType):
-            return 'boolean'
+            return 'typeof attrib === "boolean"'
         elif isinstance(type, model.StringType):
-            return 'string'
+            return 'typeof attrib === "string"'
         elif isinstance(type, model.UuidType):
-            return 'string'
+            return 'utils.isUUID(attrib)'
         elif isinstance(type, model.EnumType):
             return "{type}".format(type=type.name)
         elif isinstance(type, model.DateTimeType):
-            return 'Date'
+            return 'utils.isDate(attrib)'
         elif isinstance(type, model.DateType):
-            return 'Date'
+            return 'utils.isDate(attrib)'
         elif isinstance(type, model.BytesType):
-             return 'number[]'
-        elif isinstance(type, model.DictionaryType):
-            return "Map<String, {}>".format(printTypescriptType(type.valueType))
-        elif isinstance(type, model.ComplexType):
-            return "{type}".format(type=type.name)
+             return 'utils.allArrayElemsAreNumbers(attrib)'
+        elif isinstance(type, model.Dictobject):
+            return 'typeof attrib === "object"'
         else:
-            return type
+            return "<< ERROR UNKOWN TYPE: {type}".format(type=type.name)
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
 */
 import * as types from "./types";
+import * as utils from "../src/factory_utils";
 
 % for currentType in modelTypes:
     % if isinstance(currentType, model.EnumType):
+    ## enums only needs to validate the that the value is right
 export function is${currentType.name}(value: any): value is types.${currentType.name} {
-    if (value == null)
+    if (value == null || value == undefined)
         return true;
-    if (!(typeof value === 'string' || value instanceof String))
+    if (!(typeof value === 'string' || value instanceof String)) {
+        console.log("[is${currentType.name}] input is no string ${currentType.name}: " + String(value));
         return false;
+    }
         % for value in currentType.values:
     if (value  == "${value}")
         return true;
@@ -61,13 +62,49 @@ export function parse${currentType.name}(json: string): types.${currentType.name
         return parsedData as types.${currentType.name};
     }
     else {
-        console.log("input doesn't match expected ${currentType.name}: json");
+        console.log("[parse${currentType.name}] input doesn't match expected type: " + json);
         return null;
     }
 }
 
 export function is${currentType.name}(value: any): value is types.${currentType.name} {
-    return true; // TODO
+    if (value == null || value == undefined)
+        return true;
+    if (!(typeof value === 'object')) {
+        console.log("[is${currentType.name}] input is not of type object: " + String(value));
+        return false;
+    }
+    if (Array.isArray(value)) {
+        console.log("[is${currentType.name}] input is an array: " + String(value));
+        return false;
+    }
+    const obj = value as Object;
+    % for prop in currentType.properties:
+        ## check that all required attributes are there
+        % if prop.required:
+    if (!("${prop.name}" in obj)) { // check required attribute
+        console.log("[is${currentType.name}] missing required attribute '${prop.name}'" + String(value));
+        return false;
+    }
+        % endif
+    if ("${prop.name}" in obj) {
+        const attrib: any = obj["${prop.name}"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != ${ 'true' if prop.isArray else 'false'})) {
+            console.log("[is${currentType.name}] '${prop.name}' has wrong multiplicity" + String(value));
+            return false;
+        }
+        // check if the the attribs has the right type
+        ## check properties with base types
+        % if modelFuncs.isBaseType(prop.type):
+        if ( ! (${printBaseTypeTest(prop.type)}) ) {
+            console.log("[is${currentType.name}] '${prop.name}' has wrong type" + String(value));
+            return false;
+        }
+        % endif
+    }
+    % endfor
+    return true;
 }
 % endif
 

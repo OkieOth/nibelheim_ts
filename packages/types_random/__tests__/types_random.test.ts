@@ -11,7 +11,7 @@ it('serialize/deserialize Mine', () => {
     assert.isNotNull(randomMine, 'randomMine returns null');
     const serialized = JSON.stringify(randomMine);
 
+    // TODO
     //JSON.parse(serialized);
-
-    console.log(serialized);
+    //console.log(serialized);
 });
