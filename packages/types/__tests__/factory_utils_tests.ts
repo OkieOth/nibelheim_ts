@@ -22,4 +22,23 @@ describe('Test factory utils', () => {
         const uuid5 = "1234abck-efg0-5678-0123-abcdefg01234"
         assert.isFalse(utils.isUUID(uuid5), "uuid1 doesn't match");
     });
+
+    it('allArrayElemsAreUUIDs test', () => {
+        const chance = new Chance();
+        const randomUuidV4 = chance.guid({version: 4});
+        assert.isTrue(utils.isUUID(randomUuidV4), "random UUID v4 doesn't match");
+        const randomUuidV5 = chance.guid({version: 5});
+        assert.isTrue(utils.isUUID(randomUuidV5), "random UUID v5 doesn't match");
+        const a1 = [randomUuidV4, randomUuidV5];
+        assert.isTrue(utils.allArrayElemsAreUUIDs(a1), "no uuid array");
+
+        const a2 = [randomUuidV4, randomUuidV5, "1234abck-efg0-5678-0123-abcdefg01234"];
+        assert.isFalse(utils.allArrayElemsAreUUIDs(a2), "not detect wrong uuid array (1)");
+
+        const a3 = ["randomUuidV4", "randomUuidV5"];
+        assert.isFalse(utils.allArrayElemsAreUUIDs(a3), "not detect wrong uuid array (2)");
+
+        const a4 = [1, randomUuidV4, randomUuidV5];
+        assert.isFalse(utils.allArrayElemsAreUUIDs(a4), "not detect wrong uuid array (3)");
+    });
 });

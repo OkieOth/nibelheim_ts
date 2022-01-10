@@ -6,6 +6,14 @@ export function isUUID(str: string): boolean {
     return uuidRegExp.test(str);
 }
 
+export function allArrayElemsAreUUIDs(arrayThing: any): boolean{
+    if ((typeof arrayThing !== "object") || (!Array.isArray(arrayThing))) return false;
+    for (let i=0; i < arrayThing.length; i++) {
+        if (!isUUID(arrayThing[i])) return false;
+    }
+    return true;
+}
+
 export function isDate(str: string | Date): boolean {
     // TODO
     /*
@@ -17,8 +25,8 @@ export function isDate(str: string | Date): boolean {
 
 export function allArrayElemsAreNumbers(arrayThing: any): boolean {
     if ((typeof arrayThing !== "object") || (!Array.isArray(arrayThing))) return false;
-    for (let elem in arrayThing) {
-        if (typeof elem != 'number') return false;
+    for (let i = 0; i < arrayThing.length; i++) {
+        if (typeof arrayThing[i] != 'number') return false;
     }
     return true;
 }

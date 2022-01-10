@@ -7,31 +7,58 @@
     templateFile = 'types_factories.mako'
     templateVersion = '0.1.0'
 
-    def printBaseTypeTest(type):
-        if isinstance(type, model.IntegerType):
-            return 'typeof attrib === "number"'
-        elif isinstance(type, model.ObjectType):
-            return 'typeof attrib === "object"'
-        elif isinstance(type, model.NumberType):
-            return 'typeof attrib === "number"'
-        elif isinstance(type, model.BooleanType):
-            return 'typeof attrib === "boolean"'
-        elif isinstance(type, model.StringType):
-            return 'typeof attrib === "string"'
-        elif isinstance(type, model.UuidType):
-            return 'utils.isUUID(attrib)'
-        elif isinstance(type, model.EnumType):
-            return "{type}".format(type=type.name)
-        elif isinstance(type, model.DateTimeType):
-            return 'utils.isDate(attrib)'
-        elif isinstance(type, model.DateType):
-            return 'utils.isDate(attrib)'
-        elif isinstance(type, model.BytesType):
-             return 'utils.allArrayElemsAreNumbers(attrib)'
-        elif isinstance(type, model.Dictobject):
-            return 'typeof attrib === "object"'
+    def printBaseTypeTest(prop):
+        type = prop.type
+        if prop.isArray:
+            if isinstance(type, model.IntegerType):
+                return 'utils.allArrayElemsAreNumbers(attrib)'
+            elif isinstance(type, model.ObjectType):
+                return 'typeof attrib === "object"'
+            elif isinstance(type, model.NumberType):
+                return 'utils.allArrayElemsAreNumbers(attrib)'
+            elif isinstance(type, model.BooleanType):
+                return 'typeof attrib === "boolean"'
+            elif isinstance(type, model.StringType):
+                return 'typeof attrib === "string"'
+            elif isinstance(type, model.UuidType):
+                return 'utils.allArrayElemsAreUUIDs(attrib)'
+            elif isinstance(type, model.EnumType):
+                return "{type}".format(type=type.name)
+            elif isinstance(type, model.DateTimeType):
+                return 'utils.isDate(attrib)'
+            elif isinstance(type, model.DateType):
+                return 'utils.isDate(attrib)'
+            elif isinstance(type, model.BytesType):
+                return 'utils.allArrayElemsAreNumbers(attrib)'
+            elif isinstance(type, model.Dictobject):
+                return 'typeof attrib === "object"'
+            else:
+                return "<< ERROR UNKOWN TYPE: {type}".format(type=type.name)
         else:
-            return "<< ERROR UNKOWN TYPE: {type}".format(type=type.name)
+            if isinstance(type, model.IntegerType):
+                return 'typeof attrib === "number"'
+            elif isinstance(type, model.ObjectType):
+                return 'typeof attrib === "object"'
+            elif isinstance(type, model.NumberType):
+                return 'typeof attrib === "number"'
+            elif isinstance(type, model.BooleanType):
+                return 'typeof attrib === "boolean"'
+            elif isinstance(type, model.StringType):
+                return 'typeof attrib === "string"'
+            elif isinstance(type, model.UuidType):
+                return 'utils.isUUID(attrib)'
+            elif isinstance(type, model.EnumType):
+                return "{type}".format(type=type.name)
+            elif isinstance(type, model.DateTimeType):
+                return 'utils.isDate(attrib)'
+            elif isinstance(type, model.DateType):
+                return 'utils.isDate(attrib)'
+            elif isinstance(type, model.BytesType):
+                return 'utils.allArrayElemsAreNumbers(attrib)'
+            elif isinstance(type, model.Dictobject):
+                return 'typeof attrib === "object"'
+            else:
+                return "<< ERROR UNKOWN TYPE: {type}".format(type=type.name)
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -97,8 +124,14 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         // check if the the attribs has the right type
         ## check properties with base types
         % if modelFuncs.isBaseType(prop.type):
-        if ( ! (${printBaseTypeTest(prop.type)}) ) {
-            console.log("[is${currentType.name}] '${prop.name}' has wrong type" + String(value));
+        if ( ! (${printBaseTypeTest(prop)}) ) {
+            console.log("[is${currentType.name}] '${prop.name}' has wrong type: " + String(value));
+            return false;
+        }
+        % endif
+        % if isinstance(prop.type, model.EnumType) or isinstance(prop.type, model.ComplexType):
+        if ( ! (is${prop.type.name}(attrib)) ) {
+            console.log("[is${currentType.name}] '${prop.name}' has wrong type: " + String(value));
             return false;
         }
         % endif

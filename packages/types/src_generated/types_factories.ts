@@ -40,6 +40,10 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isMineSpotRow(attrib)) ) {
+            console.log("[isMine] 'rows' has wrong type: " + String(value));
+            return false;
+        }
     }
     if ("dwarfs" in obj) {
         const attrib: any = obj["dwarfs"];
@@ -49,6 +53,10 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isDwarf(attrib)) ) {
+            console.log("[isMine] 'dwarfs' has wrong type: " + String(value));
+            return false;
+        }
     }
     if ("storage" in obj) {
         const attrib: any = obj["storage"];
@@ -58,6 +66,10 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isStorage(attrib)) ) {
+            console.log("[isMine] 'storage' has wrong type: " + String(value));
+            return false;
+        }
     }
     if (!("time" in obj)) { // check required attribute
         console.log("[isMine] missing required attribute 'time'" + String(value));
@@ -72,7 +84,7 @@ export function isMine(value: any): value is types.Mine {
         }
         // check if the the attribs has the right type
         if ( ! (utils.isDate(attrib)) ) {
-            console.log("[isMine] 'time' has wrong type" + String(value));
+            console.log("[isMine] 'time' has wrong type: " + String(value));
             return false;
         }
     }
@@ -110,6 +122,10 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isMineSpot(attrib)) ) {
+            console.log("[isMineSpotRow] 'columns' has wrong type: " + String(value));
+            return false;
+        }
     }
     return true;
 }
@@ -150,7 +166,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "string") ) {
-            console.log("[isDwarf] 'name' has wrong type" + String(value));
+            console.log("[isDwarf] 'name' has wrong type: " + String(value));
             return false;
         }
     }
@@ -162,6 +178,10 @@ export function isDwarf(value: any): value is types.Dwarf {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isStorage(attrib)) ) {
+            console.log("[isDwarf] 'pocket' has wrong type: " + String(value));
+            return false;
+        }
     }
     if ("strongness" in obj) {
         const attrib: any = obj["strongness"];
@@ -172,7 +192,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'strongness' has wrong type" + String(value));
+            console.log("[isDwarf] 'strongness' has wrong type: " + String(value));
             return false;
         }
     }
@@ -185,7 +205,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'currentStrongness' has wrong type" + String(value));
+            console.log("[isDwarf] 'currentStrongness' has wrong type: " + String(value));
             return false;
         }
     }
@@ -198,7 +218,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'hunger' has wrong type" + String(value));
+            console.log("[isDwarf] 'hunger' has wrong type: " + String(value));
             return false;
         }
     }
@@ -211,7 +231,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'healthiness' has wrong type" + String(value));
+            console.log("[isDwarf] 'healthiness' has wrong type: " + String(value));
             return false;
         }
     }
@@ -224,7 +244,7 @@ export function isDwarf(value: any): value is types.Dwarf {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'motivation' has wrong type" + String(value));
+            console.log("[isDwarf] 'motivation' has wrong type: " + String(value));
             return false;
         }
     }
@@ -236,8 +256,8 @@ export function isDwarf(value: any): value is types.Dwarf {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (utils.isUUID(attrib)) ) {
-            console.log("[isDwarf] 'currentWay' has wrong type" + String(value));
+        if ( ! (utils.allArrayElemsAreUUIDs(attrib)) ) {
+            console.log("[isDwarf] 'currentWay' has wrong type: " + String(value));
             return false;
         }
     }
@@ -276,7 +296,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'mithril' has wrong type" + String(value));
+            console.log("[isStorage] 'mithril' has wrong type: " + String(value));
             return false;
         }
     }
@@ -289,7 +309,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'gold' has wrong type" + String(value));
+            console.log("[isStorage] 'gold' has wrong type: " + String(value));
             return false;
         }
     }
@@ -302,7 +322,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'silver' has wrong type" + String(value));
+            console.log("[isStorage] 'silver' has wrong type: " + String(value));
             return false;
         }
     }
@@ -315,7 +335,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'diamond' has wrong type" + String(value));
+            console.log("[isStorage] 'diamond' has wrong type: " + String(value));
             return false;
         }
     }
@@ -328,7 +348,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'iron' has wrong type" + String(value));
+            console.log("[isStorage] 'iron' has wrong type: " + String(value));
             return false;
         }
     }
@@ -341,7 +361,7 @@ export function isStorage(value: any): value is types.Storage {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'cupper' has wrong type" + String(value));
+            console.log("[isStorage] 'cupper' has wrong type: " + String(value));
             return false;
         }
     }
@@ -404,7 +424,7 @@ export function isMineSpot(value: any): value is types.MineSpot {
         }
         // check if the the attribs has the right type
         if ( ! (utils.isUUID(attrib)) ) {
-            console.log("[isMineSpot] 'id' has wrong type" + String(value));
+            console.log("[isMineSpot] 'id' has wrong type: " + String(value));
             return false;
         }
     }
@@ -416,6 +436,10 @@ export function isMineSpot(value: any): value is types.MineSpot {
             return false;
         }
         // check if the the attribs has the right type
+        if ( ! (isMineSpotMaterial(attrib)) ) {
+            console.log("[isMineSpot] 'material' has wrong type: " + String(value));
+            return false;
+        }
     }
     if ("initialAmountOfMaterial" in obj) {
         const attrib: any = obj["initialAmountOfMaterial"];
@@ -426,7 +450,7 @@ export function isMineSpot(value: any): value is types.MineSpot {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'initialAmountOfMaterial' has wrong type" + String(value));
+            console.log("[isMineSpot] 'initialAmountOfMaterial' has wrong type: " + String(value));
             return false;
         }
     }
@@ -439,7 +463,7 @@ export function isMineSpot(value: any): value is types.MineSpot {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'currentAmountOfMaterial' has wrong type" + String(value));
+            console.log("[isMineSpot] 'currentAmountOfMaterial' has wrong type: " + String(value));
             return false;
         }
     }
@@ -452,7 +476,7 @@ export function isMineSpot(value: any): value is types.MineSpot {
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'miningDifficulty' has wrong type" + String(value));
+            console.log("[isMineSpot] 'miningDifficulty' has wrong type: " + String(value));
             return false;
         }
     }
