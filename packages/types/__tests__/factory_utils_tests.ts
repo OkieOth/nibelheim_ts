@@ -4,6 +4,18 @@ import { Chance } from 'chance'
 import { randomEnum } from '../../types_random/src/randomFuncs';
 
 describe('Test factory utils', () => {
+    it("test date", () => {
+        const chance = new Chance();
+        const d: any = chance.date();
+        assert.isTrue(utils.isDate(d), "didn't accept date object");
+        assert.isTrue(utils.isDate(d.toISOString()), "didn't accept date str from date object");
+        assert.isTrue(utils.isDate("2092-09-22T14:18:05.460Z"), "didn't accept str");
+        assert.isFalse(utils.isDate("2092.09-22T14:18:05.460Z"), "accept wrong str");
+        assert.isFalse(utils.isDate("92-09-22T14:18:05.460Z"), "accept wrong str-2");
+        assert.isTrue(utils.isDate("2092-09-22T14:18:05"), "didn't accept str");
+        // e.g. 2092-09-22T14:18:05.460Z
+    });
+
     it('isUUID test', () => {
         const chance = new Chance();
         const randomUuidV4 = chance.guid({version: 4});

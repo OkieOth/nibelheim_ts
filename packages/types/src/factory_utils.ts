@@ -1,6 +1,9 @@
 
 const uuidRegExp = /^[A-Ga-g0-9]{8}-[A-Ga-g0-9]{4}-[A-Ga-g0-9]{4}-[A-Ga-g0-9]{4}-[A-Ga-g0-9]{12}$/;
 
+const isoDateRegExp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.?[0-9+Z]*$/
+//2092-09-22T14:18:05.460Z
+
 export function isUUID(str: string): boolean {
     if (typeof str !== "string") return false;
     return uuidRegExp.test(str);
@@ -15,12 +18,8 @@ export function allArrayElemsAreUUIDs(arrayThing: any): boolean{
 }
 
 export function isDate(str: string | Date): boolean {
-    // TODO
-    /*
-    if (typeof str !== "string") return false;
-    return uuidRegExp.test(str);
-    */
-    return true;
+    if (str instanceof Date) return true;
+    return isoDateRegExp.test(str);
 }
 
 export function allArrayElemsAreNumbers(arrayThing: any): boolean {
