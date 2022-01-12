@@ -16,6 +16,10 @@ export function parseMine(json: string): types.Mine {
     }
 }
 
+export function parseMineArray(json: string): types.Mine[] {
+    return null; // TODO
+}
+
 export function isMine(value: any): value is types.Mine {
     if (value == null || value == undefined)
         return true;
@@ -91,6 +95,11 @@ export function isMine(value: any): value is types.Mine {
     return true;
 }
 
+export function isMineArray(value: any): value is types.Mine[] {
+    // TODO
+    return false;
+}
+
 export function parseMineSpotRow(json: string): types.MineSpotRow {
     const parsedData = JSON.parse(json);
     if (isMineSpotRow(parsedData)) {
@@ -100,6 +109,10 @@ export function parseMineSpotRow(json: string): types.MineSpotRow {
         console.log("[parseMineSpotRow] input doesn't match expected type: " + json);
         return null;
     }
+}
+
+export function parseMineSpotRowArray(json: string): types.MineSpotRow[] {
+    return null; // TODO
 }
 
 export function isMineSpotRow(value: any): value is types.MineSpotRow {
@@ -130,6 +143,11 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
     return true;
 }
 
+export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
+    // TODO
+    return false;
+}
+
 export function parseDwarf(json: string): types.Dwarf {
     const parsedData = JSON.parse(json);
     if (isDwarf(parsedData)) {
@@ -139,6 +157,10 @@ export function parseDwarf(json: string): types.Dwarf {
         console.log("[parseDwarf] input doesn't match expected type: " + json);
         return null;
     }
+}
+
+export function parseDwarfArray(json: string): types.Dwarf[] {
+    return null; // TODO
 }
 
 export function isDwarf(value: any): value is types.Dwarf {
@@ -264,6 +286,11 @@ export function isDwarf(value: any): value is types.Dwarf {
     return true;
 }
 
+export function isDwarfArray(value: any): value is types.Dwarf[] {
+    // TODO
+    return false;
+}
+
 export function parseStorage(json: string): types.Storage {
     const parsedData = JSON.parse(json);
     if (isStorage(parsedData)) {
@@ -273,6 +300,10 @@ export function parseStorage(json: string): types.Storage {
         console.log("[parseStorage] input doesn't match expected type: " + json);
         return null;
     }
+}
+
+export function parseStorageArray(json: string): types.Storage[] {
+    return null; // TODO
 }
 
 export function isStorage(value: any): value is types.Storage {
@@ -368,6 +399,11 @@ export function isStorage(value: any): value is types.Storage {
     return true;
 }
 
+export function isStorageArray(value: any): value is types.Storage[] {
+    // TODO
+    return false;
+}
+
 export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial {
     if (value == null || value == undefined)
         return true;
@@ -392,6 +428,11 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
     return false;
 }
 
+export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
+    // TODO
+    return false;
+}
+
 export function parseMineSpot(json: string): types.MineSpot {
     const parsedData = JSON.parse(json);
     if (isMineSpot(parsedData)) {
@@ -401,6 +442,10 @@ export function parseMineSpot(json: string): types.MineSpot {
         console.log("[parseMineSpot] input doesn't match expected type: " + json);
         return null;
     }
+}
+
+export function parseMineSpotArray(json: string): types.MineSpot[] {
+    return null; // TODO
 }
 
 export function isMineSpot(value: any): value is types.MineSpot {
@@ -481,5 +526,10 @@ export function isMineSpot(value: any): value is types.MineSpot {
         }
     }
     return true;
+}
+
+export function isMineSpotArray(value: any): value is types.MineSpot[] {
+    // TODO
+    return false;
 }
 

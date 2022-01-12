@@ -4,6 +4,15 @@ import { Chance } from 'chance'
 import { randomEnum } from '../../types_random/src/randomFuncs';
 
 describe('Test factory utils', () => {
+    it("test isArray", () => {
+        const a = [1, 2, 3];
+        assert.isTrue(utils.isArray(a), "didn't detect simple num Array");
+        const b = [1];
+        assert.isTrue(utils.isArray(b), "didn't detect simple num Array with one elem");
+        const c = 100;
+        assert.isFalse(utils.isArray(c), "detected number as array");
+    });
+
     it("test date", () => {
         const chance = new Chance();
         const d: any = chance.date();

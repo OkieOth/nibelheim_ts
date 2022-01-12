@@ -82,6 +82,11 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         % endfor
     return false;
 }
+
+export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
+    // TODO
+    return false;
+}
     % else:
 export function parse${currentType.name}(json: string): types.${currentType.name} {
     const parsedData = JSON.parse(json);
@@ -92,6 +97,10 @@ export function parse${currentType.name}(json: string): types.${currentType.name
         console.log("[parse${currentType.name}] input doesn't match expected type: " + json);
         return null;
     }
+}
+
+export function parse${currentType.name}Array(json: string): types.${currentType.name}[] {
+    return null; // TODO
 }
 
 export function is${currentType.name}(value: any): value is types.${currentType.name} {
@@ -138,6 +147,11 @@ export function is${currentType.name}(value: any): value is types.${currentType.
     }
     % endfor
     return true;
+}
+
+export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
+    // TODO
+    return false;
 }
 % endif
 

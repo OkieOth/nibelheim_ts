@@ -9,8 +9,12 @@ export function isUUID(str: string): boolean {
     return uuidRegExp.test(str);
 }
 
+export function isArray(arrayThing: any): boolean {
+    return (typeof arrayThing === "object") || (Array.isArray(arrayThing));
+}
+
 export function allArrayElemsAreUUIDs(arrayThing: any): boolean{
-    if ((typeof arrayThing !== "object") || (!Array.isArray(arrayThing))) return false;
+    if (!isArray(arrayThing)) return false;
     for (let i=0; i < arrayThing.length; i++) {
         if (!isUUID(arrayThing[i])) return false;
     }
