@@ -11,7 +11,3 @@ if ! docker run -u $(id -u ${USER}):$(id -g ${USER}) \
     echo "error while generating tests for dummy data creation"
     exit 1
 fi
-
-
-#$scriptPos/generateDummyDataFactories.sh
-#$scriptPos/generateDummyDataFactoriesTests.sh

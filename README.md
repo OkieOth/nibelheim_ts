@@ -9,6 +9,14 @@ git clone git@github.com:OkieOth/nibelheim_ts.git
 npx lerna bootstrap --hoist
 ```
 
+## Requirements
+* npm 7.5.2
+* docker
+* bash
+
+(The project is developed and tested under Ubuntu 20.04)
+
+
 # Setup Lerna
 ```bash
 npx lerna init
@@ -44,3 +52,8 @@ npm run tsc
 cd packages/types
 npm run test
 ```
+
+# CodeGen
+* The use codeGen template are in `./codeGen/*.mako`
+* The configuration for the whole codeGen project is in `./codeGen/config/generateAll.json`
+* To run the codeGen execute `./bin/generateAll.sh`
