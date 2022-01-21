@@ -100,7 +100,18 @@ export function parse${currentType.name}(json: string): types.${currentType.name
 }
 
 export function parse${currentType.name}Array(json: string): types.${currentType.name}[] {
-    return null; // TODO
+    const parsedData = JSON.parse(json);
+    if (!utils.isArray(parsedData)) {
+        console.log("[parse${currentType.name}Array] input is no array: " + json);
+        return null;
+    }
+    for (let i=0; i < parsedData.length; i++) {
+        if (!is${currentType.name}(parsedData[i])) {
+            console.log("[parse${currentType.name}Array] input is not of ${currentType.name} type");
+            return null;
+        }
+    }
+    return parsedData;
 }
 
 export function is${currentType.name}(value: any): value is types.${currentType.name} {
@@ -147,11 +158,6 @@ export function is${currentType.name}(value: any): value is types.${currentType.
     }
     % endfor
     return true;
-}
-
-export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
-    // TODO
-    return false;
 }
 % endif
 

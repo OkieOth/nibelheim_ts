@@ -1,0 +1,47 @@
+[
+    {
+        "name": "yacg models types",
+        "description": "code gen configuration for yacg base model types",
+        "models": [ {
+            "schema": "/project/model/nibelheim.json"
+            }
+        ],
+        "tasks": [
+            {
+                "name": "create Puml",
+                "singleFileTask": {
+                    "template": "plantUml",
+                    "destFile": "/project/docs/generated/nibelheim.puml"
+                }
+            },
+            {
+                "name": "generate types",
+                "singleFileTask": {
+                    "template": "/project/codeGen/ts_types.mako",
+                    "destFile": "/project/packages/types/src_generated/types.ts"
+                }
+            },
+            {
+                "name": "generate types factories",
+                "singleFileTask": {
+                    "template": "/project/codeGen/types_factories.mako",
+                    "destFile": "/project/packages/types/src_generated/types_factories.ts"
+                }
+            },
+            {
+                "name": "generate factory functions to create dummy data",
+                "singleFileTask": {
+                    "template": "/project/codeGen/random_instances.mako",
+                    "destFile": "/project/packages/types_random/src_generated/dummy_data.ts"
+                }
+            },
+            {
+                "name": "generate tests for factory functions to create dummy data",
+                "singleFileTask": {
+                    "template": "/project/codeGen/random_instances_tests.mako",
+                    "destFile": "/project/packages/types_random/__tests_generated__/dummy_data_test.ts"
+                }
+            }
+        ]
+    }
+]
