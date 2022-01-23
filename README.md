@@ -57,3 +57,22 @@ npm run test
 * The use codeGen template are in `./codeGen/*.mako`
 * The configuration for the whole codeGen project is in `./codeGen/config/generateAll.json`
 * To run the codeGen execute `./bin/generateAll.sh`
+* To run only specific tasks run specify the tasks switch of yacg (available from v3.3.0)
+
+```bash
+# run only the 'types' task from the codeGen config
+./bin/generateAll.sh --tasks types
+
+# run the 'types' and 'types_puml' tasks from the codeGen config
+./bin/generateAll.sh --tasks types types_puml
+```
+
+## Available Tasks
+
+| Name              | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| types_puml        | generate PlantUml file from the used mode           |
+| types             | generate interfaces from the model                  |
+| types_factory     | generate functions to create instances of the types |
+| types_random      | generate functions to create random data            |
+| types_random_test | generate tests for the random data functions        |
