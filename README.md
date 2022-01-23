@@ -2,6 +2,7 @@
 
 * Test project to play around with typescript and mono repos
 * Challenge the power of yacg
+* Beside playing with codeGen has this project no purpose or deeper sense
 
 ```bash
 # kick off after a fresh clone
