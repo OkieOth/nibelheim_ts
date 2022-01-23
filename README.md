@@ -54,8 +54,8 @@ npm run test
 ```
 
 # CodeGen
-* The use codeGen template are in `./codeGen/*.mako`
-* The configuration for the whole codeGen project is in `./codeGen/config/generateAll.json`
+* The use codeGen template are in [`./codeGen/*.mako`](codeGen/ts_types.mako)
+* The configuration for the whole codeGen project is in [`./codeGen/config/generateAll.json`](codeGen/config/generateAll.json)
 * To run the codeGen execute `./bin/generateAll.sh`
 * To run only specific tasks run specify the tasks switch of yacg (available from v3.3.0)
 
