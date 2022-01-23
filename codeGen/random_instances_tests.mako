@@ -12,6 +12,7 @@
     Template: ${templateFile} v${templateVersion})
 */
 import * as types from 'types';
+import * as types_factories from 'types/lib/types_factories';
 import * as dummy from '../src_generated/dummy_data';
 import { assert } from 'chai';
 
@@ -21,6 +22,8 @@ describe('Dummy data creation with random optional attributes', () => {
     it('test ${currentType.name}', () => {
         const x: types.${currentType.name} = dummy.random${currentType.name}();
         assert.isNotNull(x, 'random${currentType.name} returns null');
+        assert.isTrue(types_factories.is${currentType.name}(x));
+        assert.isFalse(types_factories.is${currentType.name}("test"));
     });
 
 % endfor
