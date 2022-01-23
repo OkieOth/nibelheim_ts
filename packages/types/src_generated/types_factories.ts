@@ -453,8 +453,17 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
 }
 
 export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
-    // TODO
-    return false;
+    if (!utils.isArray(value)) {
+        console.log("[isMineSpotMaterialArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isMineSpotMaterial(value[i])) {
+            console.log("[isMineSpotMaterialArray] input is not of MineSpotMaterial type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
 }
 
 export function parseMineSpot(json: string): types.MineSpot {

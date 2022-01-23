@@ -84,8 +84,17 @@ export function is${currentType.name}(value: any): value is types.${currentType.
 }
 
 export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
-    // TODO
-    return false;
+    if (!utils.isArray(value)) {
+        console.log("[is${currentType.name}Array] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!is${currentType.name}(value[i])) {
+            console.log("[is${currentType.name}Array] input is not of ${currentType.name} type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
 }
     % else:
 export function parse${currentType.name}(json: string): types.${currentType.name} {
