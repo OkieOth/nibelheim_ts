@@ -19,11 +19,14 @@ describe('Test of type factories and their helper funcs', () => {
 % for currentType in modelTypes:
     it('test is${currentType.name}', () => {
         assert.isFalse(factory.is${currentType.name}("x"));
+        assert.isTrue(factory.is${currentType.name}(null));
     });
 
     it('test is${currentType.name}Array', () => {
         assert.isFalse(factory.is${currentType.name}Array("x"));
         assert.isFalse(factory.is${currentType.name}Array(["x"]));
+        assert.isTrue(factory.is${currentType.name}Array(null));
+        assert.isTrue(factory.is${currentType.name}Array([]));
     });
 
 % endfor

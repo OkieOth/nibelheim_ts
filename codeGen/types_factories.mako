@@ -160,6 +160,8 @@ export function is${currentType.name}(value: any): value is types.${currentType.
 
 % for currentType in modelTypes:
 export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[is${currentType.name}Array] input is no array: " + value);
         return false;

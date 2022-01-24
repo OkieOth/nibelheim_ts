@@ -560,6 +560,8 @@ export function isMineSpot(value: any): value is types.MineSpot {
 
 
 export function isMineArray(value: any): value is types.Mine[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isMineArray] input is no array: " + value);
         return false;
@@ -574,6 +576,8 @@ export function isMineArray(value: any): value is types.Mine[] {
 }
 
 export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isMineSpotRowArray] input is no array: " + value);
         return false;
@@ -588,6 +592,8 @@ export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
 }
 
 export function isDwarfArray(value: any): value is types.Dwarf[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isDwarfArray] input is no array: " + value);
         return false;
@@ -602,6 +608,8 @@ export function isDwarfArray(value: any): value is types.Dwarf[] {
 }
 
 export function isStorageArray(value: any): value is types.Storage[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isStorageArray] input is no array: " + value);
         return false;
@@ -616,6 +624,8 @@ export function isStorageArray(value: any): value is types.Storage[] {
 }
 
 export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isMineSpotMaterialArray] input is no array: " + value);
         return false;
@@ -630,6 +640,8 @@ export function isMineSpotMaterialArray(value: any): value is types.MineSpotMate
 }
 
 export function isMineSpotArray(value: any): value is types.MineSpot[] {
+    if (value == null || value == undefined)
+        return true;
     if (!utils.isArray(value)) {
         console.log("[isMineSpotArray] input is no array: " + value);
         return false;
