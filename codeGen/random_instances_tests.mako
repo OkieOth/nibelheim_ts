@@ -12,7 +12,6 @@
     Template: ${templateFile} v${templateVersion})
 */
 import * as types from 'types';
-import * as types_factories from 'types/lib/types_factories';
 import * as dummy from '../src_generated/dummy_data';
 import { assert } from 'chai';
 
@@ -21,9 +20,17 @@ describe('Dummy data creation with random optional attributes', () => {
 % for currentType in modelTypes:
     it('test ${currentType.name}', () => {
         const x: types.${currentType.name} = dummy.random${currentType.name}();
-        assert.isNotNull(x, 'random${currentType.name} returns null');
-        assert.isTrue(types_factories.is${currentType.name}(x));
-        assert.isFalse(types_factories.is${currentType.name}("test"));
+        const y: types.${currentType.name} = dummy.random${currentType.name}();
+        assert.isNotNull(x, 'random${currentType.name} 1 returns null');
+        assert.isNotNull(y, 'random${currentType.name} 2 returns null');
+        assert.isTrue(types.is${currentType.name}(x));
+        assert.isTrue(types.is${currentType.name}(y));
+        assert.isFalse(types.is${currentType.name}("test"));
+        assert.isFalse(types.is${currentType.name}Array(x));
+        assert.isFalse(types.is${currentType.name}Array(y));
+        assert.isTrue(types.is${currentType.name}Array([x]));
+        assert.isTrue(types.is${currentType.name}Array([y]));
+        assert.isTrue(types.is${currentType.name}Array([x,y]));
     });
 
 % endfor
@@ -45,7 +52,7 @@ describe('Dummy data for enums create different values', () => {
         const x5: types.${currentType.name} = dummy.random${currentType.name}();
         assert.isNotNull(x5, 'random${currentType.name} returns null');
         const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
-        assert.isNotTrue(valuesAreEqual, 'randomMineSpotMaterial creates constant values')
+        assert.isNotTrue(valuesAreEqual, 'random${currentType.name} creates constant values')
     });
     % endif
 % endfor

@@ -10,7 +10,9 @@ export function isUUID(str: string): boolean {
 }
 
 export function isArray(arrayThing: any): boolean {
-    return (typeof arrayThing === "object") || (Array.isArray(arrayThing));
+    const b1: boolean = typeof arrayThing === "object";
+    const b2: boolean = Array.isArray(arrayThing);
+    return b1 && b2;
 }
 
 export function allArrayElemsAreUUIDs(arrayThing: any): boolean{

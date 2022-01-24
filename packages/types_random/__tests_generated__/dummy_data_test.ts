@@ -3,7 +3,6 @@
     Template: random_instances_tests.mako v0.1.0)
 */
 import * as types from 'types';
-import * as types_factories from 'types/lib/types_factories';
 import * as dummy from '../src_generated/dummy_data';
 import { assert } from 'chai';
 
@@ -11,44 +10,92 @@ import { assert } from 'chai';
 describe('Dummy data creation with random optional attributes', () => {
     it('test Mine', () => {
         const x: types.Mine = dummy.randomMine();
-        assert.isNotNull(x, 'randomMine returns null');
-        assert.isTrue(types_factories.isMine(x));
-        assert.isFalse(types_factories.isMine("test"));
+        const y: types.Mine = dummy.randomMine();
+        assert.isNotNull(x, 'randomMine 1 returns null');
+        assert.isNotNull(y, 'randomMine 2 returns null');
+        assert.isTrue(types.isMine(x));
+        assert.isTrue(types.isMine(y));
+        assert.isFalse(types.isMine("test"));
+        assert.isFalse(types.isMineArray(x));
+        assert.isFalse(types.isMineArray(y));
+        assert.isTrue(types.isMineArray([x]));
+        assert.isTrue(types.isMineArray([y]));
+        assert.isTrue(types.isMineArray([x,y]));
     });
 
     it('test MineSpotRow', () => {
         const x: types.MineSpotRow = dummy.randomMineSpotRow();
-        assert.isNotNull(x, 'randomMineSpotRow returns null');
-        assert.isTrue(types_factories.isMineSpotRow(x));
-        assert.isFalse(types_factories.isMineSpotRow("test"));
+        const y: types.MineSpotRow = dummy.randomMineSpotRow();
+        assert.isNotNull(x, 'randomMineSpotRow 1 returns null');
+        assert.isNotNull(y, 'randomMineSpotRow 2 returns null');
+        assert.isTrue(types.isMineSpotRow(x));
+        assert.isTrue(types.isMineSpotRow(y));
+        assert.isFalse(types.isMineSpotRow("test"));
+        assert.isFalse(types.isMineSpotRowArray(x));
+        assert.isFalse(types.isMineSpotRowArray(y));
+        assert.isTrue(types.isMineSpotRowArray([x]));
+        assert.isTrue(types.isMineSpotRowArray([y]));
+        assert.isTrue(types.isMineSpotRowArray([x,y]));
     });
 
     it('test Dwarf', () => {
         const x: types.Dwarf = dummy.randomDwarf();
-        assert.isNotNull(x, 'randomDwarf returns null');
-        assert.isTrue(types_factories.isDwarf(x));
-        assert.isFalse(types_factories.isDwarf("test"));
+        const y: types.Dwarf = dummy.randomDwarf();
+        assert.isNotNull(x, 'randomDwarf 1 returns null');
+        assert.isNotNull(y, 'randomDwarf 2 returns null');
+        assert.isTrue(types.isDwarf(x));
+        assert.isTrue(types.isDwarf(y));
+        assert.isFalse(types.isDwarf("test"));
+        assert.isFalse(types.isDwarfArray(x));
+        assert.isFalse(types.isDwarfArray(y));
+        assert.isTrue(types.isDwarfArray([x]));
+        assert.isTrue(types.isDwarfArray([y]));
+        assert.isTrue(types.isDwarfArray([x,y]));
     });
 
     it('test Storage', () => {
         const x: types.Storage = dummy.randomStorage();
-        assert.isNotNull(x, 'randomStorage returns null');
-        assert.isTrue(types_factories.isStorage(x));
-        assert.isFalse(types_factories.isStorage("test"));
+        const y: types.Storage = dummy.randomStorage();
+        assert.isNotNull(x, 'randomStorage 1 returns null');
+        assert.isNotNull(y, 'randomStorage 2 returns null');
+        assert.isTrue(types.isStorage(x));
+        assert.isTrue(types.isStorage(y));
+        assert.isFalse(types.isStorage("test"));
+        assert.isFalse(types.isStorageArray(x));
+        assert.isFalse(types.isStorageArray(y));
+        assert.isTrue(types.isStorageArray([x]));
+        assert.isTrue(types.isStorageArray([y]));
+        assert.isTrue(types.isStorageArray([x,y]));
     });
 
     it('test MineSpotMaterial', () => {
         const x: types.MineSpotMaterial = dummy.randomMineSpotMaterial();
-        assert.isNotNull(x, 'randomMineSpotMaterial returns null');
-        assert.isTrue(types_factories.isMineSpotMaterial(x));
-        assert.isFalse(types_factories.isMineSpotMaterial("test"));
+        const y: types.MineSpotMaterial = dummy.randomMineSpotMaterial();
+        assert.isNotNull(x, 'randomMineSpotMaterial 1 returns null');
+        assert.isNotNull(y, 'randomMineSpotMaterial 2 returns null');
+        assert.isTrue(types.isMineSpotMaterial(x));
+        assert.isTrue(types.isMineSpotMaterial(y));
+        assert.isFalse(types.isMineSpotMaterial("test"));
+        assert.isFalse(types.isMineSpotMaterialArray(x));
+        assert.isFalse(types.isMineSpotMaterialArray(y));
+        assert.isTrue(types.isMineSpotMaterialArray([x]));
+        assert.isTrue(types.isMineSpotMaterialArray([y]));
+        assert.isTrue(types.isMineSpotMaterialArray([x,y]));
     });
 
     it('test MineSpot', () => {
         const x: types.MineSpot = dummy.randomMineSpot();
-        assert.isNotNull(x, 'randomMineSpot returns null');
-        assert.isTrue(types_factories.isMineSpot(x));
-        assert.isFalse(types_factories.isMineSpot("test"));
+        const y: types.MineSpot = dummy.randomMineSpot();
+        assert.isNotNull(x, 'randomMineSpot 1 returns null');
+        assert.isNotNull(y, 'randomMineSpot 2 returns null');
+        assert.isTrue(types.isMineSpot(x));
+        assert.isTrue(types.isMineSpot(y));
+        assert.isFalse(types.isMineSpot("test"));
+        assert.isFalse(types.isMineSpotArray(x));
+        assert.isFalse(types.isMineSpotArray(y));
+        assert.isTrue(types.isMineSpotArray([x]));
+        assert.isTrue(types.isMineSpotArray([y]));
+        assert.isTrue(types.isMineSpotArray([x,y]));
     });
 
 });

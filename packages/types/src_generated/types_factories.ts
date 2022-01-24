@@ -55,7 +55,7 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isMineSpotRow(attrib)) ) {
+        if ( ! (isMineSpotRowArray(attrib)) ) {
             console.log("[isMine] 'rows' has wrong type: " + String(value));
             return false;
         }
@@ -68,7 +68,7 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isDwarf(attrib)) ) {
+        if ( ! (isDwarfArray(attrib)) ) {
             console.log("[isMine] 'dwarfs' has wrong type: " + String(value));
             return false;
         }
@@ -152,7 +152,7 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isMineSpot(attrib)) ) {
+        if ( ! (isMineSpotArray(attrib)) ) {
             console.log("[isMineSpotRow] 'columns' has wrong type: " + String(value));
             return false;
         }
@@ -452,20 +452,6 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
     return false;
 }
 
-export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
-    if (!utils.isArray(value)) {
-        console.log("[isMineSpotMaterialArray] input is no array: " + value);
-        return false;
-    }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpotMaterial(value[i])) {
-            console.log("[isMineSpotMaterialArray] input is not of MineSpotMaterial type: " + value[i]);
-            return false;
-        }
-    }
-    return true;
-}
-
 export function parseMineSpot(json: string): types.MineSpot {
     const parsedData = JSON.parse(json);
     if (isMineSpot(parsedData)) {
@@ -566,6 +552,91 @@ export function isMineSpot(value: any): value is types.MineSpot {
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
             console.log("[isMineSpot] 'miningDifficulty' has wrong type: " + String(value));
+            return false;
+        }
+    }
+    return true;
+}
+
+
+export function isMineArray(value: any): value is types.Mine[] {
+    if (!utils.isArray(value)) {
+        console.log("[isMineArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isMine(value[i])) {
+            console.log("[isMineArray] input is not of Mine type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
+    if (!utils.isArray(value)) {
+        console.log("[isMineSpotRowArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isMineSpotRow(value[i])) {
+            console.log("[isMineSpotRowArray] input is not of MineSpotRow type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isDwarfArray(value: any): value is types.Dwarf[] {
+    if (!utils.isArray(value)) {
+        console.log("[isDwarfArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isDwarf(value[i])) {
+            console.log("[isDwarfArray] input is not of Dwarf type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isStorageArray(value: any): value is types.Storage[] {
+    if (!utils.isArray(value)) {
+        console.log("[isStorageArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isStorage(value[i])) {
+            console.log("[isStorageArray] input is not of Storage type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
+    if (!utils.isArray(value)) {
+        console.log("[isMineSpotMaterialArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isMineSpotMaterial(value[i])) {
+            console.log("[isMineSpotMaterialArray] input is not of MineSpotMaterial type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isMineSpotArray(value: any): value is types.MineSpot[] {
+    if (!utils.isArray(value)) {
+        console.log("[isMineSpotArray] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!isMineSpot(value[i])) {
+            console.log("[isMineSpotArray] input is not of MineSpot type: " + value[i]);
             return false;
         }
     }

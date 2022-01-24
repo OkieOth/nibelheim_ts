@@ -82,20 +82,6 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         % endfor
     return false;
 }
-
-export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
-    if (!utils.isArray(value)) {
-        console.log("[is${currentType.name}Array] input is no array: " + value);
-        return false;
-    }
-    for (let i=0; i < value.length; i++) {
-        if (!is${currentType.name}(value[i])) {
-            console.log("[is${currentType.name}Array] input is not of ${currentType.name} type: " + value[i]);
-            return false;
-        }
-    }
-    return true;
-}
     % else:
 export function parse${currentType.name}(json: string): types.${currentType.name} {
     const parsedData = JSON.parse(json);
@@ -159,7 +145,7 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         }
         % endif
         % if isinstance(prop.type, model.EnumType) or isinstance(prop.type, model.ComplexType):
-        if ( ! (is${prop.type.name}(attrib)) ) {
+        if ( ! (is${prop.type.name}${'Array' if prop.isArray else ''}(attrib)) ) {
             console.log("[is${currentType.name}] '${prop.name}' has wrong type: " + String(value));
             return false;
         }
@@ -168,6 +154,23 @@ export function is${currentType.name}(value: any): value is types.${currentType.
     % endfor
     return true;
 }
-% endif
+    % endif
+
+% endfor
+
+% for currentType in modelTypes:
+export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
+    if (!utils.isArray(value)) {
+        console.log("[is${currentType.name}Array] input is no array: " + value);
+        return false;
+    }
+    for (let i=0; i < value.length; i++) {
+        if (!is${currentType.name}(value[i])) {
+            console.log("[is${currentType.name}Array] input is not of ${currentType.name} type: " + value[i]);
+            return false;
+        }
+    }
+    return true;
+}
 
 % endfor

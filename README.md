@@ -32,6 +32,9 @@ npm install typescript @types/node --save-dev
 
 # install testing dev dependencies on root level
 npm install --save-dev ts-node mocha @testdeck/mocha @types/mocha nyc chai ts-mockito
+
+# examples to add dependencies to other packages
+./node_modules/.bin/lerna add types --scope=types_random
 ```
 
 # Usage
@@ -70,10 +73,11 @@ npm run test
 
 ## Available Tasks
 
-| Name               | Description                                         |
-| ------------------ | --------------------------------------------------- |
-| types_puml         | generate PlantUml file from the used mode           |
-| types              | generate interfaces from the model                  |
-| types_factory      | generate functions to create instances of the types |
-| types_random       | generate functions to create random data            |
-| types_random_tests | generate tests for the random data functions        |
+| Name                | Description                                         |
+| ------------------- | --------------------------------------------------- |
+| types_puml          | generate PlantUml file from the used mode           |
+| types               | generate interfaces from the model                  |
+| types_factory       | generate functions to create instances of the types |
+| types_factory_tests | generate tests for type factories                   |
+| types_random        | generate functions to create random data            |
+| types_random_tests  | generate tests for the random data functions        |

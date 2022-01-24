@@ -32,6 +32,14 @@
                 }
             },
             {
+                "name": "types_factory_tests",
+                "description": "generate tests for types factories",
+                "singleFileTask": {
+                    "template": "/project/codeGen/types_factories_tests.mako",
+                    "destFile": "/project/packages/types/__tests_generated__/types_factories_test.ts"
+                }
+            },
+            {
                 "name": "types_random",
                 "description": "generate factory functions to create dummy data",
                 "singleFileTask": {

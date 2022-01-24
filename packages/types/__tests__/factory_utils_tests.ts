@@ -62,4 +62,26 @@ describe('Test factory utils', () => {
         const a4 = [1, randomUuidV4, randomUuidV5];
         assert.isFalse(utils.allArrayElemsAreUUIDs(a4), "not detect wrong uuid array (3)");
     });
+
+    it('allArrayElemsAreNumbers test', () => {
+        const chance = new Chance();
+        const i1 = chance.integer();
+        const i2 = chance.integer();
+        const i3 = chance.integer();
+        const n1 = chance.floating();
+        const n2 = chance.floating();
+        const n3 = chance.floating();
+        assert.isFalse(utils.allArrayElemsAreNumbers(i1));
+        assert.isFalse(utils.allArrayElemsAreNumbers(i2));
+        assert.isFalse(utils.allArrayElemsAreNumbers(i3));
+        assert.isFalse(utils.allArrayElemsAreNumbers(n1));
+        assert.isFalse(utils.allArrayElemsAreNumbers(n2));
+        assert.isFalse(utils.allArrayElemsAreNumbers(n3));
+        assert.isTrue(utils.allArrayElemsAreNumbers([n1,n2,n3]));
+        assert.isTrue(utils.allArrayElemsAreNumbers([i1,i2,i3]));
+        assert.isTrue(utils.allArrayElemsAreNumbers([i1,i2,n1,i3]));
+        assert.isFalse(utils.allArrayElemsAreNumbers([i1,i2,"xxx",i3]));
+        assert.isFalse(utils.allArrayElemsAreNumbers([n1,n2,"xxx",n3]));
+    });
+
 });
