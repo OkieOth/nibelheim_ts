@@ -6,7 +6,7 @@ import * as types from "./types";
 import * as utils from "../src/factory_utils";
 
 export function parseMine(json: string): types.Mine {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (isMine(parsedData)) {
         return parsedData as types.Mine;
     }
@@ -17,7 +17,7 @@ export function parseMine(json: string): types.Mine {
 }
 
 export function parseMineArray(json: string): types.Mine[] {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         console.log("[parseMineArray] input is no array: " + json);
         return null;
@@ -107,7 +107,7 @@ export function isMine(value: any): value is types.Mine {
 }
 
 export function parseMineSpotRow(json: string): types.MineSpotRow {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (isMineSpotRow(parsedData)) {
         return parsedData as types.MineSpotRow;
     }
@@ -118,7 +118,7 @@ export function parseMineSpotRow(json: string): types.MineSpotRow {
 }
 
 export function parseMineSpotRowArray(json: string): types.MineSpotRow[] {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         console.log("[parseMineSpotRowArray] input is no array: " + json);
         return null;
@@ -161,7 +161,7 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
 }
 
 export function parseDwarf(json: string): types.Dwarf {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (isDwarf(parsedData)) {
         return parsedData as types.Dwarf;
     }
@@ -172,7 +172,7 @@ export function parseDwarf(json: string): types.Dwarf {
 }
 
 export function parseDwarfArray(json: string): types.Dwarf[] {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         console.log("[parseDwarfArray] input is no array: " + json);
         return null;
@@ -310,7 +310,7 @@ export function isDwarf(value: any): value is types.Dwarf {
 }
 
 export function parseStorage(json: string): types.Storage {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (isStorage(parsedData)) {
         return parsedData as types.Storage;
     }
@@ -321,7 +321,7 @@ export function parseStorage(json: string): types.Storage {
 }
 
 export function parseStorageArray(json: string): types.Storage[] {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         console.log("[parseStorageArray] input is no array: " + json);
         return null;
@@ -453,7 +453,7 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
 }
 
 export function parseMineSpot(json: string): types.MineSpot {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (isMineSpot(parsedData)) {
         return parsedData as types.MineSpot;
     }
@@ -464,7 +464,7 @@ export function parseMineSpot(json: string): types.MineSpot {
 }
 
 export function parseMineSpotArray(json: string): types.MineSpot[] {
-    const parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         console.log("[parseMineSpotArray] input is no array: " + json);
         return null;

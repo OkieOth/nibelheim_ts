@@ -28,6 +28,29 @@ export function isDate(str: string | Date): boolean {
     return isoDateRegExp.test(str);
 }
 
+export function isDateStr(str: string): boolean {
+    if (typeof str !== "string") return false;
+    return isoDateRegExp.test(str);
+}
+
+export function reviver(key, value) {
+    if (isDateStr(value)) {
+        return new Date(value);
+    }
+    return value;
+}
+
+
+export function strToDate(str: string): Date {
+    if (str == null) return null;
+    const d: any = Date.parse(str);
+    if (!(d instanceof Date)) {
+        console.log("can't convert input to Date: " + str);
+        return null;
+    }
+    return d as Date;
+}
+
 export function allArrayElemsAreNumbers(arrayThing: any): boolean {
     if ((typeof arrayThing !== "object") || (!Array.isArray(arrayThing))) return false;
     for (let i = 0; i < arrayThing.length; i++) {
