@@ -12,21 +12,21 @@
     Template: ${templateFile} v${templateVersion})
 */
 import * as types from '../src_generated/types';
-import * as factory from '../src_generated/types_factories';
+import * as guards from '../src_generated/type_guards';
 import { assert } from 'chai';
 
 describe('Test of type factories and their helper funcs', () => {
 % for currentType in modelTypes:
-    it('test is${currentType.name}', () => {
-        assert.isFalse(factory.is${currentType.name}("x"));
-        assert.isTrue(factory.is${currentType.name}(null));
+    it('test guards.is${currentType.name}', () => {
+        assert.isFalse(guards.is${currentType.name}("x"));
+        assert.isTrue(guards.is${currentType.name}(null));
     });
 
-    it('test is${currentType.name}Array', () => {
-        assert.isFalse(factory.is${currentType.name}Array("x"));
-        assert.isFalse(factory.is${currentType.name}Array(["x"]));
-        assert.isTrue(factory.is${currentType.name}Array(null));
-        assert.isTrue(factory.is${currentType.name}Array([]));
+    it('test guards.is${currentType.name}Array', () => {
+        assert.isFalse(guards.is${currentType.name}Array("x"));
+        assert.isFalse(guards.is${currentType.name}Array(["x"]));
+        assert.isTrue(guards.is${currentType.name}Array(null));
+        assert.isTrue(guards.is${currentType.name}Array([]));
     });
 
 % endfor

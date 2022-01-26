@@ -24,19 +24,35 @@
                 }
             },
             {
-                "name": "types_factory",
+                "name": "type_factories",
                 "description": "generate types factories",
                 "singleFileTask": {
-                    "template": "/project/codeGen/types_factories.mako",
-                    "destFile": "/project/packages/types/src_generated/types_factories.ts"
+                    "template": "/project/codeGen/type_factories.mako",
+                    "destFile": "/project/packages/types/src_generated/type_factories.ts"
                 }
             },
             {
-                "name": "types_factory_tests",
+                "name": "type_factories_tests",
                 "description": "generate tests for types factories",
                 "singleFileTask": {
-                    "template": "/project/codeGen/types_factories_tests.mako",
-                    "destFile": "/project/packages/types/__tests_generated__/types_factories_test.ts"
+                    "template": "/project/codeGen/type_factories_tests.mako",
+                    "destFile": "/project/packages/types_random/__tests_generated__/type_factories_test.ts"
+                }
+            },
+            {
+                "name": "type_guards",
+                "description": "generate type validation functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/type_guards.mako",
+                    "destFile": "/project/packages/types/src_generated/type_guards.ts"
+                }
+            },
+            {
+                "name": "type_guards_tests",
+                "description": "generate tests for type guards",
+                "singleFileTask": {
+                    "template": "/project/codeGen/type_guards_tests.mako",
+                    "destFile": "/project/packages/types/__tests_generated__/type_guards_test.ts"
                 }
             },
             {

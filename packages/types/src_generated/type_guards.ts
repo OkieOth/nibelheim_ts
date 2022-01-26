@@ -1,35 +1,9 @@
 /**
     This file is generated.
-    Template: types_factories.mako v0.1.0)
+    Template: type_guards.mako v0.1.0)
 */
 import * as types from "./types";
 import * as utils from "../src/factory_utils";
-
-export function parseMine(json: string): types.Mine {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (isMine(parsedData)) {
-        return parsedData as types.Mine;
-    }
-    else {
-        console.log("[parseMine] input doesn't match expected type: " + json);
-        return null;
-    }
-}
-
-export function parseMineArray(json: string): types.Mine[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        console.log("[parseMineArray] input is no array: " + json);
-        return null;
-    }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!isMine(parsedData[i])) {
-            console.log("[parseMineArray] input is not of Mine type");
-            return null;
-        }
-    }
-    return parsedData;
-}
 
 export function isMine(value: any): value is types.Mine {
     if (value == null || value == undefined)
@@ -106,32 +80,6 @@ export function isMine(value: any): value is types.Mine {
     return true;
 }
 
-export function parseMineSpotRow(json: string): types.MineSpotRow {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (isMineSpotRow(parsedData)) {
-        return parsedData as types.MineSpotRow;
-    }
-    else {
-        console.log("[parseMineSpotRow] input doesn't match expected type: " + json);
-        return null;
-    }
-}
-
-export function parseMineSpotRowArray(json: string): types.MineSpotRow[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        console.log("[parseMineSpotRowArray] input is no array: " + json);
-        return null;
-    }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!isMineSpotRow(parsedData[i])) {
-            console.log("[parseMineSpotRowArray] input is not of MineSpotRow type");
-            return null;
-        }
-    }
-    return parsedData;
-}
-
 export function isMineSpotRow(value: any): value is types.MineSpotRow {
     if (value == null || value == undefined)
         return true;
@@ -158,32 +106,6 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
         }
     }
     return true;
-}
-
-export function parseDwarf(json: string): types.Dwarf {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (isDwarf(parsedData)) {
-        return parsedData as types.Dwarf;
-    }
-    else {
-        console.log("[parseDwarf] input doesn't match expected type: " + json);
-        return null;
-    }
-}
-
-export function parseDwarfArray(json: string): types.Dwarf[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        console.log("[parseDwarfArray] input is no array: " + json);
-        return null;
-    }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!isDwarf(parsedData[i])) {
-            console.log("[parseDwarfArray] input is not of Dwarf type");
-            return null;
-        }
-    }
-    return parsedData;
 }
 
 export function isDwarf(value: any): value is types.Dwarf {
@@ -309,32 +231,6 @@ export function isDwarf(value: any): value is types.Dwarf {
     return true;
 }
 
-export function parseStorage(json: string): types.Storage {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (isStorage(parsedData)) {
-        return parsedData as types.Storage;
-    }
-    else {
-        console.log("[parseStorage] input doesn't match expected type: " + json);
-        return null;
-    }
-}
-
-export function parseStorageArray(json: string): types.Storage[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        console.log("[parseStorageArray] input is no array: " + json);
-        return null;
-    }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!isStorage(parsedData[i])) {
-            console.log("[parseStorageArray] input is not of Storage type");
-            return null;
-        }
-    }
-    return parsedData;
-}
-
 export function isStorage(value: any): value is types.Storage {
     if (value == null || value == undefined)
         return true;
@@ -450,32 +346,6 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
     if (value  == "ROCK")
         return true;
     return false;
-}
-
-export function parseMineSpot(json: string): types.MineSpot {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (isMineSpot(parsedData)) {
-        return parsedData as types.MineSpot;
-    }
-    else {
-        console.log("[parseMineSpot] input doesn't match expected type: " + json);
-        return null;
-    }
-}
-
-export function parseMineSpotArray(json: string): types.MineSpot[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        console.log("[parseMineSpotArray] input is no array: " + json);
-        return null;
-    }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!isMineSpot(parsedData[i])) {
-            console.log("[parseMineSpotArray] input is not of MineSpot type");
-            return null;
-        }
-    }
-    return parsedData;
 }
 
 export function isMineSpot(value: any): value is types.MineSpot {
