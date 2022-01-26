@@ -32,6 +32,15 @@ it('serialize/deserialize arrays of Mine', () => {
     const deserialized: types.Mine[] = types.parseMineArray(serialized);
     assert.isNotNull(deserialized);
     assert.deepEqual(randomArray, deserialized);
+
+    const serialized2 = JSON.stringify(randomValue1);
+    const deserialized2: types.Mine[] = types.parseMineArray(serialized2);
+    assert.isNull(deserialized2);
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    const deserialized3: types.Mine[] = types.parseMineArray(serialized3);
+    assert.isNull(deserialized2);
+
 });
 
 it('serialize/deserialize MineSpotRow', () => {
@@ -60,6 +69,15 @@ it('serialize/deserialize arrays of MineSpotRow', () => {
     const deserialized: types.MineSpotRow[] = types.parseMineSpotRowArray(serialized);
     assert.isNotNull(deserialized);
     assert.deepEqual(randomArray, deserialized);
+
+    const serialized2 = JSON.stringify(randomValue1);
+    const deserialized2: types.MineSpotRow[] = types.parseMineSpotRowArray(serialized2);
+    assert.isNull(deserialized2);
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    const deserialized3: types.MineSpotRow[] = types.parseMineSpotRowArray(serialized3);
+    assert.isNull(deserialized2);
+
 });
 
 it('serialize/deserialize Dwarf', () => {
@@ -88,6 +106,15 @@ it('serialize/deserialize arrays of Dwarf', () => {
     const deserialized: types.Dwarf[] = types.parseDwarfArray(serialized);
     assert.isNotNull(deserialized);
     assert.deepEqual(randomArray, deserialized);
+
+    const serialized2 = JSON.stringify(randomValue1);
+    const deserialized2: types.Dwarf[] = types.parseDwarfArray(serialized2);
+    assert.isNull(deserialized2);
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    const deserialized3: types.Dwarf[] = types.parseDwarfArray(serialized3);
+    assert.isNull(deserialized2);
+
 });
 
 it('serialize/deserialize Storage', () => {
@@ -116,6 +143,15 @@ it('serialize/deserialize arrays of Storage', () => {
     const deserialized: types.Storage[] = types.parseStorageArray(serialized);
     assert.isNotNull(deserialized);
     assert.deepEqual(randomArray, deserialized);
+
+    const serialized2 = JSON.stringify(randomValue1);
+    const deserialized2: types.Storage[] = types.parseStorageArray(serialized2);
+    assert.isNull(deserialized2);
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    const deserialized3: types.Storage[] = types.parseStorageArray(serialized3);
+    assert.isNull(deserialized2);
+
 });
 
 it('serialize/deserialize MineSpot', () => {
@@ -144,6 +180,15 @@ it('serialize/deserialize arrays of MineSpot', () => {
     const deserialized: types.MineSpot[] = types.parseMineSpotArray(serialized);
     assert.isNotNull(deserialized);
     assert.deepEqual(randomArray, deserialized);
+
+    const serialized2 = JSON.stringify(randomValue1);
+    const deserialized2: types.MineSpot[] = types.parseMineSpotArray(serialized2);
+    assert.isNull(deserialized2);
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    const deserialized3: types.MineSpot[] = types.parseMineSpotArray(serialized3);
+    assert.isNull(deserialized2);
+
 });
 
 
