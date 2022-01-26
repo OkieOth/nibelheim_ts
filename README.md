@@ -73,11 +73,13 @@ npm run test
 
 ## Available Tasks
 
-| Name                | Description                                         |
-| ------------------- | --------------------------------------------------- |
-| types_puml          | generate PlantUml file from the used mode           |
-| types               | generate interfaces from the model                  |
-| types_factory       | generate functions to create instances of the types |
-| types_factory_tests | generate tests for type factories                   |
-| types_random        | generate functions to create random data            |
-| types_random_tests  | generate tests for the random data functions        |
+| Name                 | Description                                         |
+| -------------------- | --------------------------------------------------- |
+| types_puml           | generate PlantUml file from the used mode           |
+| types                | generate interfaces from the model                  |
+| type_factories       | generate functions to create instances of the types |
+| type_factories_tests | generate tests for type factories                   |
+| type_quards          | generate functions to validate types                |
+| type_guards_tests    | generate tests for type validation                  |
+| types_random         | generate functions to create random data            |
+| types_random_tests   | generate tests for the random data functions        |
