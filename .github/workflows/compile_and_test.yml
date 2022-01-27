@@ -1,0 +1,24 @@
+name: compile and test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Init project
+      run: |
+        npx lerna bootstrap --hoist
+    - name: Compile
+      run: |
+        npx lerna run tsc
+    - name: Test
+      run: |
+        npx lerna run test
+
