@@ -4,33 +4,35 @@
 */
 import * as types from "./types";
 import * as utils from "../src/factory_utils";
+import {logger} from "logger";
 
 export function isMine(value: any): value is types.Mine {
     if (value == null || value == undefined)
         return true;
+    const caller = "isMine";
     if (!(typeof value === 'object')) {
-        console.log("[isMine] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[isMine] input is an array: " + String(value));
+        logger.error(() => `input is an array: ${value}`, caller);
         return false;
     }
     const obj = value as Object;
     if (!("rows" in obj)) { // check required attribute
-        console.log("[isMine] missing required attribute 'rows'" + String(value));
+        logger.error(() => `missing required attribute 'rows': ${value}`, caller);
         return false;
     }
     if ("rows" in obj) {
         const attrib: any = obj["rows"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            console.log("[isMine] 'rows' has wrong multiplicity" + String(value));
+            logger.error(() => `'rows' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isMineSpotRowArray(attrib)) ) {
-            console.log("[isMine] 'rows' has wrong type: " + String(value));
+            logger.error(() => `'rows' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -38,12 +40,12 @@ export function isMine(value: any): value is types.Mine {
         const attrib: any = obj["dwarfs"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            console.log("[isMine] 'dwarfs' has wrong multiplicity" + String(value));
+            logger.error(() => `'dwarfs' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isDwarfArray(attrib)) ) {
-            console.log("[isMine] 'dwarfs' has wrong type: " + String(value));
+            logger.error(() => `'dwarfs' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -51,29 +53,29 @@ export function isMine(value: any): value is types.Mine {
         const attrib: any = obj["storage"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMine] 'storage' has wrong multiplicity" + String(value));
+            logger.error(() => `'storage' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isStorage(attrib)) ) {
-            console.log("[isMine] 'storage' has wrong type: " + String(value));
+            logger.error(() => `'storage' has wrong type: ${value}`, caller);
             return false;
         }
     }
     if (!("time" in obj)) { // check required attribute
-        console.log("[isMine] missing required attribute 'time'" + String(value));
+        logger.error(() => `missing required attribute 'time': ${value}`, caller);
         return false;
     }
     if ("time" in obj) {
         const attrib: any = obj["time"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMine] 'time' has wrong multiplicity" + String(value));
+            logger.error(() => `'time' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (utils.isDate(attrib)) ) {
-            console.log("[isMine] 'time' has wrong type: " + String(value));
+            logger.error(() => `'time' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -83,12 +85,13 @@ export function isMine(value: any): value is types.Mine {
 export function isMineSpotRow(value: any): value is types.MineSpotRow {
     if (value == null || value == undefined)
         return true;
+    const caller = "isMineSpotRow";
     if (!(typeof value === 'object')) {
-        console.log("[isMineSpotRow] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[isMineSpotRow] input is an array: " + String(value));
+        logger.error(() => `input is an array: ${value}`, caller);
         return false;
     }
     const obj = value as Object;
@@ -96,12 +99,12 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
         const attrib: any = obj["columns"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            console.log("[isMineSpotRow] 'columns' has wrong multiplicity" + String(value));
+            logger.error(() => `'columns' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isMineSpotArray(attrib)) ) {
-            console.log("[isMineSpotRow] 'columns' has wrong type: " + String(value));
+            logger.error(() => `'columns' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -111,29 +114,30 @@ export function isMineSpotRow(value: any): value is types.MineSpotRow {
 export function isDwarf(value: any): value is types.Dwarf {
     if (value == null || value == undefined)
         return true;
+    const caller = "isDwarf";
     if (!(typeof value === 'object')) {
-        console.log("[isDwarf] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[isDwarf] input is an array: " + String(value));
+        logger.error(() => `input is an array: ${value}`, caller);
         return false;
     }
     const obj = value as Object;
     if (!("name" in obj)) { // check required attribute
-        console.log("[isDwarf] missing required attribute 'name'" + String(value));
+        logger.error(() => `missing required attribute 'name': ${value}`, caller);
         return false;
     }
     if ("name" in obj) {
         const attrib: any = obj["name"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'name' has wrong multiplicity" + String(value));
+            logger.error(() => `'name' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "string") ) {
-            console.log("[isDwarf] 'name' has wrong type: " + String(value));
+            logger.error(() => `'name' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -141,12 +145,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["pocket"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'pocket' has wrong multiplicity" + String(value));
+            logger.error(() => `'pocket' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isStorage(attrib)) ) {
-            console.log("[isDwarf] 'pocket' has wrong type: " + String(value));
+            logger.error(() => `'pocket' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -154,12 +158,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["strongness"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'strongness' has wrong multiplicity" + String(value));
+            logger.error(() => `'strongness' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'strongness' has wrong type: " + String(value));
+            logger.error(() => `'strongness' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -167,12 +171,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["currentStrongness"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'currentStrongness' has wrong multiplicity" + String(value));
+            logger.error(() => `'currentStrongness' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'currentStrongness' has wrong type: " + String(value));
+            logger.error(() => `'currentStrongness' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -180,12 +184,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["hunger"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'hunger' has wrong multiplicity" + String(value));
+            logger.error(() => `'hunger' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'hunger' has wrong type: " + String(value));
+            logger.error(() => `'hunger' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -193,12 +197,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["healthiness"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'healthiness' has wrong multiplicity" + String(value));
+            logger.error(() => `'healthiness' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'healthiness' has wrong type: " + String(value));
+            logger.error(() => `'healthiness' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -206,12 +210,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["motivation"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isDwarf] 'motivation' has wrong multiplicity" + String(value));
+            logger.error(() => `'motivation' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isDwarf] 'motivation' has wrong type: " + String(value));
+            logger.error(() => `'motivation' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -219,12 +223,12 @@ export function isDwarf(value: any): value is types.Dwarf {
         const attrib: any = obj["currentWay"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            console.log("[isDwarf] 'currentWay' has wrong multiplicity" + String(value));
+            logger.error(() => `'currentWay' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (utils.allArrayElemsAreUUIDs(attrib)) ) {
-            console.log("[isDwarf] 'currentWay' has wrong type: " + String(value));
+            logger.error(() => `'currentWay' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -234,12 +238,13 @@ export function isDwarf(value: any): value is types.Dwarf {
 export function isStorage(value: any): value is types.Storage {
     if (value == null || value == undefined)
         return true;
+    const caller = "isStorage";
     if (!(typeof value === 'object')) {
-        console.log("[isStorage] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[isStorage] input is an array: " + String(value));
+        logger.error(() => `input is an array: ${value}`, caller);
         return false;
     }
     const obj = value as Object;
@@ -247,12 +252,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["mithril"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'mithril' has wrong multiplicity" + String(value));
+            logger.error(() => `'mithril' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'mithril' has wrong type: " + String(value));
+            logger.error(() => `'mithril' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -260,12 +265,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["gold"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'gold' has wrong multiplicity" + String(value));
+            logger.error(() => `'gold' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'gold' has wrong type: " + String(value));
+            logger.error(() => `'gold' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -273,12 +278,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["silver"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'silver' has wrong multiplicity" + String(value));
+            logger.error(() => `'silver' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'silver' has wrong type: " + String(value));
+            logger.error(() => `'silver' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -286,12 +291,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["diamond"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'diamond' has wrong multiplicity" + String(value));
+            logger.error(() => `'diamond' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'diamond' has wrong type: " + String(value));
+            logger.error(() => `'diamond' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -299,12 +304,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["iron"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'iron' has wrong multiplicity" + String(value));
+            logger.error(() => `'iron' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'iron' has wrong type: " + String(value));
+            logger.error(() => `'iron' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -312,12 +317,12 @@ export function isStorage(value: any): value is types.Storage {
         const attrib: any = obj["cupper"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isStorage] 'cupper' has wrong multiplicity" + String(value));
+            logger.error(() => `'cupper' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isStorage] 'cupper' has wrong type: " + String(value));
+            logger.error(() => `'cupper' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -328,7 +333,7 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
     if (value == null || value == undefined)
         return true;
     if (!(typeof value === 'string' || value instanceof String)) {
-        console.log("[isMineSpotMaterial] input is no string MineSpotMaterial: " + String(value));
+        logger.error(() => `input is no string MineSpotMaterial: ${value}`, "isMineSpotMaterial");
         return false;
     }
     if (value  == "MITHRIL")
@@ -351,12 +356,13 @@ export function isMineSpotMaterial(value: any): value is types.MineSpotMaterial 
 export function isMineSpot(value: any): value is types.MineSpot {
     if (value == null || value == undefined)
         return true;
+    const caller = "isMineSpot";
     if (!(typeof value === 'object')) {
-        console.log("[isMineSpot] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[isMineSpot] input is an array: " + String(value));
+        logger.error(() => `input is an array: ${value}`, caller);
         return false;
     }
     const obj = value as Object;
@@ -364,12 +370,12 @@ export function isMineSpot(value: any): value is types.MineSpot {
         const attrib: any = obj["id"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMineSpot] 'id' has wrong multiplicity" + String(value));
+            logger.error(() => `'id' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (utils.isUUID(attrib)) ) {
-            console.log("[isMineSpot] 'id' has wrong type: " + String(value));
+            logger.error(() => `'id' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -377,12 +383,12 @@ export function isMineSpot(value: any): value is types.MineSpot {
         const attrib: any = obj["material"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMineSpot] 'material' has wrong multiplicity" + String(value));
+            logger.error(() => `'material' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (isMineSpotMaterial(attrib)) ) {
-            console.log("[isMineSpot] 'material' has wrong type: " + String(value));
+            logger.error(() => `'material' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -390,12 +396,12 @@ export function isMineSpot(value: any): value is types.MineSpot {
         const attrib: any = obj["initialAmountOfMaterial"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMineSpot] 'initialAmountOfMaterial' has wrong multiplicity" + String(value));
+            logger.error(() => `'initialAmountOfMaterial' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'initialAmountOfMaterial' has wrong type: " + String(value));
+            logger.error(() => `'initialAmountOfMaterial' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -403,12 +409,12 @@ export function isMineSpot(value: any): value is types.MineSpot {
         const attrib: any = obj["currentAmountOfMaterial"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMineSpot] 'currentAmountOfMaterial' has wrong multiplicity" + String(value));
+            logger.error(() => `'currentAmountOfMaterial' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'currentAmountOfMaterial' has wrong type: " + String(value));
+            logger.error(() => `'currentAmountOfMaterial' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -416,12 +422,12 @@ export function isMineSpot(value: any): value is types.MineSpot {
         const attrib: any = obj["miningDifficulty"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            console.log("[isMineSpot] 'miningDifficulty' has wrong multiplicity" + String(value));
+            logger.error(() => `'miningDifficulty' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "number") ) {
-            console.log("[isMineSpot] 'miningDifficulty' has wrong type: " + String(value));
+            logger.error(() => `'miningDifficulty' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -430,97 +436,133 @@ export function isMineSpot(value: any): value is types.MineSpot {
 
 
 export function isMineArray(value: any): value is types.Mine[] {
+    const caller = "isMineArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isMineArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMine(value[i])) {
-            console.log("[isMineArray] input is not of Mine type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMine(elem)) {
+                logger.error(() => `input is not of Mine type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
 
 export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
+    const caller = "isMineSpotRowArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isMineSpotRowArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpotRow(value[i])) {
-            console.log("[isMineSpotRowArray] input is not of MineSpotRow type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpotRow(elem)) {
+                logger.error(() => `input is not of MineSpotRow type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
 
 export function isDwarfArray(value: any): value is types.Dwarf[] {
+    const caller = "isDwarfArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isDwarfArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isDwarf(value[i])) {
-            console.log("[isDwarfArray] input is not of Dwarf type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isDwarf(elem)) {
+                logger.error(() => `input is not of Dwarf type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
 
 export function isStorageArray(value: any): value is types.Storage[] {
+    const caller = "isStorageArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isStorageArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isStorage(value[i])) {
-            console.log("[isStorageArray] input is not of Storage type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isStorage(elem)) {
+                logger.error(() => `input is not of Storage type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
 
 export function isMineSpotMaterialArray(value: any): value is types.MineSpotMaterial[] {
+    const caller = "isMineSpotMaterialArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isMineSpotMaterialArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpotMaterial(value[i])) {
-            console.log("[isMineSpotMaterialArray] input is not of MineSpotMaterial type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpotMaterial(elem)) {
+                logger.error(() => `input is not of MineSpotMaterial type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
 
 export function isMineSpotArray(value: any): value is types.MineSpot[] {
+    const caller = "isMineSpotArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[isMineSpotArray] input is no array: " + value);
+        logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpot(value[i])) {
-            console.log("[isMineSpotArray] input is not of MineSpot type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpot(elem)) {
+                logger.error(() => `input is not of MineSpot type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }

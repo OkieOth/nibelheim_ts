@@ -1,14 +1,14 @@
 {
-  "name": "types_random",
+  "name": "logger",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "log helper for the project",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
-  "license": "ISC",
-  "main": "lib/dummy_data.js",
+  "license": "MIT",
+  "main": "lib/logger.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__ __tests_generated__"
+    "test": "__tests__"
   },
   "files": [
     "lib"
@@ -19,13 +19,12 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '__tests*__/**/*.ts'"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register '__tests__/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
-    "logger": "^0.0.0",
-    "types": "^0.0.0"
+    "winston": "^3.5.1"
   }
 }

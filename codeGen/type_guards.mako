@@ -65,6 +65,7 @@
 */
 import * as types from "./types";
 import * as utils from "../src/factory_utils";
+import {logger} from "logger";
 
 % for currentType in modelTypes:
     % if isinstance(currentType, model.EnumType):
@@ -73,7 +74,7 @@ export function is${currentType.name}(value: any): value is types.${currentType.
     if (value == null || value == undefined)
         return true;
     if (!(typeof value === 'string' || value instanceof String)) {
-        console.log("[is${currentType.name}] input is no string ${currentType.name}: " + String(value));
+        logger.error(() => `input is no string ${currentType.name}: $${}{value}`, "is${currentType.name}");
         return false;
     }
         % for value in currentType.values:
@@ -86,12 +87,13 @@ export function is${currentType.name}(value: any): value is types.${currentType.
 export function is${currentType.name}(value: any): value is types.${currentType.name} {
     if (value == null || value == undefined)
         return true;
+    const caller = "is${currentType.name}";
     if (!(typeof value === 'object')) {
-        console.log("[is${currentType.name}] input is not of type object: " + String(value));
+        logger.error(() => `input is not of type object: $${}{value}`, caller);
         return false;
     }
     if (Array.isArray(value)) {
-        console.log("[is${currentType.name}] input is an array: " + String(value));
+        logger.error(() => `input is an array: $${}{value}`, caller);
         return false;
     }
     const obj = value as Object;
@@ -99,7 +101,7 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         ## check that all required attributes are there
         % if prop.required:
     if (!("${prop.name}" in obj)) { // check required attribute
-        console.log("[is${currentType.name}] missing required attribute '${prop.name}'" + String(value));
+        logger.error(() => `missing required attribute '${prop.name}': $${}{value}`, caller);
         return false;
     }
         % endif
@@ -107,20 +109,20 @@ export function is${currentType.name}(value: any): value is types.${currentType.
         const attrib: any = obj["${prop.name}"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != ${ 'true' if prop.isArray else 'false'})) {
-            console.log("[is${currentType.name}] '${prop.name}' has wrong multiplicity" + String(value));
+            logger.error(() => `'${prop.name}' has wrong multiplicity: $${}{value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
         ## check properties with base types
         % if modelFuncs.isBaseType(prop.type):
         if ( ! (${printBaseTypeTest(prop)}) ) {
-            console.log("[is${currentType.name}] '${prop.name}' has wrong type: " + String(value));
+            logger.error(() => `'${prop.name}' has wrong type: $${}{value}`, caller);
             return false;
         }
         % endif
         % if isinstance(prop.type, model.EnumType) or isinstance(prop.type, model.ComplexType):
         if ( ! (is${prop.type.name}${'Array' if prop.isArray else ''}(attrib)) ) {
-            console.log("[is${currentType.name}] '${prop.name}' has wrong type: " + String(value));
+            logger.error(() => `'${prop.name}' has wrong type: $${}{value}`, caller);
             return false;
         }
         % endif
@@ -134,17 +136,23 @@ export function is${currentType.name}(value: any): value is types.${currentType.
 
 % for currentType in modelTypes:
 export function is${currentType.name}Array(value: any): value is types.${currentType.name}[] {
+    const caller = "is${currentType.name}Array";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
-        console.log("[is${currentType.name}Array] input is no array: " + value);
+        logger.error(() => `input is no array: $${}{value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!is${currentType.name}(value[i])) {
-            console.log("[is${currentType.name}Array] input is not of ${currentType.name} type: " + value[i]);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!is${currentType.name}(elem)) {
+                logger.error(() => `input is not of ${currentType.name} type: $${}{elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }

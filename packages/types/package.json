@@ -19,9 +19,12 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '__tests__/**/*.ts'"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '__tests*__/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
+  },
+  "dependencies": {
+    "logger": "^0.0.0"
   }
 }

@@ -5,11 +5,9 @@
     },
     "include": [
         "./src",
-        "./src_generated"
     ],
     "exclude": [
         "./__tests__/",
-        "./__tests_generated__/",
         "./node_modules/",
         "./lib/"
       ]

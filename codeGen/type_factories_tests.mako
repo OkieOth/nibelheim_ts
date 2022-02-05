@@ -45,13 +45,18 @@ it('serialize/deserialize arrays of ${currentType.name}', () => {
     assert.deepEqual(randomArray, deserialized);
 
     const serialized2 = JSON.stringify(randomValue1);
-    const deserialized2: types.${currentType.name}[] = types.parse${currentType.name}Array(serialized2);
-    assert.isNull(deserialized2);
+    try {
+        types.parse${currentType.name}Array(serialized2);
+        assert.fail();
+    }
+    catch(e) {}
 
     const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
-    const deserialized3: types.${currentType.name}[] = types.parse${currentType.name}Array(serialized3);
-    assert.isNull(deserialized2);
-
+    try {
+        types.parse${currentType.name}Array(serialized3);
+        assert.fail();
+    }
+    catch(e) {}
 });
 
     % endif
