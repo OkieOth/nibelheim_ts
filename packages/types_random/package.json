@@ -25,6 +25,7 @@
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
+    "logger": "^0.0.0",
     "types": "^0.0.0"
   }
 }

@@ -5,7 +5,7 @@
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
   "license": "MIT",
-  "main": "lib/src/logger.js",
+  "main": "lib/logger.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
