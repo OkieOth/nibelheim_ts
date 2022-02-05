@@ -15,7 +15,7 @@ export function parseMine(json: string): types.Mine {
     }
     else {
         logger.error(() => `input doesn't match expected type: ${json}`, "parseMine");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -23,12 +23,13 @@ export function parseMineArray(json: string): types.Mine[] {
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: ${json}`, "parseMineArray");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.isMine(elem)) {
-            logger.error(() => `input is not of Mine type`, "parseMineArray");
-            return null;
+            const errorMsg = "input is not of Mine type";
+            logger.error(errorMsg, "parseMineArray");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;
@@ -40,7 +41,7 @@ export function parseMineSpotRow(json: string): types.MineSpotRow {
     }
     else {
         logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpotRow");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -48,12 +49,13 @@ export function parseMineSpotRowArray(json: string): types.MineSpotRow[] {
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: ${json}`, "parseMineSpotRowArray");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.isMineSpotRow(elem)) {
-            logger.error(() => `input is not of MineSpotRow type`, "parseMineSpotRowArray");
-            return null;
+            const errorMsg = "input is not of MineSpotRow type";
+            logger.error(errorMsg, "parseMineSpotRowArray");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;
@@ -65,7 +67,7 @@ export function parseDwarf(json: string): types.Dwarf {
     }
     else {
         logger.error(() => `input doesn't match expected type: ${json}`, "parseDwarf");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -73,12 +75,13 @@ export function parseDwarfArray(json: string): types.Dwarf[] {
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: ${json}`, "parseDwarfArray");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.isDwarf(elem)) {
-            logger.error(() => `input is not of Dwarf type`, "parseDwarfArray");
-            return null;
+            const errorMsg = "input is not of Dwarf type";
+            logger.error(errorMsg, "parseDwarfArray");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;
@@ -90,7 +93,7 @@ export function parseStorage(json: string): types.Storage {
     }
     else {
         logger.error(() => `input doesn't match expected type: ${json}`, "parseStorage");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -98,12 +101,13 @@ export function parseStorageArray(json: string): types.Storage[] {
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: ${json}`, "parseStorageArray");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.isStorage(elem)) {
-            logger.error(() => `input is not of Storage type`, "parseStorageArray");
-            return null;
+            const errorMsg = "input is not of Storage type";
+            logger.error(errorMsg, "parseStorageArray");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;
@@ -115,7 +119,7 @@ export function parseMineSpot(json: string): types.MineSpot {
     }
     else {
         logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpot");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -123,12 +127,13 @@ export function parseMineSpotArray(json: string): types.MineSpot[] {
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: ${json}`, "parseMineSpotArray");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.isMineSpot(elem)) {
-            logger.error(() => `input is not of MineSpot type`, "parseMineSpotArray");
-            return null;
+            const errorMsg = "input is not of MineSpot type";
+            logger.error(errorMsg, "parseMineSpotArray");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;

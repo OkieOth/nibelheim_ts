@@ -443,11 +443,16 @@ export function isMineArray(value: any): value is types.Mine[] {
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMine(value[i])) {
-            logger.error(() => `input is not of Mine type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMine(elem)) {
+                logger.error(() => `input is not of Mine type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
@@ -460,11 +465,16 @@ export function isMineSpotRowArray(value: any): value is types.MineSpotRow[] {
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpotRow(value[i])) {
-            logger.error(() => `input is not of MineSpotRow type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpotRow(elem)) {
+                logger.error(() => `input is not of MineSpotRow type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
@@ -477,11 +487,16 @@ export function isDwarfArray(value: any): value is types.Dwarf[] {
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isDwarf(value[i])) {
-            logger.error(() => `input is not of Dwarf type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isDwarf(elem)) {
+                logger.error(() => `input is not of Dwarf type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
@@ -494,11 +509,16 @@ export function isStorageArray(value: any): value is types.Storage[] {
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isStorage(value[i])) {
-            logger.error(() => `input is not of Storage type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isStorage(elem)) {
+                logger.error(() => `input is not of Storage type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
@@ -511,11 +531,16 @@ export function isMineSpotMaterialArray(value: any): value is types.MineSpotMate
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpotMaterial(value[i])) {
-            logger.error(() => `input is not of MineSpotMaterial type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpotMaterial(elem)) {
+                logger.error(() => `input is not of MineSpotMaterial type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }
@@ -528,11 +553,16 @@ export function isMineSpotArray(value: any): value is types.MineSpot[] {
         logger.error(() => `input is no array: ${value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!isMineSpot(value[i])) {
-            logger.error(() => `input is not of MineSpot type: ${value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!isMineSpot(elem)) {
+                logger.error(() => `input is not of MineSpot type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }

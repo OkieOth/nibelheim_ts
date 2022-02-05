@@ -143,11 +143,16 @@ export function is${currentType.name}Array(value: any): value is types.${current
         logger.error(() => `input is no array: $${}{value}`, caller);
         return false;
     }
-    for (let i=0; i < value.length; i++) {
-        if (!is${currentType.name}(value[i])) {
-            logger.error(() => `input is not of ${currentType.name} type: $${}{value[i]}`, caller);
-            return false;
-        }
+    try {
+        value.forEach(elem => {
+            if (!is${currentType.name}(elem)) {
+                logger.error(() => `input is not of ${currentType.name} type: $${}{elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
     }
     return true;
 }

@@ -78,7 +78,7 @@ export function parse${currentType.name}(json: string): types.${currentType.name
     }
     else {
         logger.error(() => `input doesn't match expected type: $${}{json}`, "parse${currentType.name}");
-        return null;
+        throw new Error("input doesn't match expected type");
     }
 }
 
@@ -86,12 +86,13 @@ export function parse${currentType.name}Array(json: string): types.${currentType
     const parsedData = JSON.parse(json, utils.reviver);
     if (!utils.isArray(parsedData)) {
         logger.error(() => `input is no array: $${}{json}`, "parse${currentType.name}Array");
-        return null;
+        throw new Error("input is no array");
     }
     parsedData.forEach(elem => {
         if (!guards.is${currentType.name}(elem)) {
-            logger.error(() => `input is not of ${currentType.name} type`, "parse${currentType.name}Array");
-            return null;
+            const errorMsg = "input is not of ${currentType.name} type";
+            logger.error(errorMsg, "parse${currentType.name}Array");
+            throw new Error(errorMsg);
         }
     });
     return parsedData;
