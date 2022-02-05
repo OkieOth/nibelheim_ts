@@ -70,9 +70,7 @@ function initLogger(myLogger: MyLogger): Logger {
                 format: 'YYYY-MM-DD HH:mm:ss'
             }),
             format.printf(info => {
-                console.log("###### logger format was called")
                 if (info.msgCallback && (typeof info.msgCallback == 'function')) {
-                    console.log("############ logger arrow function will be called")
                     info.message = info.msgCallback();
                 }
                 const labelStr = info.label ? `[${info.label}] ` : ''
