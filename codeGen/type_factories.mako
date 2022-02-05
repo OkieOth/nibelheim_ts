@@ -88,12 +88,12 @@ export function parse${currentType.name}Array(json: string): types.${currentType
         logger.error(() => `input is no array: $${}{json}`, "parse${currentType.name}Array");
         return null;
     }
-    for (let i=0; i < parsedData.length; i++) {
-        if (!guards.is${currentType.name}(parsedData[i])) {
+    parsedData.forEach(elem => {
+        if (!guards.is${currentType.name}(elem)) {
             logger.error(() => `input is not of ${currentType.name} type`, "parse${currentType.name}Array");
             return null;
         }
-    }
+    });
     return parsedData;
 }
     % endif
