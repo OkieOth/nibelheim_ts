@@ -4,8 +4,8 @@
   "description": "> TODO: description",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
-  "license": "ISC",
-  "main": "lib/dummy_data.js",
+  "license": "MIT",
+  "main": "lib/src_generated/dummy_data.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__ __tests_generated__"

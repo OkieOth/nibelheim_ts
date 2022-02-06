@@ -4,11 +4,11 @@
   "description": "> TODO: description",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "lib/dao.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__"
+    "test": "__tests__ __tests_generated__"
   },
   "files": [
     "lib"
@@ -18,7 +18,8 @@
     "url": "git+https://github.com/OkieOth/nibelheim_ts.git"
   },
   "scripts": {
-    "test": "echo \"TODO\" && exit 0"
+    "tsc": "tsc",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '__tests*__/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
