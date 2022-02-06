@@ -1,7 +1,11 @@
-import { expect } from 'chai';
+import { assert } from 'chai';
 import * as nibelheim_types from '../src_generated/types';
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: ".env" })
+
 describe('Dummy test suite', () => {
-    it('first test', () => {
-        console.log("I am a dummy test");
+    it('dotenv', () => {
+        assert.deepEqual("i am a dummy", process.env.DUMMY);
     });
 });
