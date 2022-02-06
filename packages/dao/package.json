@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "logger": "^0.0.0",
+    "mongodb": "^4.3.1",
     "types": "^0.0.0"
   },
   "devDependencies": {
