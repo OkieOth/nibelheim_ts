@@ -11,9 +11,14 @@ it('serialize/deserialize Mine', () => {
     assert.isNotNull(randomValue, 'randomValue returns null');
     const serialized = JSON.stringify(randomValue);
 
-    const deserialized: types.Mine = types.parseMine(serialized);
-    assert.isNotNull(deserialized);
-    assert.deepEqual(randomValue, deserialized);
+    types.parseMine(serialized)
+        .then((deserialized: types.Mine) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomValue, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
 });
 
 it('serialize/deserialize arrays of Mine', () => {

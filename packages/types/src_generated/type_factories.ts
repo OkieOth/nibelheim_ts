@@ -8,15 +8,17 @@ import * as guards from "./type_guards";
 import {logger} from "logger";
 
 
-export function parseMine(json: string): types.Mine {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isMine(parsedData)) {
-        return parsedData as types.Mine;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseMine");
-        throw new Error("input doesn't match expected type");
-    }
+export async function parseMine(json: string): Promise<types.Mine> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isMine(parsedData)) {
+            resolve(parsedData as types.Mine);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseMine");
+            reject("input doesn't match expected type");
+        }
+    })
 }
 
 export function parseMineArray(json: string): types.Mine[] {
