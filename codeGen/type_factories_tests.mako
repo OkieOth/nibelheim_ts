@@ -22,9 +22,14 @@ it('serialize/deserialize ${currentType.name}', () => {
     assert.isNotNull(randomValue, 'randomValue returns null');
     const serialized = JSON.stringify(randomValue);
 
-    const deserialized: types.${currentType.name} = types.parse${currentType.name}(serialized);
-    assert.isNotNull(deserialized);
-    assert.deepEqual(randomValue, deserialized);
+    types.parse${currentType.name}(serialized)
+        .then((deserialized: types.${currentType.name}) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomValue, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
 });
 
 it('serialize/deserialize arrays of ${currentType.name}', () => {
@@ -34,29 +39,40 @@ it('serialize/deserialize arrays of ${currentType.name}', () => {
     const randomValue2: types.${currentType.name} = dummy.random${currentType.name}();
     assert.isNotNull(randomValue2, 'randomValue2 returns null');
 
-    const randomValue3: types.${currentType.name} = dummy.random${currentType.name}();    
+    const randomValue3: types.${currentType.name} = dummy.random${currentType.name}();
     assert.isNotNull(randomValue3, 'randomValue3 returns null');
 
     const randomArray: types.${currentType.name}[] = [randomValue1, randomValue2, randomValue3];
     const serialized = JSON.stringify(randomArray);
 
-    const deserialized: types.${currentType.name}[] = types.parse${currentType.name}Array(serialized);
-    assert.isNotNull(deserialized);
-    assert.deepEqual(randomArray, deserialized);
+    types.parse${currentType.name}Array(serialized)
+        .then((deserialized: types.${currentType.name}[]) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomArray, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+
 
     const serialized2 = JSON.stringify(randomValue1);
-    try {
-        types.parse${currentType.name}Array(serialized2);
-        assert.fail();
-    }
-    catch(e) {}
+    types.parse${currentType.name}Array(serialized2)
+        .then((deserialized: types.${currentType.name}[]) => {
+            assert.fail("parse${currentType.name}Array (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parse${currentType.name}Array detect none array")
+        });
+
 
     const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
-    try {
-        types.parse${currentType.name}Array(serialized3);
-        assert.fail();
-    }
-    catch(e) {}
+    types.parse${currentType.name}Array(serialized3)
+        .then((deserialized: types.${currentType.name}[]) => {
+            assert.fail("parse${currentType.name}Array (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parse${currentType.name}Array detect array with wrong elements")
+        });
 });
 
     % endif

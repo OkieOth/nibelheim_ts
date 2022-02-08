@@ -15,6 +15,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomMine 2 returns null');
         assert.isTrue(types.isMine(x));
         assert.isTrue(types.isMine(y));
+        assert.isFalse(types.isMine([y]));
+        assert.isFalse(types.isMine([x,y]));
         assert.isFalse(types.isMine("test"));
         assert.isFalse(types.isMineArray(x));
         assert.isFalse(types.isMineArray(y));
@@ -30,6 +32,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomMineSpotRow 2 returns null');
         assert.isTrue(types.isMineSpotRow(x));
         assert.isTrue(types.isMineSpotRow(y));
+        assert.isFalse(types.isMineSpotRow([y]));
+        assert.isFalse(types.isMineSpotRow([x,y]));
         assert.isFalse(types.isMineSpotRow("test"));
         assert.isFalse(types.isMineSpotRowArray(x));
         assert.isFalse(types.isMineSpotRowArray(y));
@@ -45,6 +49,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomDwarf 2 returns null');
         assert.isTrue(types.isDwarf(x));
         assert.isTrue(types.isDwarf(y));
+        assert.isFalse(types.isDwarf([y]));
+        assert.isFalse(types.isDwarf([x,y]));
         assert.isFalse(types.isDwarf("test"));
         assert.isFalse(types.isDwarfArray(x));
         assert.isFalse(types.isDwarfArray(y));
@@ -60,6 +66,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomStorage 2 returns null');
         assert.isTrue(types.isStorage(x));
         assert.isTrue(types.isStorage(y));
+        assert.isFalse(types.isStorage([y]));
+        assert.isFalse(types.isStorage([x,y]));
         assert.isFalse(types.isStorage("test"));
         assert.isFalse(types.isStorageArray(x));
         assert.isFalse(types.isStorageArray(y));
@@ -75,6 +83,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomMineSpotMaterial 2 returns null');
         assert.isTrue(types.isMineSpotMaterial(x));
         assert.isTrue(types.isMineSpotMaterial(y));
+        assert.isFalse(types.isMineSpotMaterial([y]));
+        assert.isFalse(types.isMineSpotMaterial([x,y]));
         assert.isFalse(types.isMineSpotMaterial("test"));
         assert.isFalse(types.isMineSpotMaterialArray(x));
         assert.isFalse(types.isMineSpotMaterialArray(y));
@@ -90,6 +100,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'randomMineSpot 2 returns null');
         assert.isTrue(types.isMineSpot(x));
         assert.isTrue(types.isMineSpot(y));
+        assert.isFalse(types.isMineSpot([y]));
+        assert.isFalse(types.isMineSpot([x,y]));
         assert.isFalse(types.isMineSpot("test"));
         assert.isFalse(types.isMineSpotArray(x));
         assert.isFalse(types.isMineSpotArray(y));
