@@ -1,0 +1,10 @@
+FROM node:16-alpine
+
+ADD . /project/
+
+WORKDIR /project
+
+RUN npx lerna bootstrap --hoist
+RUN npx lerna run tsc
+
+CMD ["/bin/sh"]

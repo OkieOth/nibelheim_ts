@@ -1,15 +1,18 @@
 import * as mongoDB from "mongodb";
+import {logger} from "logger";
+import { resolve } from "path/posix";
 
 
 let defaultClient: mongoDB.MongoClient;
 
 
-export async function getMongoClient(conStr: string): Promise<mongoDB.MongoClient> {
+export async function getMongoConnection(conStr: string): Promise<mongoDB.MongoClient> {
+    logger.debug(conStr,"getMongoClient")
     const client = new mongoDB.MongoClient(conStr);
     return client.connect();
 }
 
-export async function getDefaultMongoClient(): Promise<mongoDB.MongoClient> {
+export async function getDefaultMongoConnection(): Promise<mongoDB.MongoClient> {
     if (!defaultClient) {
         const conStr = initDefaultConStr();
         defaultClient = new mongoDB.MongoClient(conStr);
@@ -33,14 +36,50 @@ export async function getDb(dbName: string, client?: mongoDB.MongoClient): Promi
     }
 }
 
+export async function closeDefaultConnection(): Promise<void> {
+    logger.debug("closeDefaultConnection");
+    if (defaultClient) {
+        try {
+            const client = defaultClient;
+            defaultClient = null;
+            return client.close();
+        }
+        catch(e) {
+            const errorMsg = `error while close connection: ${e}`;
+            logger.error(errorMsg,"getDbFromDefaultClient");
+            return new Promise((resolve, reject) => {
+                reject(errorMsg);
+            });
+        }
+    }
+    else {
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
+    }
+}
+
+
 async function getDbFromDefaultClient(dbName: string): Promise<mongoDB.Db> {
-    const client = await getDefaultMongoClient()
+    logger.debug(dbName,"getDbFromDefaultClient");
+    if (defaultClient) {
+        try {
+            return new Promise((resolve, reject) => {
+                resolve(defaultClient.db(dbName));
+            });
+        }
+        catch(e) {
+            logger.error("defaultClient wasn't connected, try reconnect","getDbFromDefaultClient");
+        }
+    }
+    const client = await getDefaultMongoConnection()
     return new Promise((resolve, reject) => {
         resolve(client.db(dbName));
     });
 }
 
 async function getDbFromGivenClient(dbName: string, client: mongoDB.MongoClient): Promise<mongoDB.Db> {
+    logger.debug(dbName,"getDbFromGivenClient");
     return new Promise((resolve) => {
         resolve(client.db(dbName))
     })
@@ -57,7 +96,7 @@ function initFromConStr(userName: string, userPassword: string, host: string, po
     if (userName) {
         conStr = conStr.replace("{MONGODB_USER}", userName);
     }
-    // TODO Logging
+    logger.info(conStr,"initFromConStr");
     if (userPassword) {
         conStr = conStr.replace("{MONGODB_PASSWORD}", userPassword);
     }
@@ -73,8 +112,8 @@ function initDefaultConStr(): string {
         return initFromConStr(userName, userPassword, host, port);
     }
     else {
-        // TODO Logging
-        // TODO check for missing username/password
-        return `mongodb://${userName}:${userPassword}@${host}:${port}`;
+        const conStr = `mongodb://${userName}:${userPassword}@${host}:${port}`;
+        logger.info(conStr,"initDefaultConStr");
+        return conStr;
     }
 }
