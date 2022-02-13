@@ -80,4 +80,80 @@ describe('basic connection tests', async () => {
             }
         }
     });
+
+    it('get default client multiple times', async () => {
+        if (process.env.MONGODB_USER !== "root") {
+            return errorPromise("expected process.env.MONGODB_USER=='root'");
+        }
+        try {
+            const mongoClient = await mongo.getDefaultMongoConnection();
+            if (!mongoClient) return errorPromise("mongoClient is null");
+            logger.info("got db connection");
+            const db: mongoDB.Db = mongoClient.db("test");
+            if (!db) return errorPromise("db is null");
+            await db.collections();
+
+            const mongoClient2 = await mongo.getDefaultMongoConnection();
+            if (!mongoClient2) return errorPromise("mongoClient is null");
+            logger.info("got db connection");
+            const db2: mongoDB.Db = mongoClient2.db("test");
+            if (!db2) return errorPromise("db is null");
+            await db2.collections();
+
+            const mongoClient3 = await mongo.getDefaultMongoConnection();
+            if (!mongoClient3) return errorPromise("mongoClient is null");
+
+            const mongoClient4 = await mongo.getDefaultMongoConnection();
+            if (!mongoClient4) return errorPromise("mongoClient is null");
+
+            const mongoClient5 = await mongo.getDefaultMongoConnection();
+            if (!mongoClient5) return errorPromise("mongoClient is null");
+
+            await mongo.closeDefaultConnection();
+
+            return new Promise((resolve) => {
+                resolve();
+            });
+        }
+        catch(e) {
+            return errorPromise(`can't connect to db: ${e}`);
+        }
+        finally {
+            return mongo.closeDefaultConnection();
+        }
+    });
+
+    it('get default client close and reconnect', async () => {
+        if (process.env.MONGODB_USER !== "root") {
+            return errorPromise("expected process.env.MONGODB_USER=='root'");
+        }
+        try {
+            const mongoClient = await mongo.getDefaultMongoConnection();
+            if (!mongoClient) return errorPromise("mongoClient is null");
+            logger.info("got db connection");
+            const db: mongoDB.Db = mongoClient.db("test");
+            if (!db) return errorPromise("db is null");
+            await db.collections();
+            await mongo.closeDefaultConnection();
+
+            const mongoClient2 = await mongo.getDefaultMongoConnection();
+            if (!mongoClient2) return errorPromise("mongoClient is null");
+            logger.info("got db connection");
+            const db2: mongoDB.Db = mongoClient2.db("test");
+            if (!db2) return errorPromise("db is null");
+            await db2.collections();
+
+            await mongo.closeDefaultConnection();
+
+            return new Promise((resolve) => {
+                resolve();
+            });
+        }
+        catch(e) {
+            return errorPromise(`can't connect to db: ${e}`);
+        }
+        finally {
+            return mongo.closeDefaultConnection();
+        }
+    });
 });

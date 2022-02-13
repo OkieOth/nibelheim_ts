@@ -37,7 +37,7 @@ export async function getDb(dbName: string, client?: mongoDB.MongoClient): Promi
 }
 
 export async function closeDefaultConnection(): Promise<void> {
-    logger.debug("closeDefaultConnection");
+    logger.info("called","closeDefaultConnection");
     if (defaultClient) {
         try {
             const client = defaultClient;
@@ -46,7 +46,7 @@ export async function closeDefaultConnection(): Promise<void> {
         }
         catch(e) {
             const errorMsg = `error while close connection: ${e}`;
-            logger.error(errorMsg,"getDbFromDefaultClient");
+            logger.error(errorMsg,"closeDefaultConnection");
             return new Promise((resolve, reject) => {
                 reject(errorMsg);
             });
