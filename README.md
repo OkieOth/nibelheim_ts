@@ -55,6 +55,9 @@ npm run tsc
 # run tests for one package
 cd packages/types
 npm run test
+
+# run docker-compose based tests
+./bin/run_compose_tests.sh
 ```
 
 # CodeGen
