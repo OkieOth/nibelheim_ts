@@ -70,6 +70,14 @@
                     "template": "/project/codeGen/random_instances_tests.mako",
                     "destFile": "/project/packages/types_random/__tests_generated__/dummy_data_test.ts"
                 }
+            },
+            {
+                "name": "dao",
+                "description": "generate functions to handle mongo data",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao.ts"
+                }
             }
         ]
     }

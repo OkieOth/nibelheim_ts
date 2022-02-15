@@ -2,32 +2,13 @@
 @startuml
 
 class Mine {
-        MineSpotRow[] rows 
-        Dwarf[] dwarfs 
+        UuidType id 
+        StringType name 
         Storage storage 
         DateTimeType time 
 }
 
 note top: the place where you find\nall the gems
-
-class MineSpotRow {
-        MineSpot[] columns 
-}
-
-note top: One row of mine spots
-
-class Dwarf {
-        StringType name 
-        Storage pocket 
-        IntegerType strongness 
-        IntegerType currentStrongness 
-        IntegerType hunger 
-        NumberType healthiness 
-        NumberType motivation 
-        UuidType[] currentWay 
-}
-
-note top: A guy that runs around\nin the mine an dig\nfor gems
 
 class Storage {
         IntegerType mithril 
@@ -52,7 +33,6 @@ enum MineSpotMaterial {
 
 
 class MineSpot {
-        UuidType id 
         MineSpotMaterial material 
         IntegerType initialAmountOfMaterial 
         IntegerType currentAmountOfMaterial 
@@ -61,13 +41,45 @@ class MineSpot {
 
 note top: Brick, from which the mine\nis built
 
+class MineSpotRow {
+        UuidType mine_id 
+        IntegerType row_number 
+        IntegerType level 
+        MineSpot[] columns 
+}
+
+note top: One row of mine spots
+
+class Dwarf {
+        UuidType id 
+        StringType name 
+        UuidType mine_id 
+        Storage pocket 
+        IntegerType strongness 
+        IntegerType currentStrongness 
+        IntegerType hunger 
+        NumberType healthiness 
+        NumberType motivation 
+        DwarfWay[] way 
+}
+
+note top: A guy that runs around\nin the mine an dig\nfor gems
+
+class DwarfWay {
+        IntegerType row_number 
+        IntegerType spot 
+        IntegerType level 
+}
+
+
 
     
-Mine "0" *-- "n" MineSpotRow        
-            
-Mine "0" *-- "n" Dwarf        
-            
 Mine  *--  Storage        
+            
+    
+    
+    
+MineSpot  *--  MineSpotMaterial        
             
     
 MineSpotRow "0" *-- "n" MineSpot        
@@ -75,11 +87,9 @@ MineSpotRow "0" *-- "n" MineSpot
     
 Dwarf  *--  Storage        
             
-    
-    
-    
-MineSpot  *--  MineSpotMaterial        
+Dwarf "0" *-- "n" DwarfWay        
             
+    
 
 footer \ngenerated with yacg (https://github.com/OkieOth/yacg),\n(template: plantUml.mako v1.1.0)\npowered by plantuml (https://plantuml.com/)
 @enduml

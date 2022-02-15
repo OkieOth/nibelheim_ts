@@ -25,40 +25,6 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isTrue(types.isMineArray([x,y]));
     });
 
-    it('test MineSpotRow', () => {
-        const x: types.MineSpotRow = dummy.randomMineSpotRow();
-        const y: types.MineSpotRow = dummy.randomMineSpotRow();
-        assert.isNotNull(x, 'randomMineSpotRow 1 returns null');
-        assert.isNotNull(y, 'randomMineSpotRow 2 returns null');
-        assert.isTrue(types.isMineSpotRow(x));
-        assert.isTrue(types.isMineSpotRow(y));
-        assert.isFalse(types.isMineSpotRow([y]));
-        assert.isFalse(types.isMineSpotRow([x,y]));
-        assert.isFalse(types.isMineSpotRow("test"));
-        assert.isFalse(types.isMineSpotRowArray(x));
-        assert.isFalse(types.isMineSpotRowArray(y));
-        assert.isTrue(types.isMineSpotRowArray([x]));
-        assert.isTrue(types.isMineSpotRowArray([y]));
-        assert.isTrue(types.isMineSpotRowArray([x,y]));
-    });
-
-    it('test Dwarf', () => {
-        const x: types.Dwarf = dummy.randomDwarf();
-        const y: types.Dwarf = dummy.randomDwarf();
-        assert.isNotNull(x, 'randomDwarf 1 returns null');
-        assert.isNotNull(y, 'randomDwarf 2 returns null');
-        assert.isTrue(types.isDwarf(x));
-        assert.isTrue(types.isDwarf(y));
-        assert.isFalse(types.isDwarf([y]));
-        assert.isFalse(types.isDwarf([x,y]));
-        assert.isFalse(types.isDwarf("test"));
-        assert.isFalse(types.isDwarfArray(x));
-        assert.isFalse(types.isDwarfArray(y));
-        assert.isTrue(types.isDwarfArray([x]));
-        assert.isTrue(types.isDwarfArray([y]));
-        assert.isTrue(types.isDwarfArray([x,y]));
-    });
-
     it('test Storage', () => {
         const x: types.Storage = dummy.randomStorage();
         const y: types.Storage = dummy.randomStorage();
@@ -110,6 +76,57 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isTrue(types.isMineSpotArray([x,y]));
     });
 
+    it('test MineSpotRow', () => {
+        const x: types.MineSpotRow = dummy.randomMineSpotRow();
+        const y: types.MineSpotRow = dummy.randomMineSpotRow();
+        assert.isNotNull(x, 'randomMineSpotRow 1 returns null');
+        assert.isNotNull(y, 'randomMineSpotRow 2 returns null');
+        assert.isTrue(types.isMineSpotRow(x));
+        assert.isTrue(types.isMineSpotRow(y));
+        assert.isFalse(types.isMineSpotRow([y]));
+        assert.isFalse(types.isMineSpotRow([x,y]));
+        assert.isFalse(types.isMineSpotRow("test"));
+        assert.isFalse(types.isMineSpotRowArray(x));
+        assert.isFalse(types.isMineSpotRowArray(y));
+        assert.isTrue(types.isMineSpotRowArray([x]));
+        assert.isTrue(types.isMineSpotRowArray([y]));
+        assert.isTrue(types.isMineSpotRowArray([x,y]));
+    });
+
+    it('test Dwarf', () => {
+        const x: types.Dwarf = dummy.randomDwarf();
+        const y: types.Dwarf = dummy.randomDwarf();
+        assert.isNotNull(x, 'randomDwarf 1 returns null');
+        assert.isNotNull(y, 'randomDwarf 2 returns null');
+        assert.isTrue(types.isDwarf(x));
+        assert.isTrue(types.isDwarf(y));
+        assert.isFalse(types.isDwarf([y]));
+        assert.isFalse(types.isDwarf([x,y]));
+        assert.isFalse(types.isDwarf("test"));
+        assert.isFalse(types.isDwarfArray(x));
+        assert.isFalse(types.isDwarfArray(y));
+        assert.isTrue(types.isDwarfArray([x]));
+        assert.isTrue(types.isDwarfArray([y]));
+        assert.isTrue(types.isDwarfArray([x,y]));
+    });
+
+    it('test DwarfWay', () => {
+        const x: types.DwarfWay = dummy.randomDwarfWay();
+        const y: types.DwarfWay = dummy.randomDwarfWay();
+        assert.isNotNull(x, 'randomDwarfWay 1 returns null');
+        assert.isNotNull(y, 'randomDwarfWay 2 returns null');
+        assert.isTrue(types.isDwarfWay(x));
+        assert.isTrue(types.isDwarfWay(y));
+        assert.isFalse(types.isDwarfWay([y]));
+        assert.isFalse(types.isDwarfWay([x,y]));
+        assert.isFalse(types.isDwarfWay("test"));
+        assert.isFalse(types.isDwarfWayArray(x));
+        assert.isFalse(types.isDwarfWayArray(y));
+        assert.isTrue(types.isDwarfWayArray([x]));
+        assert.isTrue(types.isDwarfWayArray([y]));
+        assert.isTrue(types.isDwarfWayArray([x,y]));
+    });
+
 });
 
 describe('Dummy data for enums create different values', () => {
@@ -135,6 +152,14 @@ describe('Dummy data creation with randomized optional attributes', () => {
         const x: types.Mine = dummy.randomMine(true);
         assert.isNotNull(x, 'randomMine (2) returns null');
     });
+    it('test type (2) Storage', () => {
+        const x: types.Storage = dummy.randomStorage(true);
+        assert.isNotNull(x, 'randomStorage (2) returns null');
+    });
+    it('test type (2) MineSpot', () => {
+        const x: types.MineSpot = dummy.randomMineSpot(true);
+        assert.isNotNull(x, 'randomMineSpot (2) returns null');
+    });
     it('test type (2) MineSpotRow', () => {
         const x: types.MineSpotRow = dummy.randomMineSpotRow(true);
         assert.isNotNull(x, 'randomMineSpotRow (2) returns null');
@@ -143,12 +168,8 @@ describe('Dummy data creation with randomized optional attributes', () => {
         const x: types.Dwarf = dummy.randomDwarf(true);
         assert.isNotNull(x, 'randomDwarf (2) returns null');
     });
-    it('test type (2) Storage', () => {
-        const x: types.Storage = dummy.randomStorage(true);
-        assert.isNotNull(x, 'randomStorage (2) returns null');
-    });
-    it('test type (2) MineSpot', () => {
-        const x: types.MineSpot = dummy.randomMineSpot(true);
-        assert.isNotNull(x, 'randomMineSpot (2) returns null');
+    it('test type (2) DwarfWay', () => {
+        const x: types.DwarfWay = dummy.randomDwarfWay(true);
+        assert.isNotNull(x, 'randomDwarfWay (2) returns null');
     });
 });

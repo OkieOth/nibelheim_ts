@@ -19,30 +19,6 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isTrue(guards.isMineArray([]));
     });
 
-    it('test guards.isMineSpotRow', () => {
-        assert.isFalse(guards.isMineSpotRow("x"));
-        assert.isTrue(guards.isMineSpotRow(null));
-    });
-
-    it('test guards.isMineSpotRowArray', () => {
-        assert.isFalse(guards.isMineSpotRowArray("x"));
-        assert.isFalse(guards.isMineSpotRowArray(["x"]));
-        assert.isTrue(guards.isMineSpotRowArray(null));
-        assert.isTrue(guards.isMineSpotRowArray([]));
-    });
-
-    it('test guards.isDwarf', () => {
-        assert.isFalse(guards.isDwarf("x"));
-        assert.isTrue(guards.isDwarf(null));
-    });
-
-    it('test guards.isDwarfArray', () => {
-        assert.isFalse(guards.isDwarfArray("x"));
-        assert.isFalse(guards.isDwarfArray(["x"]));
-        assert.isTrue(guards.isDwarfArray(null));
-        assert.isTrue(guards.isDwarfArray([]));
-    });
-
     it('test guards.isStorage', () => {
         assert.isFalse(guards.isStorage("x"));
         assert.isTrue(guards.isStorage(null));
@@ -77,6 +53,42 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isFalse(guards.isMineSpotArray(["x"]));
         assert.isTrue(guards.isMineSpotArray(null));
         assert.isTrue(guards.isMineSpotArray([]));
+    });
+
+    it('test guards.isMineSpotRow', () => {
+        assert.isFalse(guards.isMineSpotRow("x"));
+        assert.isTrue(guards.isMineSpotRow(null));
+    });
+
+    it('test guards.isMineSpotRowArray', () => {
+        assert.isFalse(guards.isMineSpotRowArray("x"));
+        assert.isFalse(guards.isMineSpotRowArray(["x"]));
+        assert.isTrue(guards.isMineSpotRowArray(null));
+        assert.isTrue(guards.isMineSpotRowArray([]));
+    });
+
+    it('test guards.isDwarf', () => {
+        assert.isFalse(guards.isDwarf("x"));
+        assert.isTrue(guards.isDwarf(null));
+    });
+
+    it('test guards.isDwarfArray', () => {
+        assert.isFalse(guards.isDwarfArray("x"));
+        assert.isFalse(guards.isDwarfArray(["x"]));
+        assert.isTrue(guards.isDwarfArray(null));
+        assert.isTrue(guards.isDwarfArray([]));
+    });
+
+    it('test guards.isDwarfWay', () => {
+        assert.isFalse(guards.isDwarfWay("x"));
+        assert.isTrue(guards.isDwarfWay(null));
+    });
+
+    it('test guards.isDwarfWayArray', () => {
+        assert.isFalse(guards.isDwarfWayArray("x"));
+        assert.isFalse(guards.isDwarfWayArray(["x"]));
+        assert.isTrue(guards.isDwarfWayArray(null));
+        assert.isTrue(guards.isDwarfWayArray([]));
     });
 
 });

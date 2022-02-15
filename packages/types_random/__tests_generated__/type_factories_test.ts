@@ -64,6 +64,122 @@ it('serialize/deserialize arrays of Mine', () => {
         });
 });
 
+it('serialize/deserialize Storage', () => {
+    const randomValue: types.Storage = dummy.randomStorage();
+    assert.isNotNull(randomValue, 'randomValue returns null');
+    const serialized = JSON.stringify(randomValue);
+
+    types.parseStorage(serialized)
+        .then((deserialized: types.Storage) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomValue, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+});
+
+it('serialize/deserialize arrays of Storage', () => {
+    const randomValue1: types.Storage = dummy.randomStorage();
+    assert.isNotNull(randomValue1, 'randomValue1 returns null');
+
+    const randomValue2: types.Storage = dummy.randomStorage();
+    assert.isNotNull(randomValue2, 'randomValue2 returns null');
+
+    const randomValue3: types.Storage = dummy.randomStorage();
+    assert.isNotNull(randomValue3, 'randomValue3 returns null');
+
+    const randomArray: types.Storage[] = [randomValue1, randomValue2, randomValue3];
+    const serialized = JSON.stringify(randomArray);
+
+    types.parseStorageArray(serialized)
+        .then((deserialized: types.Storage[]) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomArray, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+
+
+    const serialized2 = JSON.stringify(randomValue1);
+    types.parseStorageArray(serialized2)
+        .then((deserialized: types.Storage[]) => {
+            assert.fail("parseStorageArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseStorageArray detect none array")
+        });
+
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    types.parseStorageArray(serialized3)
+        .then((deserialized: types.Storage[]) => {
+            assert.fail("parseStorageArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseStorageArray detect array with wrong elements")
+        });
+});
+
+it('serialize/deserialize MineSpot', () => {
+    const randomValue: types.MineSpot = dummy.randomMineSpot();
+    assert.isNotNull(randomValue, 'randomValue returns null');
+    const serialized = JSON.stringify(randomValue);
+
+    types.parseMineSpot(serialized)
+        .then((deserialized: types.MineSpot) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomValue, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+});
+
+it('serialize/deserialize arrays of MineSpot', () => {
+    const randomValue1: types.MineSpot = dummy.randomMineSpot();
+    assert.isNotNull(randomValue1, 'randomValue1 returns null');
+
+    const randomValue2: types.MineSpot = dummy.randomMineSpot();
+    assert.isNotNull(randomValue2, 'randomValue2 returns null');
+
+    const randomValue3: types.MineSpot = dummy.randomMineSpot();
+    assert.isNotNull(randomValue3, 'randomValue3 returns null');
+
+    const randomArray: types.MineSpot[] = [randomValue1, randomValue2, randomValue3];
+    const serialized = JSON.stringify(randomArray);
+
+    types.parseMineSpotArray(serialized)
+        .then((deserialized: types.MineSpot[]) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomArray, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+
+
+    const serialized2 = JSON.stringify(randomValue1);
+    types.parseMineSpotArray(serialized2)
+        .then((deserialized: types.MineSpot[]) => {
+            assert.fail("parseMineSpotArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseMineSpotArray detect none array")
+        });
+
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    types.parseMineSpotArray(serialized3)
+        .then((deserialized: types.MineSpot[]) => {
+            assert.fail("parseMineSpotArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseMineSpotArray detect array with wrong elements")
+        });
+});
+
 it('serialize/deserialize MineSpotRow', () => {
     const randomValue: types.MineSpotRow = dummy.randomMineSpotRow();
     assert.isNotNull(randomValue, 'randomValue returns null');
@@ -180,13 +296,13 @@ it('serialize/deserialize arrays of Dwarf', () => {
         });
 });
 
-it('serialize/deserialize Storage', () => {
-    const randomValue: types.Storage = dummy.randomStorage();
+it('serialize/deserialize DwarfWay', () => {
+    const randomValue: types.DwarfWay = dummy.randomDwarfWay();
     assert.isNotNull(randomValue, 'randomValue returns null');
     const serialized = JSON.stringify(randomValue);
 
-    types.parseStorage(serialized)
-        .then((deserialized: types.Storage) => {
+    types.parseDwarfWay(serialized)
+        .then((deserialized: types.DwarfWay) => {
             assert.isNotNull(deserialized);
             assert.deepEqual(randomValue, deserialized);
         })
@@ -195,21 +311,21 @@ it('serialize/deserialize Storage', () => {
         });
 });
 
-it('serialize/deserialize arrays of Storage', () => {
-    const randomValue1: types.Storage = dummy.randomStorage();
+it('serialize/deserialize arrays of DwarfWay', () => {
+    const randomValue1: types.DwarfWay = dummy.randomDwarfWay();
     assert.isNotNull(randomValue1, 'randomValue1 returns null');
 
-    const randomValue2: types.Storage = dummy.randomStorage();
+    const randomValue2: types.DwarfWay = dummy.randomDwarfWay();
     assert.isNotNull(randomValue2, 'randomValue2 returns null');
 
-    const randomValue3: types.Storage = dummy.randomStorage();
+    const randomValue3: types.DwarfWay = dummy.randomDwarfWay();
     assert.isNotNull(randomValue3, 'randomValue3 returns null');
 
-    const randomArray: types.Storage[] = [randomValue1, randomValue2, randomValue3];
+    const randomArray: types.DwarfWay[] = [randomValue1, randomValue2, randomValue3];
     const serialized = JSON.stringify(randomArray);
 
-    types.parseStorageArray(serialized)
-        .then((deserialized: types.Storage[]) => {
+    types.parseDwarfWayArray(serialized)
+        .then((deserialized: types.DwarfWay[]) => {
             assert.isNotNull(deserialized);
             assert.deepEqual(randomArray, deserialized);
         })
@@ -219,80 +335,22 @@ it('serialize/deserialize arrays of Storage', () => {
 
 
     const serialized2 = JSON.stringify(randomValue1);
-    types.parseStorageArray(serialized2)
-        .then((deserialized: types.Storage[]) => {
-            assert.fail("parseStorageArray (1) didn't raise an error")
+    types.parseDwarfWayArray(serialized2)
+        .then((deserialized: types.DwarfWay[]) => {
+            assert.fail("parseDwarfWayArray (1) didn't raise an error")
         })
         .catch((error) => {
-            console.log("parseStorageArray detect none array")
+            console.log("parseDwarfWayArray detect none array")
         });
 
 
     const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
-    types.parseStorageArray(serialized3)
-        .then((deserialized: types.Storage[]) => {
-            assert.fail("parseStorageArray (1) didn't raise an error")
+    types.parseDwarfWayArray(serialized3)
+        .then((deserialized: types.DwarfWay[]) => {
+            assert.fail("parseDwarfWayArray (1) didn't raise an error")
         })
         .catch((error) => {
-            console.log("parseStorageArray detect array with wrong elements")
-        });
-});
-
-it('serialize/deserialize MineSpot', () => {
-    const randomValue: types.MineSpot = dummy.randomMineSpot();
-    assert.isNotNull(randomValue, 'randomValue returns null');
-    const serialized = JSON.stringify(randomValue);
-
-    types.parseMineSpot(serialized)
-        .then((deserialized: types.MineSpot) => {
-            assert.isNotNull(deserialized);
-            assert.deepEqual(randomValue, deserialized);
-        })
-        .catch((error) => {
-            assert.fail(error)
-        });
-});
-
-it('serialize/deserialize arrays of MineSpot', () => {
-    const randomValue1: types.MineSpot = dummy.randomMineSpot();
-    assert.isNotNull(randomValue1, 'randomValue1 returns null');
-
-    const randomValue2: types.MineSpot = dummy.randomMineSpot();
-    assert.isNotNull(randomValue2, 'randomValue2 returns null');
-
-    const randomValue3: types.MineSpot = dummy.randomMineSpot();
-    assert.isNotNull(randomValue3, 'randomValue3 returns null');
-
-    const randomArray: types.MineSpot[] = [randomValue1, randomValue2, randomValue3];
-    const serialized = JSON.stringify(randomArray);
-
-    types.parseMineSpotArray(serialized)
-        .then((deserialized: types.MineSpot[]) => {
-            assert.isNotNull(deserialized);
-            assert.deepEqual(randomArray, deserialized);
-        })
-        .catch((error) => {
-            assert.fail(error)
-        });
-
-
-    const serialized2 = JSON.stringify(randomValue1);
-    types.parseMineSpotArray(serialized2)
-        .then((deserialized: types.MineSpot[]) => {
-            assert.fail("parseMineSpotArray (1) didn't raise an error")
-        })
-        .catch((error) => {
-            console.log("parseMineSpotArray detect none array")
-        });
-
-
-    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
-    types.parseMineSpotArray(serialized3)
-        .then((deserialized: types.MineSpot[]) => {
-            assert.fail("parseMineSpotArray (1) didn't raise an error")
-        })
-        .catch((error) => {
-            console.log("parseMineSpotArray detect array with wrong elements")
+            console.log("parseDwarfWayArray detect array with wrong elements")
         });
 });
 

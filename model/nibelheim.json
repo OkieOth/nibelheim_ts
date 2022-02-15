@@ -7,19 +7,12 @@
       "description": "the place where you find all the gems",
       "type": "object",
       "properties": {
-        "rows": {
-          "description": "defines a two dimensional array as area of the mine",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MineSpotRow"
-          }
+        "id": {
+          "type": "string",
+          "format": "uuid"
         },
-        "dwarfs": {
-          "description": "list of dwarfs that are working currently in the mine",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Dwarf"
-          }
+        "name": {
+          "type": "string"
         },
         "storage": {
           "description": "storage for already digged gems and stuff",
@@ -31,7 +24,7 @@
           "format": "date-time"
         }
       },
-      "required":["rows", "time"]
+      "required":["id", "name", "time"]
     },
     "MineSpotMaterial": {
       "type": "string",
@@ -49,10 +42,6 @@
       "description": "Brick, from which the mine is built",
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid"
-        },
         "material": {
           "$ref": "#/definitions/MineSpotMaterial"
         },
@@ -74,26 +63,51 @@
           "minimum": 0.5,
           "maximum": 3.0
         }
-      }
+      },
+      "required": ["id", "material", "initialAmountOfMaterial", "currentAmountOfMaterial", "miningDifficulty"]
+
     },
     "MineSpotRow": {
       "description": "One row of mine spots",
       "type": "object",
       "properties": {
+        "mine_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-ref": "#/definitions/Mine"
+        },
+        "row_number": {
+          "description": "order of the rows in one level",
+          "type": "integer"
+        },
+        "level": {
+          "description": "level of the row to make the mine 3 dimensional",
+          "type": "integer"
+        },
         "columns": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/MineSpot"
           }
         }
-      }
+      },
+      "required":["mine_id", "order", "level"]
     },
     "Dwarf": {
       "description": "A guy that runs around in the mine an dig for gems",
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
         "name": {
           "type": "string"
+        },
+        "mine_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-ref": "#/definitions/Mine"
         },
         "pocket": {
           "description": "small storage of mined material",
@@ -124,16 +138,26 @@
           "minimum": 0,
           "maximum": 1.0
         },
-        "currentWay": {
+        "way": {
           "description": "ids of the minespots, from the entry/storage to the current spot",
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "uuid"
+            "type": "object",
+            "properties": {
+              "row_number": {
+                "type": "integer"
+              },
+              "spot": {
+                "type": "integer"
+              },
+              "level": {
+                "type": "integer"
+              }
+            }
           }
         }
       },
-      "required":["name"]
+      "required":["name", "mine_id"]
     },
     "Storage": {
       "description": "A storage stores produced gems",
@@ -147,7 +171,7 @@
         },
         "silver":  {
           "type": "integer"
-        }, 
+        },
         "diamond": {
           "type": "integer"
         },
@@ -156,7 +180,7 @@
         },
         "cupper":  {
           "type": "integer"
-        } 
+        }
       }
     }
   }
