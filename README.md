@@ -79,6 +79,8 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 ./bin/generateAll.sh --tasks types types_puml
 ```
 
+[More information are here ...](docs/codegen.md)
+
 ## Available Tasks
 
 | Name                 | Description                                         |
@@ -91,3 +93,5 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 | type_guards_tests    | generate tests for type validation                  |
 | types_random         | generate functions to create random data            |
 | types_random_tests   | generate tests for the random data functions        |
+| dao                  | generates the functions to access mongodb           |
+| dao_tests            | generates the functions to test access mongodb      |

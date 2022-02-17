@@ -24,7 +24,8 @@
           "format": "date-time"
         }
       },
-      "required":["id", "name", "time"]
+      "required": ["id", "name", "time"],
+      "x-tags": ["mongodb"]
     },
     "MineSpotMaterial": {
       "type": "string",
@@ -91,7 +92,8 @@
           }
         }
       },
-      "required":["mine_id", "order", "level"]
+      "required":["mine_id", "order", "level"],
+      "x-tags": ["mongodb"]
     },
     "Dwarf": {
       "description": "A guy that runs around in the mine an dig for gems",
@@ -157,7 +159,8 @@
           }
         }
       },
-      "required":["name", "mine_id"]
+      "required":["name", "mine_id"],
+      "x-tags": ["mongodb"]
     },
     "Storage": {
       "description": "A storage stores produced gems",
