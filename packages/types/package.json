@@ -1,6 +1,6 @@
 {
   "name": "types",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "description": "model based types",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
@@ -25,6 +25,6 @@
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
-    "logger": "^0.0.0"
+    "logger": "^1.0.0-rc.1"
   }
 }

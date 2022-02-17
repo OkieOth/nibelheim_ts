@@ -1,6 +1,6 @@
 {
   "name": "dao",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "description": "> TODO: description",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
@@ -25,11 +25,11 @@
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
-    "logger": "^0.0.0",
+    "logger": "^1.0.0-rc.1",
     "mongodb": "^4.3.1",
-    "types": "^0.0.0"
+    "types": "^1.0.0-rc.1"
   },
   "devDependencies": {
-    "types_random": "^0.0.0"
+    "types_random": "^1.0.0-rc.1"
   }
 }
