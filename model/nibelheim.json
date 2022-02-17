@@ -74,7 +74,7 @@
         "mine_id": {
           "type": "string",
           "format": "uuid",
-          "x-ref": "#/definitions/Mine"
+          "x-ref": "#/definitions/Mine.id"
         },
         "row_number": {
           "description": "order of the rows in one level",
@@ -107,7 +107,7 @@
         "mine_id": {
           "type": "string",
           "format": "uuid",
-          "x-ref": "#/definitions/Mine"
+          "x-ref": "#/definitions/Mine.id"
         },
         "pocket": {
           "description": "small storage of mined material",

@@ -61,6 +61,11 @@ npm run test
 ```
 
 # CodeGen
+**Attention**, the codegen is using the latest version of `ghcr.io/okieoth/yacg`.
+If you run into complile issues the you have maybe to old latest version on your
+machine. There are small but breaking changes from v3.* to v4.*.
+Pull the new latest version (currently 4.0.0) and the problems should be gone.
+
 * The use codeGen template are in [`./codeGen/*.mako`](codeGen)
 * The configuration for the whole codeGen project is in [`./codeGen/config/generateAll.json`](codeGen/config/generateAll.json)
 * To run the codeGen execute `./bin/generateAll.sh`

@@ -2,21 +2,21 @@
 @startuml
 
 class Mine {
-        UuidType id 
-        StringType name 
-        Storage storage 
-        DateTimeType time 
+        UuidType id
+        StringType name
+        Storage storage
+        DateTimeType time
 }
 
 note top: the place where you find\nall the gems
 
 class Storage {
-        IntegerType mithril 
-        IntegerType gold 
-        IntegerType silver 
-        IntegerType diamond 
-        IntegerType iron 
-        IntegerType cupper 
+        IntegerType mithril
+        IntegerType gold
+        IntegerType silver
+        IntegerType diamond
+        IntegerType iron
+        IntegerType cupper
 }
 
 note top: A storage stores produced gems
@@ -33,63 +33,98 @@ enum MineSpotMaterial {
 
 
 class MineSpot {
-        MineSpotMaterial material 
-        IntegerType initialAmountOfMaterial 
-        IntegerType currentAmountOfMaterial 
-        NumberType miningDifficulty 
+        MineSpotMaterial material
+        IntegerType initialAmountOfMaterial
+        IntegerType currentAmountOfMaterial
+        NumberType miningDifficulty
 }
 
 note top: Brick, from which the mine\nis built
 
 class MineSpotRow {
-        UuidType mine_id 
-        IntegerType row_number 
-        IntegerType level 
-        MineSpot[] columns 
+        UuidType mine_id<color:grey>"" // -> Mine.id""</color>
+        IntegerType row_number
+        IntegerType level
+        MineSpot[] columns
 }
 
 note top: One row of mine spots
 
 class Dwarf {
-        UuidType id 
-        StringType name 
-        UuidType mine_id 
-        Storage pocket 
-        IntegerType strongness 
-        IntegerType currentStrongness 
-        IntegerType hunger 
-        NumberType healthiness 
-        NumberType motivation 
-        DwarfWay[] way 
+        UuidType id
+        StringType name
+        UuidType mine_id<color:grey>"" // -> Mine.id""</color>
+        Storage pocket
+        IntegerType strongness
+        IntegerType currentStrongness
+        IntegerType hunger
+        NumberType healthiness
+        NumberType motivation
+        DwarfWay[] way
 }
 
 note top: A guy that runs around\nin the mine an dig\nfor gems
 
 class DwarfWay {
-        IntegerType row_number 
-        IntegerType spot 
-        IntegerType level 
+        IntegerType row_number
+        IntegerType spot
+        IntegerType level
 }
 
 
 
     
-Mine  *--  Storage        
+
+
+Mine  *--  Storage
             
+
+
+    
+
+
+
+
+
+
     
     
-    
-MineSpot  *--  MineSpotMaterial        
+MineSpot  *--  MineSpotMaterial
             
+
+
+
+
     
-MineSpotRow "0" *-- "n" MineSpot        
+
+MineSpotRow .. Mine
             
+
+
+MineSpotRow "0" *-- "n" MineSpot
+            
+
     
-Dwarf  *--  Storage        
+
+
+
+Dwarf .. Mine
             
-Dwarf "0" *-- "n" DwarfWay        
+Dwarf  *--  Storage
             
+
+
+
+
+
+
+Dwarf "0" *-- "n" DwarfWay
+            
+
     
+
+
+
 
 footer \ngenerated with yacg (https://github.com/OkieOth/yacg),\n(template: plantUml.mako v1.1.0)\npowered by plantuml (https://plantuml.com/)
 @enduml
