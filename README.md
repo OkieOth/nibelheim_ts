@@ -45,6 +45,9 @@ npx lerna run tsc
 # run all tests
 npx lerna run test
 
+# bump versions for all packages
+npx lerna version "1.0.0-rc.1"
+
 # run all tests with coverage
 node_modules/.bin/nyc npx lerna run test
 
