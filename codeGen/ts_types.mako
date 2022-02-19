@@ -20,7 +20,8 @@
         elif isinstance(type, model.StringType):
             return 'string'
         elif isinstance(type, model.UuidType):
-            return 'string'
+            # this is needed to simplify later the handling for mongodb
+            return 'string | any'
         elif isinstance(type, model.EnumType):
             return "{type}".format(type=type.name)
         elif isinstance(type, model.DateTimeType):
