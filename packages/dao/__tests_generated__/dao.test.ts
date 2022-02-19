@@ -7,9 +7,15 @@ import * as mongoDb from "mongodb";
 import * as mongoConnection from "../src/mongo_connection"
 import {logger} from "logger";
 import { rejects } from 'assert';
+import  * as fs from "fs";
 
 
-dotenv.config({ path: "packages/dao/__tests__/singleMongo/.env" })
+const envPath1 = "packages/dao/__tests__/singleMongo";
+if (fs.existsSync(envPath1)) {
+    dotenv.config({ path: `${envPath1}/.env` });
+} else {
+    dotenv.config({ path: "__tests__/singleMongo/.env" });
+}
 
 const errorPromise = (msg) => {
     return new Promise((resovle, reject) => {

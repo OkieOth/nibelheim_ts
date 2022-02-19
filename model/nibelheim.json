@@ -22,6 +22,14 @@
           "description": "current time in the Mine simulation",
           "type": "string",
           "format": "date-time"
+        },
+        "dwarfs": {
+          "$comment": "only put to the model to have a uuid array for mongo :D",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
         }
       },
       "required": ["id", "name", "time"],

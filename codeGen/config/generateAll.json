@@ -72,11 +72,11 @@
                 }
             },
             {
-                "name": "dao",
-                "description": "generate functions to handle mongo data",
+                "name": "dao_uuid",
+                "description": "generate functions to convert uuids for mongodb",
                 "singleFileTask": {
-                    "template": "/project/codeGen/dao.mako",
-                    "destFile": "/project/packages/dao/src_generated/dao.ts"
+                    "template": "/project/codeGen/dao_uuid.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_uuid.ts"
                 }
             }
         ]

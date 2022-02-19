@@ -19,8 +19,8 @@ export async function insertMine(mine: types.Mine, dbName: string): Promise<mong
     try {
         const db: mongoDb.Db = await mongoConnection.getDb(dbName);
         const collection: mongoDb.Collection = db.collection("Mine");
-        const daoMine = dao_uuid.mine2Dao(mine);
-        const result = await collection.insertOne(daoMine);
+        dao_uuid.mine2Dao(mine);
+        const result = await collection.insertOne(mine);
         return new Promise((resolve, reject) => {
             // TODO logging
             resolve(result.insertedId);

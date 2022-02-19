@@ -7,7 +7,7 @@
  the place where you find all the gems
 */
 export interface Mine {
-    id: string;
+    id: string | any;
     name: string;
 
     /**
@@ -70,7 +70,7 @@ export interface MineSpot {
  One row of mine spots
 */
 export interface MineSpotRow {
-    mine_id: string;
+    mine_id: string | any;
 
     /**
      order of the rows in one level
@@ -88,9 +88,9 @@ export interface MineSpotRow {
  A guy that runs around in the mine an dig for gems
 */
 export interface Dwarf {
-    id?: string;
+    id?: string | any;
     name: string;
-    mine_id: string;
+    mine_id: string | any;
 
     /**
      small storage of mined material

@@ -1,26 +1,19 @@
 /**
     This file is generated.
-    Template: dao.mako v0.1.0)
+    Template: dao_uuid.mako v0.1.0)
 
-    The file provides functions to access mongo db. For all types that are
-    tagged with 'mongodb' the needed function for query, insert, update and
-    delete are exported.
+    The file provides functions to convert uuid fields into mongo compatible
+    BSON UUIDs.
 */
 import * as types from 'types';
 import * as uuid from "uuid-mongodb";
 import {logger} from "logger";
 
-interface DaoMine extends Omit<types.Mine, 'id'> {
-    id: uuid.MUUID
-}
-
-export function mine2Dao(mine: types.Mine): DaoMine {
+export function mine2Dao(x: types.Mine) {
     try {
-        let daoMine: DaoMine = mine as unknown as DaoMine;
-        if (mine.id) {
-            daoMine.id = uuid.from(mine.id);
+        if (x.id && (typeof x.id === "string")) {
+            x.id = uuid.from(x.id);
         }
-        return daoMine;
     }
     catch(e) {
         logger.error(e, "mine2Dao");
@@ -28,13 +21,11 @@ export function mine2Dao(mine: types.Mine): DaoMine {
     }
 }
 
-export function dao2Mine(dao: any): types.Mine {
+export function dao2Mine (dao: any) {
     try {
-        let mine: types.Mine = dao as types.Mine;
         if (dao.id) {
-            mine.id = uuid.from(dao.id).toString();
+            dao.id = uuid.from(dao.id).toString();
         }
-        return mine;
     }
     catch(e) {
         logger.error(e,"dao2Mine");
@@ -42,8 +33,54 @@ export function dao2Mine(dao: any): types.Mine {
     }
 }
 
+export function mineSpotRow2Dao(x: types.MineSpotRow) {
+    try {
+        if (x.mine_id && (typeof x.mine_id === "string")) {
+            x.mine_id = uuid.from(x.mine_id);
+        }
+    }
+    catch(e) {
+        logger.error(e, "mineSpotRow2Dao");
+        throw new Error(e);
+    }
+}
 
+export function dao2MineSpotRow (dao: any) {
+    try {
+        if (dao.id) {
+            dao.id = uuid.from(dao.id).toString();
+        }
+    }
+    catch(e) {
+        logger.error(e,"dao2MineSpotRow");
+        throw new Error(e);
+    }
+}
 
+export function dwarf2Dao(x: types.Dwarf) {
+    try {
+        if (x.id && (typeof x.id === "string")) {
+            x.id = uuid.from(x.id);
+        }
+        if (x.mine_id && (typeof x.mine_id === "string")) {
+            x.mine_id = uuid.from(x.mine_id);
+        }
+    }
+    catch(e) {
+        logger.error(e, "dwarf2Dao");
+        throw new Error(e);
+    }
+}
 
-
+export function dao2Dwarf (dao: any) {
+    try {
+        if (dao.id) {
+            dao.id = uuid.from(dao.id).toString();
+        }
+    }
+    catch(e) {
+        logger.error(e,"dao2Dwarf");
+        throw new Error(e);
+    }
+}
 
