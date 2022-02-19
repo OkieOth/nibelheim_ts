@@ -13,7 +13,12 @@ export function mine2Dao(x: types.Mine) {
     try {
         if (x.id && (typeof x.id === "string")) {
             x.id = uuid.from(x.id);
-        }
+        };
+        if (x.dwarfs) {
+            x.dwarfs = x.dwarfs.map((elem: string) => {
+                return uuid.from(elem);
+            });
+        };
     }
     catch(e) {
         logger.error(e, "mine2Dao");
@@ -21,11 +26,16 @@ export function mine2Dao(x: types.Mine) {
     }
 }
 
-export function dao2Mine (dao: any) {
+export function dao2Mine (x: any) {
     try {
-        if (dao.id) {
-            dao.id = uuid.from(dao.id).toString();
-        }
+        if (x.id && (typeof x.id === "string")) {
+            x.id = uuid.from(x.id).toString();
+        };
+        if (x.dwarfs) {
+            x.dwarfs = x.dwarfs.map((elem: any) => {
+                return uuid.from(elem).toString;
+            });
+        };
     }
     catch(e) {
         logger.error(e,"dao2Mine");
@@ -37,7 +47,7 @@ export function mineSpotRow2Dao(x: types.MineSpotRow) {
     try {
         if (x.mine_id && (typeof x.mine_id === "string")) {
             x.mine_id = uuid.from(x.mine_id);
-        }
+        };
     }
     catch(e) {
         logger.error(e, "mineSpotRow2Dao");
@@ -45,11 +55,11 @@ export function mineSpotRow2Dao(x: types.MineSpotRow) {
     }
 }
 
-export function dao2MineSpotRow (dao: any) {
+export function dao2MineSpotRow (x: any) {
     try {
-        if (dao.id) {
-            dao.id = uuid.from(dao.id).toString();
-        }
+        if (x.mine_id && (typeof x.mine_id === "string")) {
+            x.mine_id = uuid.from(x.mine_id).toString();
+        };
     }
     catch(e) {
         logger.error(e,"dao2MineSpotRow");
@@ -61,10 +71,10 @@ export function dwarf2Dao(x: types.Dwarf) {
     try {
         if (x.id && (typeof x.id === "string")) {
             x.id = uuid.from(x.id);
-        }
+        };
         if (x.mine_id && (typeof x.mine_id === "string")) {
             x.mine_id = uuid.from(x.mine_id);
-        }
+        };
     }
     catch(e) {
         logger.error(e, "dwarf2Dao");
@@ -72,11 +82,14 @@ export function dwarf2Dao(x: types.Dwarf) {
     }
 }
 
-export function dao2Dwarf (dao: any) {
+export function dao2Dwarf (x: any) {
     try {
-        if (dao.id) {
-            dao.id = uuid.from(dao.id).toString();
-        }
+        if (x.id && (typeof x.id === "string")) {
+            x.id = uuid.from(x.id).toString();
+        };
+        if (x.mine_id && (typeof x.mine_id === "string")) {
+            x.mine_id = uuid.from(x.mine_id).toString();
+        };
     }
     catch(e) {
         logger.error(e,"dao2Dwarf");

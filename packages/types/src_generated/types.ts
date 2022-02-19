@@ -19,6 +19,7 @@ export interface Mine {
      current time in the Mine simulation
     */
     time: Date;
+    dwarfs?: string[] | any[];
 }
 
 /**

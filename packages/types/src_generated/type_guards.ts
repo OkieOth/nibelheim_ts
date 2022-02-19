@@ -83,6 +83,19 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
     }
+    if ("dwarfs" in obj) {
+        const attrib: any = obj["dwarfs"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != true)) {
+            logger.error(() => `'dwarfs' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (utils.allArrayElemsAreUUIDs(attrib)) ) {
+            logger.error(() => `'dwarfs' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
     return true;
 }
 

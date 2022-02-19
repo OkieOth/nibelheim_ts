@@ -6,6 +6,7 @@ class Mine {
         StringType name
         Storage storage
         DateTimeType time
+        UuidType[] dwarfs
 }
 
 note top: the place where you find\nall the gems
@@ -78,6 +79,7 @@ class DwarfWay {
 
 Mine  *--  Storage
             
+
 
 
     

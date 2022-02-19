@@ -21,6 +21,13 @@ export function randomMine(randomizeOptionalAttribs = false): types.Mine {
     if ((!randomizeOptionalAttribs) || chance.bool()) {
         ret.storage = randomStorage();
     };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.dwarfs = [];
+        const dwarfsCount = chance.integer({ min: 0, max: arrayMax });
+        for (let i=0; i < dwarfsCount; i++) {
+            ret.dwarfs.push(chance.guid({version: 4}));
+        }
+    };
     return ret;
 }
 

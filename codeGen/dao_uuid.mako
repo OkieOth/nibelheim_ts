@@ -30,11 +30,29 @@ export function ${stringUtils.toLowerCamelCase(currentType.name)}2Dao(x: types.$
     % for prop in currentType.properties:
         % if isinstance(prop.type, model.UuidType):
             % if prop.isArray:
-        // TODO - handle array
+        if (x.${prop.name}) {
+            x.${prop.name} = x.${prop.name}.map((elem: string) => {
+                return uuid.from(elem);
+            });
+        };
             % else:
         if (x.${prop.name} && (typeof x.${prop.name} === "string")) {
             x.${prop.name} = uuid.from(x.${prop.name});
-        }
+        };
+            % endif
+        % else:
+            % if isinstance(prop.type, model.ComplexType) and modelFuncs.doesTypeOrAttribContainsType(prop.type, model.UuidType):
+                % if prop.isArray:
+        if (x.${prop.name}) {
+            x.${prop.name}.forEach((elem: any) => {
+                ${stringUtils.toLowerCamelCase(prop.type.name)}2Dao(elem);
+            });
+        };
+                % else:
+        if (x.${prop.name}) {
+            ${stringUtils.toLowerCamelCase(prop.type.name)}2Dao(x.${prop.name});
+        };
+                % endif
             % endif
         % endif
     % endfor
@@ -45,11 +63,37 @@ export function ${stringUtils.toLowerCamelCase(currentType.name)}2Dao(x: types.$
     }
 }
 
-export function dao2${currentType.name} (dao: any) {
+export function dao2${currentType.name} (x: any) {
     try {
-        if (dao.id) {
-            dao.id = uuid.from(dao.id).toString();
-        }
+    % for prop in currentType.properties:
+        % if isinstance(prop.type, model.UuidType):
+            % if prop.isArray:
+        if (x.${prop.name}) {
+            x.${prop.name} = x.${prop.name}.map((elem: any) => {
+                return uuid.from(elem).toString;
+            });
+        };
+            % else:
+        if (x.${prop.name} && (typeof x.${prop.name} === "string")) {
+            x.${prop.name} = uuid.from(x.${prop.name}).toString();
+        };
+            % endif
+        % else:
+            % if isinstance(prop.type, model.ComplexType) and modelFuncs.doesTypeOrAttribContainsType(prop.type, model.UuidType):
+                % if prop.isArray:
+            if (x.${prop.name}) {
+                x.${prop.name}.forEach((elem: any) => {
+                    dao2${prop.type.name}(x.${prop.name});
+                });
+            };
+                % else:
+            if (x.${prop.name}) {
+                dao2${prop.type.name}(x.${prop.name});
+            };
+                % endif
+            % endif
+        % endif
+    % endfor
     }
     catch(e) {
         logger.error(e,"dao2${currentType.name}");
