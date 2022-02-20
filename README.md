@@ -86,16 +86,17 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 
 ## Available Tasks
 
-| Name                 | Description                                         |
-| -------------------- | --------------------------------------------------- |
-| types_puml           | generate PlantUml file from the used mode           |
-| types                | generate interfaces from the model                  |
-| type_factories       | generate functions to create instances of the types |
-| type_factories_tests | generate tests for type factories                   |
-| type_quards          | generate functions to validate types                |
-| type_guards_tests    | generate tests for type validation                  |
-| types_random         | generate functions to create random data            |
-| types_random_tests   | generate tests for the random data functions        |
-| dao_uuid             | generates the functions to convert uuids            |
-| dao                  | generates the functions to access mongodb           |
-| dao_tests            | generates the functions to test access mongodb      |
+| Name                 | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| types_puml           | generate PlantUml file from the used mode              |
+| types                | generate interfaces from the model                     |
+| type_factories       | generate functions to create instances of the types    |
+| type_factories_tests | generate tests for type factories                      |
+| type_quards          | generate functions to validate types                   |
+| type_guards_tests    | generate tests for type validation                     |
+| types_random         | generate functions to create random data               |
+| types_random_tests   | generate tests for the random data functions           |
+| dao_uuid             | generates the functions to convert uuids               |
+| dao_uuid_tests       | generates the tests for the functions to convert uuids |
+| dao                  | generates the functions to access mongodb              |
+| dao_tests            | generates the functions to test access mongodb         |

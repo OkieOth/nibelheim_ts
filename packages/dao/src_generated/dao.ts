@@ -8,11 +8,8 @@
 */
 import * as types from 'types';
 import * as mongoDb from "mongodb";
-import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid"
-
 import {logger} from "logger";
-
 import * as mongoConnection from "../src/mongo_connection"
 
 export async function insertMine(mine: types.Mine, dbName: string): Promise<mongoDb.ObjectId> {
@@ -48,19 +45,7 @@ export async function findMine(dbName: string): Promise<types.Mine[]> {
                 array.push(doc);
             }
         });
-        /*
-        for await (const doc of cursor) {
-            //logger.info(String(doc));
-            //array.push(doc);
-        }
-        */
-/*
-        cursor.stream().on("data", doc => {
-            logger.info(doc);
-        })
-*/
         cursor.close();
-
         return new Promise((resolve) => {
             resolve(array);
         });
