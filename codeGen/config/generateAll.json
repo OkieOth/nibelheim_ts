@@ -78,6 +78,14 @@
                     "template": "/project/codeGen/dao_uuid.mako",
                     "destFile": "/project/packages/dao/src_generated/dao_uuid.ts"
                 }
+            },
+            {
+                "name": "dao_uuid_tests",
+                "description": "generate tests for functions to convert uuids for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_uuid_tests.mako", 
+                    "destFile": "/project/packages/dao/__tests_generated__/dao_uuid.test.ts"
+                }
             }
         ]
     }
