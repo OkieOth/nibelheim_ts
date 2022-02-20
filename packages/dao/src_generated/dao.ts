@@ -12,19 +12,24 @@ import * as dao_uuid from "./dao_uuid"
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 
-export async function insertMine(mine: types.Mine, dbName: string): Promise<mongoDb.ObjectId> {
+export async function insertMine(x: types.Mine, dbName: string): Promise<mongoDb.ObjectId> {
     try {
         const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-        const collection: mongoDb.Collection = db.collection("Mine");
-        dao_uuid.mine2Dao(mine);
-        const result = await collection.insertOne(mine);
+        const collectionName = "Mine";
+        const collection: mongoDb.Collection = db.collection(collectionName);
+
+        logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertMine");
+        logger.debug(() => JSON.stringify(x), "insertMine");
+
+        // TODO check if type contains UUID type
+        dao_uuid.mine2Dao(x);
+        const result = await collection.insertOne(x);
         return new Promise((resolve, reject) => {
-            // TODO logging
             resolve(result.insertedId);
         });
     }
     catch(e) {
-        logger.error(e);
+        logger.error(e, "insertMine");
         return new Promise((resolve, reject) => {
             reject(e);
         });
@@ -33,13 +38,15 @@ export async function insertMine(mine: types.Mine, dbName: string): Promise<mong
 
 export async function findMine(dbName: string): Promise<types.Mine[]> {
     try {
+        const collectionName = "Mine";
         const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-        const collection: mongoDb.Collection = db.collection("Mine");
+        const collection: mongoDb.Collection = db.collection(collectionName);
         const cursor = collection.find({});
         const elemCount = await cursor.count();
-        logger.info(() => `found ${elemCount} elements`, "findMine");
+        logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findMine");
         const array: types.Mine[] = [];
         await cursor.forEach(doc => {
+            // TODO check if type contains UUID type
             dao_uuid.dao2Mine(doc);
             if (types.isMine(doc)) {
                 array.push(doc);
@@ -58,9 +65,109 @@ export async function findMine(dbName: string): Promise<types.Mine[]> {
     }
 }
 
+export async function insertMineSpotRow(x: types.MineSpotRow, dbName: string): Promise<mongoDb.ObjectId> {
+    try {
+        const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+        const collectionName = "MineSpotRow";
+        const collection: mongoDb.Collection = db.collection(collectionName);
 
+        logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertMineSpotRow");
+        logger.debug(() => JSON.stringify(x), "insertMineSpotRow");
 
+        // TODO check if type contains UUID type
+        dao_uuid.mineSpotRow2Dao(x);
+        const result = await collection.insertOne(x);
+        return new Promise((resolve, reject) => {
+            resolve(result.insertedId);
+        });
+    }
+    catch(e) {
+        logger.error(e, "insertMineSpotRow");
+        return new Promise((resolve, reject) => {
+            reject(e);
+        });
+    }
+}
 
+export async function findMineSpotRow(dbName: string): Promise<types.MineSpotRow[]> {
+    try {
+        const collectionName = "MineSpotRow";
+        const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+        const collection: mongoDb.Collection = db.collection(collectionName);
+        const cursor = collection.find({});
+        const elemCount = await cursor.count();
+        logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findMineSpotRow");
+        const array: types.MineSpotRow[] = [];
+        await cursor.forEach(doc => {
+            // TODO check if type contains UUID type
+            dao_uuid.dao2MineSpotRow(doc);
+            if (types.isMineSpotRow(doc)) {
+                array.push(doc);
+            }
+        });
+        cursor.close();
+        return new Promise((resolve) => {
+            resolve(array);
+        });
+    }
+    catch(e) {
+        logger.error(e);
+        return new Promise((resolve, reject) => {
+            reject(e);
+        });
+    }
+}
 
+export async function insertDwarf(x: types.Dwarf, dbName: string): Promise<mongoDb.ObjectId> {
+    try {
+        const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+        const collectionName = "Dwarf";
+        const collection: mongoDb.Collection = db.collection(collectionName);
 
+        logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertDwarf");
+        logger.debug(() => JSON.stringify(x), "insertDwarf");
+
+        // TODO check if type contains UUID type
+        dao_uuid.dwarf2Dao(x);
+        const result = await collection.insertOne(x);
+        return new Promise((resolve, reject) => {
+            resolve(result.insertedId);
+        });
+    }
+    catch(e) {
+        logger.error(e, "insertDwarf");
+        return new Promise((resolve, reject) => {
+            reject(e);
+        });
+    }
+}
+
+export async function findDwarf(dbName: string): Promise<types.Dwarf[]> {
+    try {
+        const collectionName = "Dwarf";
+        const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+        const collection: mongoDb.Collection = db.collection(collectionName);
+        const cursor = collection.find({});
+        const elemCount = await cursor.count();
+        logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findDwarf");
+        const array: types.Dwarf[] = [];
+        await cursor.forEach(doc => {
+            // TODO check if type contains UUID type
+            dao_uuid.dao2Dwarf(doc);
+            if (types.isDwarf(doc)) {
+                array.push(doc);
+            }
+        });
+        cursor.close();
+        return new Promise((resolve) => {
+            resolve(array);
+        });
+    }
+    catch(e) {
+        logger.error(e);
+        return new Promise((resolve, reject) => {
+            reject(e);
+        });
+    }
+}
 
