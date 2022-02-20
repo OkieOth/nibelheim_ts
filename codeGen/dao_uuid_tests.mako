@@ -5,7 +5,7 @@
     import yacg.templateHelper as templateHelper
     import yacg.util.stringUtils as stringUtils
 
-    templateFile = 'dao_uuid.mako'
+    templateFile = 'dao_uuid_tests.mako'
     templateVersion = '0.1.0'
 
     typesWithUuids = []
@@ -17,88 +17,58 @@
     This file is generated.
     Template: ${templateFile} v${templateVersion})
 
-    The file provides functions to convert uuid fields into mongo compatible
-    BSON UUIDs.
+    The file provides the tests for the functions to convert uuid fields into 
+    mongo compatible BSON UUIDs.
 */
-import * as types from 'types';
-import * as uuid from "uuid-mongodb";
-import {logger} from "logger";
+import * as dummy from "types_random";
+import * as types from "types";
+import * as dao_uuid from "../src_generated/dao_uuid";
+import {errorPromise, indexGenerator} from "../__tests__/helper/helper";
 
+describe('test uuid convert', async () => {
 % for currentType in typesWithUuids:
-export function ${stringUtils.toLowerCamelCase(currentType.name)}2Dao(x: types.${currentType.name}) {
-    try {
+    it('${currentType.name}', async () => {
+        try {
+            for await (const num of indexGenerator(10)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                if (!types.is${currentType.name}(x)) {
+                    return errorPromise("random elem isn't of type ${currentType.name}");
+                }
+                // check uuid attribs - start
     % for prop in currentType.properties:
         % if isinstance(prop.type, model.UuidType):
             % if prop.isArray:
-        if (x.${prop.name}) {
-            x.${prop.name} = x.${prop.name}.map((elem: string) => {
-                return uuid.from(elem);
-            });
-        };
+                if (x.${prop.name}) {
+                    x.${prop.name}.forEach(elem => {
+                        if (typeof elem !== "string") {
+                            return errorPromise("x.${prop.name} elem should be 'string'");
+                        }
+                    });
+                }
             % else:
-        if (x.${prop.name} && (typeof x.${prop.name} === "string")) {
-            x.${prop.name} = uuid.from(x.${prop.name});
-        };
+                if (typeof x.${prop.name} !== "string") {
+                    return errorPromise("x.${prop.name} should be 'string'");
+                }
             % endif
         % else:
             % if isinstance(prop.type, model.ComplexType) and modelFuncs.doesTypeOrAttribContainsType(prop.type, model.UuidType):
                 % if prop.isArray:
-        if (x.${prop.name}) {
-            x.${prop.name}.forEach((elem: any) => {
-                ${stringUtils.toLowerCamelCase(prop.type.name)}2Dao(elem);
-            });
-        };
+                // TODO check array complex attrib
                 % else:
-        if (x.${prop.name}) {
-            ${stringUtils.toLowerCamelCase(prop.type.name)}2Dao(x.${prop.name});
-        };
+                // TODO check array complex attrib
                 % endif
             % endif
         % endif
     % endfor
-    }
-    catch(e) {
-        logger.error(e, "${stringUtils.toLowerCamelCase(currentType.name)}2Dao");
-        throw new Error(e);
-    }
-}
-
-export function dao2${currentType.name} (x: any) {
-    try {
-    % for prop in currentType.properties:
-        % if isinstance(prop.type, model.UuidType):
-            % if prop.isArray:
-        if (x.${prop.name}) {
-            x.${prop.name} = x.${prop.name}.map((elem: any) => {
-                return uuid.from(elem).toString();
+            }
+            return new Promise((resolve, reject) => {
+                resolve();
             });
-        };
-            % else:
-        if (x.${prop.name} && (typeof x.${prop.name} !== "string")) {
-            x.${prop.name} = uuid.from(x.${prop.name}).toString();
-        };
-            % endif
-        % else:
-            % if isinstance(prop.type, model.ComplexType) and modelFuncs.doesTypeOrAttribContainsType(prop.type, model.UuidType):
-                % if prop.isArray:
-            if (x.${prop.name}) {
-                x.${prop.name}.forEach((elem: any) => {
-                    dao2${prop.type.name}(x.${prop.name});
-                });
-            };
-                % else:
-            if (x.${prop.name}) {
-                dao2${prop.type.name}(x.${prop.name});
-            };
-                % endif
-            % endif
-        % endif
-    % endfor
-    }
-    catch(e) {
-        logger.error(e,"dao2${currentType.name}");
-        throw new Error(e);
-    }
-}
+        }
+        catch (e) {
+            return errorPromise(e);
+        }
+    });
 
 % endfor
+});
