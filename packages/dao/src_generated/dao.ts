@@ -43,7 +43,7 @@ export async function findMine(dbName: string): Promise<types.Mine[]> {
         logger.info(() => `found ${elemCount} elements`, "findMine");
         const array: types.Mine[] = [];
         await cursor.forEach(doc => {
-            const mine = dao_uuid.dao2Mine(doc);
+            dao_uuid.dao2Mine(doc);
             if (types.isMine(doc)) {
                 array.push(doc);
             }

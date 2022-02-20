@@ -28,12 +28,12 @@ export function mine2Dao(x: types.Mine) {
 
 export function dao2Mine (x: any) {
     try {
-        if (x.id && (typeof x.id === "string")) {
+        if (x.id && (typeof x.id !== "string")) {
             x.id = uuid.from(x.id).toString();
         };
         if (x.dwarfs) {
             x.dwarfs = x.dwarfs.map((elem: any) => {
-                return uuid.from(elem).toString;
+                return uuid.from(elem).toString();
             });
         };
     }
@@ -57,7 +57,7 @@ export function mineSpotRow2Dao(x: types.MineSpotRow) {
 
 export function dao2MineSpotRow (x: any) {
     try {
-        if (x.mine_id && (typeof x.mine_id === "string")) {
+        if (x.mine_id && (typeof x.mine_id !== "string")) {
             x.mine_id = uuid.from(x.mine_id).toString();
         };
     }
@@ -84,10 +84,10 @@ export function dwarf2Dao(x: types.Dwarf) {
 
 export function dao2Dwarf (x: any) {
     try {
-        if (x.id && (typeof x.id === "string")) {
+        if (x.id && (typeof x.id !== "string")) {
             x.id = uuid.from(x.id).toString();
         };
-        if (x.mine_id && (typeof x.mine_id === "string")) {
+        if (x.mine_id && (typeof x.mine_id !== "string")) {
             x.mine_id = uuid.from(x.mine_id).toString();
         };
     }

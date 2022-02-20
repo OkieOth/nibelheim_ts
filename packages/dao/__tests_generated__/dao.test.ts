@@ -25,10 +25,18 @@ const errorPromise = (msg) => {
 
 const testDb = `nibelheim_test_${new Date().getTime()}`;
 
+function* indexGenerator(maxItems) {
+    let index = 0;
+    while (index < maxItems) {
+      yield index;
+      index++;
+    }
+  }
+
 describe('Mine', async () => {
     it('insertMine', async () => {
         try {
-            for (let i=0; i<1000; i++) {
+            for await (const num of indexGenerator(1000)) {
                 const mine: types.Mine = dummy.randomMine()
                 const insertedId: mongoDb.ObjectId = await dao.insertMine(mine, testDb);
             }
@@ -38,7 +46,7 @@ describe('Mine', async () => {
                 return errorPromise(`received wrong number of elements. Expected 1000 got ${mines.length}`);
             }
             if (!types.isMineArray(mines)) {
-                return errorPromise("expectec Mine array, but got something different");
+                return errorPromise("expected Mine array, but got something different");
             }
             return new Promise((resolve, reject) => {
                 resolve();

@@ -70,11 +70,11 @@ export function dao2${currentType.name} (x: any) {
             % if prop.isArray:
         if (x.${prop.name}) {
             x.${prop.name} = x.${prop.name}.map((elem: any) => {
-                return uuid.from(elem).toString;
+                return uuid.from(elem).toString();
             });
         };
             % else:
-        if (x.${prop.name} && (typeof x.${prop.name} === "string")) {
+        if (x.${prop.name} && (typeof x.${prop.name} !== "string")) {
             x.${prop.name} = uuid.from(x.${prop.name}).toString();
         };
             % endif
