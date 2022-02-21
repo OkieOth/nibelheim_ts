@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  mongodb:
+    image: "mongo:4.4.12-focal"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: strengGeheim
+  nibelheim:
+    build:
+      context: ../
+      dockerfile: Dockerfile_tests
+    entrypoint: ["node_modules/.bin/nyc", "npx", "npx", "lerna", "run", "test"]
+    environment:
+      MONGODB_HOST: mongodb
+      MONGODB_USER: root

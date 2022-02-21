@@ -71,31 +71,36 @@ import {logger} from "logger";
 
 % for currentType in modelTypes:
     % if not isinstance(currentType, model.EnumType):
-export function parse${currentType.name}(json: string): types.${currentType.name} {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.is${currentType.name}(parsedData)) {
-        return parsedData as types.${currentType.name};
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: $${}{json}`, "parse${currentType.name}");
-        throw new Error("input doesn't match expected type");
-    }
-}
-
-export function parse${currentType.name}Array(json: string): types.${currentType.name}[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: $${}{json}`, "parse${currentType.name}Array");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.is${currentType.name}(elem)) {
-            const errorMsg = "input is not of ${currentType.name} type";
-            logger.error(errorMsg, "parse${currentType.name}Array");
-            throw new Error(errorMsg);
+export async function parse${currentType.name}(json: string): Promise<types.${currentType.name}> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.is${currentType.name}(parsedData)) {
+            resolve(parsedData as types.${currentType.name});
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: $${}{json}`, "parse${currentType.name}");
+            reject("input doesn't match expected type");
         }
     });
-    return parsedData;
 }
+
+export async function parse${currentType.name}Array(json: string): Promise<types.${currentType.name}[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: $${}{json}`, "parse${currentType.name}Array");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.is${currentType.name}(elem)) {
+                const errorMsg = "input is not of ${currentType.name} type";
+                logger.error(errorMsg, "parse${currentType.name}Array");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.${currentType.name}[]);
+    });
+}
+
     % endif
 % endfor

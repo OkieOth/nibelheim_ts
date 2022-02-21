@@ -1,0 +1,11 @@
+FROM node:16-alpine
+
+ADD . /project/
+
+WORKDIR /project
+
+RUN npx lerna bootstrap
+RUN npm install --legacy-peer-deps
+RUN npx lerna run tsc
+
+CMD ["/bin/sh"]

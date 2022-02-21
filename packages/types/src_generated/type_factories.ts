@@ -8,133 +8,189 @@ import * as guards from "./type_guards";
 import {logger} from "logger";
 
 
-export function parseMine(json: string): types.Mine {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isMine(parsedData)) {
-        return parsedData as types.Mine;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseMine");
-        throw new Error("input doesn't match expected type");
-    }
-}
-
-export function parseMineArray(json: string): types.Mine[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: ${json}`, "parseMineArray");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.isMine(elem)) {
-            const errorMsg = "input is not of Mine type";
-            logger.error(errorMsg, "parseMineArray");
-            throw new Error(errorMsg);
+export async function parseMine(json: string): Promise<types.Mine> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isMine(parsedData)) {
+            resolve(parsedData as types.Mine);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseMine");
+            reject("input doesn't match expected type");
         }
     });
-    return parsedData;
-}
-export function parseMineSpotRow(json: string): types.MineSpotRow {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isMineSpotRow(parsedData)) {
-        return parsedData as types.MineSpotRow;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpotRow");
-        throw new Error("input doesn't match expected type");
-    }
 }
 
-export function parseMineSpotRowArray(json: string): types.MineSpotRow[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: ${json}`, "parseMineSpotRowArray");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.isMineSpotRow(elem)) {
-            const errorMsg = "input is not of MineSpotRow type";
-            logger.error(errorMsg, "parseMineSpotRowArray");
-            throw new Error(errorMsg);
+export async function parseMineArray(json: string): Promise<types.Mine[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseMineArray");
+            reject("input is no array");
         }
+        parsedData.forEach(elem => {
+            if (!guards.isMine(elem)) {
+                const errorMsg = "input is not of Mine type";
+                logger.error(errorMsg, "parseMineArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.Mine[]);
     });
-    return parsedData;
-}
-export function parseDwarf(json: string): types.Dwarf {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isDwarf(parsedData)) {
-        return parsedData as types.Dwarf;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseDwarf");
-        throw new Error("input doesn't match expected type");
-    }
 }
 
-export function parseDwarfArray(json: string): types.Dwarf[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: ${json}`, "parseDwarfArray");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.isDwarf(elem)) {
-            const errorMsg = "input is not of Dwarf type";
-            logger.error(errorMsg, "parseDwarfArray");
-            throw new Error(errorMsg);
+export async function parseStorage(json: string): Promise<types.Storage> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isStorage(parsedData)) {
+            resolve(parsedData as types.Storage);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseStorage");
+            reject("input doesn't match expected type");
         }
     });
-    return parsedData;
-}
-export function parseStorage(json: string): types.Storage {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isStorage(parsedData)) {
-        return parsedData as types.Storage;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseStorage");
-        throw new Error("input doesn't match expected type");
-    }
 }
 
-export function parseStorageArray(json: string): types.Storage[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: ${json}`, "parseStorageArray");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.isStorage(elem)) {
-            const errorMsg = "input is not of Storage type";
-            logger.error(errorMsg, "parseStorageArray");
-            throw new Error(errorMsg);
+export async function parseStorageArray(json: string): Promise<types.Storage[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseStorageArray");
+            reject("input is no array");
         }
+        parsedData.forEach(elem => {
+            if (!guards.isStorage(elem)) {
+                const errorMsg = "input is not of Storage type";
+                logger.error(errorMsg, "parseStorageArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.Storage[]);
     });
-    return parsedData;
-}
-export function parseMineSpot(json: string): types.MineSpot {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (guards.isMineSpot(parsedData)) {
-        return parsedData as types.MineSpot;
-    }
-    else {
-        logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpot");
-        throw new Error("input doesn't match expected type");
-    }
 }
 
-export function parseMineSpotArray(json: string): types.MineSpot[] {
-    const parsedData = JSON.parse(json, utils.reviver);
-    if (!utils.isArray(parsedData)) {
-        logger.error(() => `input is no array: ${json}`, "parseMineSpotArray");
-        throw new Error("input is no array");
-    }
-    parsedData.forEach(elem => {
-        if (!guards.isMineSpot(elem)) {
-            const errorMsg = "input is not of MineSpot type";
-            logger.error(errorMsg, "parseMineSpotArray");
-            throw new Error(errorMsg);
+export async function parseMineSpot(json: string): Promise<types.MineSpot> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isMineSpot(parsedData)) {
+            resolve(parsedData as types.MineSpot);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpot");
+            reject("input doesn't match expected type");
         }
     });
-    return parsedData;
 }
+
+export async function parseMineSpotArray(json: string): Promise<types.MineSpot[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseMineSpotArray");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.isMineSpot(elem)) {
+                const errorMsg = "input is not of MineSpot type";
+                logger.error(errorMsg, "parseMineSpotArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.MineSpot[]);
+    });
+}
+
+export async function parseMineSpotRow(json: string): Promise<types.MineSpotRow> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isMineSpotRow(parsedData)) {
+            resolve(parsedData as types.MineSpotRow);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseMineSpotRow");
+            reject("input doesn't match expected type");
+        }
+    });
+}
+
+export async function parseMineSpotRowArray(json: string): Promise<types.MineSpotRow[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseMineSpotRowArray");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.isMineSpotRow(elem)) {
+                const errorMsg = "input is not of MineSpotRow type";
+                logger.error(errorMsg, "parseMineSpotRowArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.MineSpotRow[]);
+    });
+}
+
+export async function parseDwarf(json: string): Promise<types.Dwarf> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isDwarf(parsedData)) {
+            resolve(parsedData as types.Dwarf);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseDwarf");
+            reject("input doesn't match expected type");
+        }
+    });
+}
+
+export async function parseDwarfArray(json: string): Promise<types.Dwarf[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseDwarfArray");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.isDwarf(elem)) {
+                const errorMsg = "input is not of Dwarf type";
+                logger.error(errorMsg, "parseDwarfArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.Dwarf[]);
+    });
+}
+
+export async function parseDwarfWay(json: string): Promise<types.DwarfWay> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isDwarfWay(parsedData)) {
+            resolve(parsedData as types.DwarfWay);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseDwarfWay");
+            reject("input doesn't match expected type");
+        }
+    });
+}
+
+export async function parseDwarfWayArray(json: string): Promise<types.DwarfWay[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseDwarfWayArray");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.isDwarfWay(elem)) {
+                const errorMsg = "input is not of DwarfWay type";
+                logger.error(errorMsg, "parseDwarfWayArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.DwarfWay[]);
+    });
+}
+

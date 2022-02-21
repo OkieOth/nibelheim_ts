@@ -1,11 +1,11 @@
 {
   "name": "types_random",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "description": "> TODO: description",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",
-  "license": "ISC",
-  "main": "lib/dummy_data.js",
+  "license": "MIT",
+  "main": "lib/src_generated/dummy_data.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__ __tests_generated__"
@@ -25,7 +25,7 @@
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
-    "logger": "^0.0.0",
-    "types": "^0.0.0"
+    "logger": "^1.0.0-rc.1",
+    "types": "^1.0.0-rc.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "nibelheim_ts",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "description": "play around with typescript",
   "directories": {
     "doc": "docs"
@@ -24,5 +24,8 @@
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
   }
 }

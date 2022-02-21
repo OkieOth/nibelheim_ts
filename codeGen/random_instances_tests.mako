@@ -25,6 +25,8 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isNotNull(y, 'random${currentType.name} 2 returns null');
         assert.isTrue(types.is${currentType.name}(x));
         assert.isTrue(types.is${currentType.name}(y));
+        assert.isFalse(types.is${currentType.name}([y]));
+        assert.isFalse(types.is${currentType.name}([x,y]));
         assert.isFalse(types.is${currentType.name}("test"));
         assert.isFalse(types.is${currentType.name}Array(x));
         assert.isFalse(types.is${currentType.name}Array(y));

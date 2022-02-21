@@ -1,3 +1,9 @@
+# dao
+Generation of functions to serialize type objects in mongodb
+
+Types are tagged (`x-tags`) in the model with 'mongodb' are serialized
+in their own collections. The codegen provides the functions to store
+and read them.
 
 # Generation of the model documentation
 ```bash

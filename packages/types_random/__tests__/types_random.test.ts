@@ -11,10 +11,12 @@ it('serialize/deserialize Mine', () => {
     assert.isNotNull(randomMine, 'randomMine returns null');
     const serialized = JSON.stringify(randomMine);
 
-    const deserialized: types.Mine = types.parseMine(serialized);
-    assert.isNotNull(deserialized);
-    assert.deepEqual(randomMine, deserialized);
-    // TODO
-    //JSON.parse(serialized);
-    console.log(serialized);
+    types.parseMine(serialized)
+        .then((deserialized: types.Mine) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomMine, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
 });

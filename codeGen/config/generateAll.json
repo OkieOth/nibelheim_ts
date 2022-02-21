@@ -70,6 +70,38 @@
                     "template": "/project/codeGen/random_instances_tests.mako",
                     "destFile": "/project/packages/types_random/__tests_generated__/dummy_data_test.ts"
                 }
+            },
+            {
+                "name": "dao_uuid",
+                "description": "generate functions to convert uuids for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_uuid.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_uuid.ts"
+                }
+            },
+            {
+                "name": "dao_uuid_tests",
+                "description": "generate tests for functions to convert uuids for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_uuid_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao_uuid.test.ts"
+                }
+            },
+            {
+                "name": "dao",
+                "description": "generate crud functions to utilize mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao.ts"
+                }
+            },
+            {
+                "name": "dao_tests",
+                "description": "generate tests for dao functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao.test.ts"
+                }
             }
         ]
     }

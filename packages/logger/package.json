@@ -1,6 +1,6 @@
 {
   "name": "logger",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "description": "log helper for the project",
   "author": "Eiko Thomas <eiko.thomas@gmail.com>",
   "homepage": "https://github.com/OkieOth/nibelheim_ts#readme",

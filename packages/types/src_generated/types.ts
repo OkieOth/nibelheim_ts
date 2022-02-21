@@ -7,16 +7,8 @@
  the place where you find all the gems
 */
 export interface Mine {
-
-    /**
-     defines a two dimensional array as area of the mine
-    */
-    rows: MineSpotRow[];
-
-    /**
-     list of dwarfs that are working currently in the mine
-    */
-    dwarfs?: Dwarf[];
+    id: string | any;
+    name: string;
 
     /**
      storage for already digged gems and stuff
@@ -27,35 +19,7 @@ export interface Mine {
      current time in the Mine simulation
     */
     time: Date;
-}
-
-/**
- One row of mine spots
-*/
-export interface MineSpotRow {
-    columns?: MineSpot[];
-}
-
-/**
- A guy that runs around in the mine an dig for gems
-*/
-export interface Dwarf {
-    name: string;
-
-    /**
-     small storage of mined material
-    */
-    pocket?: Storage;
-    strongness?: number;
-    currentStrongness?: number;
-    hunger?: number;
-    healthiness?: number;
-    motivation?: number;
-
-    /**
-     ids of the minespots, from the entry/storage to the current spot
-    */
-    currentWay?: string[];
+    dwarfs?: string[] | any[];
 }
 
 /**
@@ -84,23 +48,70 @@ export enum MineSpotMaterial {
  Brick, from which the mine is built
 */
 export interface MineSpot {
-    id?: string;
-    material?: MineSpotMaterial;
+    material: MineSpotMaterial;
 
     /**
      how many material contained the spot in the beginning
     */
-    initialAmountOfMaterial?: number;
+    initialAmountOfMaterial: number;
 
     /**
      how many material contains the spot in the moment
     */
-    currentAmountOfMaterial?: number;
+    currentAmountOfMaterial: number;
 
     /**
      factor that describes how more complicated is the mining of the material
     is
     */
-    miningDifficulty?: number;
+    miningDifficulty: number;
+}
+
+/**
+ One row of mine spots
+*/
+export interface MineSpotRow {
+    mine_id: string | any;
+
+    /**
+     order of the rows in one level
+    */
+    row_number?: number;
+
+    /**
+     level of the row to make the mine 3 dimensional
+    */
+    level: number;
+    columns?: MineSpot[];
+}
+
+/**
+ A guy that runs around in the mine an dig for gems
+*/
+export interface Dwarf {
+    id?: string | any;
+    name: string;
+    mine_id: string | any;
+
+    /**
+     small storage of mined material
+    */
+    pocket?: Storage;
+    strongness?: number;
+    currentStrongness?: number;
+    hunger?: number;
+    healthiness?: number;
+    motivation?: number;
+
+    /**
+     ids of the minespots, from the entry/storage to the current spot
+    */
+    way?: DwarfWay[];
+}
+
+export interface DwarfWay {
+    row_number?: number;
+    spot?: number;
+    level?: number;
 }
 

@@ -6,33 +6,35 @@
     templateFile = 'ts_types.mako'
     templateVersion = '0.1.0'
 
-    def printTypescriptType(type):
+    def printTypescriptType(prop):
+        type = prop.type
         if type is None:
-            return 'unknown'
+            return 'unknown' if not prop.isArray else 'unknown[]'
         elif isinstance(type, model.IntegerType):
-            return 'number'
+            return 'number' if not prop.isArray else 'number[]'
         elif isinstance(type, model.ObjectType):
-            return 'Object'
+            return 'Object' if not prop.isArray else 'Object[]'
         elif isinstance(type, model.NumberType):
-            return 'number'
+            return 'number' if not prop.isArray else 'number[]'
         elif isinstance(type, model.BooleanType):
-            return 'boolean'
+            return 'boolean' if not prop.isArray else 'boolean[]'
         elif isinstance(type, model.StringType):
-            return 'string'
+            return 'string' if not prop.isArray else 'string[]'
         elif isinstance(type, model.UuidType):
-            return 'string'
+            # this is needed to simplify later the handling for mongodb
+            return 'string | any' if not prop.isArray else 'string[] | any[]'
         elif isinstance(type, model.EnumType):
-            return "{type}".format(type=type.name)
+            return "{type}".format(type=type.name) if not prop.isArray else "{type}[]".format(type=type.name)
         elif isinstance(type, model.DateTimeType):
-            return 'Date'
+            return 'Date' if not prop.isArray else 'Date[]'
         elif isinstance(type, model.DateType):
-            return 'Date'
+            return 'Date' if not prop.isArray else 'Date[]'
         elif isinstance(type, model.BytesType):
-             return 'number[]'
+             return 'number[]' if not prop.isArray else 'number[][]'
         elif isinstance(type, model.DictionaryType):
-            return "Map<String, {}>".format(printTypescriptType(type.valueType))
+            return "Map<String, {}>".format(printTypescriptType(type.valueType))  if not prop.isArray else "Map<String, {}>[]".format(printTypescriptType(type.valueType))
         elif isinstance(type, model.ComplexType):
-            return "{type}".format(type=type.name)
+            return "{type}".format(type=type.name) if not prop.isArray else "{type}[]".format(type=type.name)
         else:
             return type
 %>/**
@@ -63,7 +65,7 @@ export interface ${currentType.name} {
     ${templateHelper.addLineBreakToDescription(prop.description,4)}
     */
         % endif
-    ${prop.name}${'' if prop.required else '?'}: ${printTypescriptType(prop.type)}${'[]' if prop.isArray else ''};
+    ${prop.name}${'' if prop.required else '?'}: ${printTypescriptType(prop)};
     % endfor
     % endif
 }
