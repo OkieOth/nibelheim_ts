@@ -4,7 +4,8 @@ ADD . /project/
 
 WORKDIR /project
 
-RUN npx lerna bootstrap --hoist
+RUN npx lerna bootstrap
+RUN npm install --legacy-peer-deps
 RUN npx lerna run tsc
 
 CMD ["/bin/sh"]

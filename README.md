@@ -7,7 +7,13 @@
 ```bash
 # kick off after a fresh clone
 git clone git@github.com:OkieOth/nibelheim_ts.git
-npx lerna bootstrap --hoist
+
+# this doesn't work because dependency issues of uuid-mongodb
+# npx lerna bootstrap --hoist
+
+# use instead this ...
+npx lerna bootstrap
+npm install --legacy-peer-deps
 ```
 
 ## Requirements
