@@ -19,9 +19,15 @@ if (fs.existsSync(envPath1)) {
 
 const errorPromise = (msg) => {
     return new Promise((resovle, reject) => {
+        logger.error(`finish with error: ${msg}`);
         reject(msg);
     });
 }
+
+const errorPromise2 = (msg, done) => {
+    done(msg);
+}
+
 
 const testDb = `nibelheim_test_${new Date().getTime()}`;
 
@@ -33,54 +39,37 @@ function* indexGenerator(maxItems) {
     }
   }
 
-describe('Mine', async () => {
-    it('insertMine', async () => {
+describe('Mine', () => {
+    it('insertMine', function(done) {
         try {
-            for await (const num of indexGenerator(1000)) {
+            let i = 0;
+            const iMax = 10;
+            let promises = [];
+            for (const num of indexGenerator(10)) {
                 const mine: types.Mine = dummy.randomMine()
-                const insertedId: mongoDb.ObjectId = await dao.insertMine(mine, testDb);
+                promises.push(dao.insertMine(mine, testDb));
             }
-            const mines: types.Mine[] = await dao.findMine(testDb);
-            mongoConnection.closeDefaultConnection();
-            if (mines.length != 1000) {
-                return errorPromise(`received wrong number of elements. Expected 1000 got ${mines.length}`);
-            }
-            if (!types.isMineArray(mines)) {
-                return errorPromise("expected Mine array, but got something different");
-            }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
-        }
-        catch(e) {
-            mongoConnection.closeDefaultConnection();
-            return errorPromise(`can't connect to db: ${e}`);
-        }
-    });
-
-    /*
-    it('insertMine', async () => {
-        try {
-            return new Promise((resolve, reject) => {
-                try {
-                    for (let i=0; i<1000; i++) {
-                        const mine: types.Mine = dummy.randomMine()
-                        const insertedId: mongoDb.ObjectId = await dao.insertMine(mine, testDb);
-                    }
+            Promise.all(promises).then(function(){
+                //All operations done
+                dao.findMine(testDb)
+                .then(mines => {
                     mongoConnection.closeDefaultConnection();
-                    resolve();
-                }
-                catch(e) {
-                    reject(e);
-                }
+                    if (mines.length != 10) {
+                        return errorPromise2(`received wrong number of elements. Expected 1000 got ${mines.length}`, done);
+                    }
+                    if (!types.isMineArray(mines)) {
+                        return errorPromise2("expected Mine array, but got something different", done);
+                    }
+                    logger.info("done :)");
+                    done();
+                });
             });
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();
-            return errorPromise(`can't connect to db: ${e}`);
+            return errorPromise2(`can't connect to db: ${e}`, done);
         }
     });
 
-    */
 
 });
