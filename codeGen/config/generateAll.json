@@ -94,6 +94,14 @@
                     "template": "/project/codeGen/dao.mako",
                     "destFile": "/project/packages/dao/src_generated/dao.ts"
                 }
+            },
+            {
+                "name": "dao_tests",
+                "description": "generate tests for dao functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao.test.ts"
+                }
             }
         ]
     }

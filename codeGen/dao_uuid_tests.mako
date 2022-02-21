@@ -20,53 +20,64 @@
     The file provides the tests for the functions to convert uuid fields into 
     mongo compatible BSON UUIDs.
 */
+
+import { assert } from 'chai';
 import * as dummy from "types_random";
 import * as types from "types";
 import * as dao_uuid from "../src_generated/dao_uuid";
-import {errorPromise, indexGenerator} from "../__tests__/helper/helper";
+import {indexGenerator} from "../__tests__/helper/helper";
 
-describe('test uuid convert', async () => {
+const randomObjectCount = 3;
+
 % for currentType in typesWithUuids:
-    it('${currentType.name}', async () => {
-        try {
-            for await (const num of indexGenerator(10)) {
-                const x: types.${currentType.name} = dummy.random${currentType.name}();
-                if (!types.is${currentType.name}(x)) {
-                    return errorPromise("random elem isn't of type ${currentType.name}");
-                }
-                // check uuid attribs - start
+const check${currentType.name}Attribs = (x, isType) => {
+    if (types.is${currentType.name}(x) != isType) {
+        assert.fail("random elem isn't of type ${currentType.name}");
+    }
     % for prop in currentType.properties:
         % if isinstance(prop.type, model.UuidType):
             % if prop.isArray:
-                if (x.${prop.name}) {
-                    x.${prop.name}.forEach(elem => {
-                        if (typeof elem !== "string") {
-                            return errorPromise("x.${prop.name} elem should be 'string'");
-                        }
-                    });
-                }
+    if (x.${prop.name}) {
+        x.${prop.name}.forEach(elem => {
+            if ((typeof elem !== "string") == isType) {
+                assert.fail(`x.${prop.name} === 'string': $${}{isType}`);
+            }
+        });
+    }
             % else:
-                if (typeof x.${prop.name} !== "string") {
-                    return errorPromise("x.${prop.name} should be 'string'");
-                }
+    if ((typeof x.${prop.name} !== "string") == isType) {
+        assert.fail(`x.id === 'string': $${}{isType}`);
+    }
             % endif
         % else:
             % if isinstance(prop.type, model.ComplexType) and modelFuncs.doesTypeOrAttribContainsType(prop.type, model.UuidType):
                 % if prop.isArray:
-                // TODO check array complex attrib
+    // TODO check complex attrib array
                 % else:
-                // TODO check array complex attrib
+    // TODO check complex attrib
                 % endif
             % endif
         % endif
     % endfor
+};
+
+% endfor
+
+describe('test uuid convert', () => {
+% for currentType in typesWithUuids:
+    it('${currentType.name}', () => {
+        try {
+            for (const num of indexGenerator(randomObjectCount)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                check${currentType.name}Attribs(x, true);
+                dao_uuid.${stringUtils.toLowerCamelCase(currentType.name)}2Dao(x);
+                check${currentType.name}Attribs(x, false);
+                dao_uuid.dao2${currentType.name}(x);
+                check${currentType.name}Attribs(x, true);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
         }
         catch (e) {
-            return errorPromise(e);
+            assert.fail(e);
         }
     });
 

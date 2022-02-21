@@ -5,82 +5,99 @@
     The file provides the tests for the functions to convert uuid fields into 
     mongo compatible BSON UUIDs.
 */
+
+import { assert } from 'chai';
 import * as dummy from "types_random";
 import * as types from "types";
 import * as dao_uuid from "../src_generated/dao_uuid";
-import {errorPromise, indexGenerator} from "../__tests__/helper/helper";
+import {indexGenerator} from "../__tests__/helper/helper";
 
-describe('test uuid convert', async () => {
-    it('Mine', async () => {
+const randomObjectCount = 3;
+
+const checkMineAttribs = (x, isType) => {
+    if (types.isMine(x) != isType) {
+        assert.fail("random elem isn't of type Mine");
+    }
+    if ((typeof x.id !== "string") == isType) {
+        assert.fail(`x.id === 'string': ${isType}`);
+    }
+    if (x.dwarfs) {
+        x.dwarfs.forEach(elem => {
+            if ((typeof elem !== "string") == isType) {
+                assert.fail(`x.dwarfs === 'string': ${isType}`);
+            }
+        });
+    }
+};
+
+const checkMineSpotRowAttribs = (x, isType) => {
+    if (types.isMineSpotRow(x) != isType) {
+        assert.fail("random elem isn't of type MineSpotRow");
+    }
+    if ((typeof x.mine_id !== "string") == isType) {
+        assert.fail(`x.id === 'string': ${isType}`);
+    }
+};
+
+const checkDwarfAttribs = (x, isType) => {
+    if (types.isDwarf(x) != isType) {
+        assert.fail("random elem isn't of type Dwarf");
+    }
+    if ((typeof x.id !== "string") == isType) {
+        assert.fail(`x.id === 'string': ${isType}`);
+    }
+    if ((typeof x.mine_id !== "string") == isType) {
+        assert.fail(`x.id === 'string': ${isType}`);
+    }
+};
+
+
+describe('test uuid convert', () => {
+    it('Mine', () => {
         try {
-            for await (const num of indexGenerator(10)) {
+            for (const num of indexGenerator(randomObjectCount)) {
                 const x: types.Mine = dummy.randomMine();
-                if (!types.isMine(x)) {
-                    return errorPromise("random elem isn't of type Mine");
-                }
-                // check uuid attribs - start
-                if (typeof x.id !== "string") {
-                    return errorPromise("x.id should be 'string'");
-                }
-                if (x.dwarfs) {
-                    x.dwarfs.forEach(elem => {
-                        if (typeof elem !== "string") {
-                            return errorPromise("x.dwarfs elem should be 'string'");
-                        }
-                    });
-                }
+                checkMineAttribs(x, true);
+                dao_uuid.mine2Dao(x);
+                checkMineAttribs(x, false);
+                dao_uuid.dao2Mine(x);
+                checkMineAttribs(x, true);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
         }
         catch (e) {
-            return errorPromise(e);
+            assert.fail(e);
         }
     });
 
-    it('MineSpotRow', async () => {
+    it('MineSpotRow', () => {
         try {
-            for await (const num of indexGenerator(10)) {
+            for (const num of indexGenerator(randomObjectCount)) {
                 const x: types.MineSpotRow = dummy.randomMineSpotRow();
-                if (!types.isMineSpotRow(x)) {
-                    return errorPromise("random elem isn't of type MineSpotRow");
-                }
-                // check uuid attribs - start
-                if (typeof x.mine_id !== "string") {
-                    return errorPromise("x.mine_id should be 'string'");
-                }
+                checkMineSpotRowAttribs(x, true);
+                dao_uuid.mineSpotRow2Dao(x);
+                checkMineSpotRowAttribs(x, false);
+                dao_uuid.dao2MineSpotRow(x);
+                checkMineSpotRowAttribs(x, true);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
         }
         catch (e) {
-            return errorPromise(e);
+            assert.fail(e);
         }
     });
 
-    it('Dwarf', async () => {
+    it('Dwarf', () => {
         try {
-            for await (const num of indexGenerator(10)) {
+            for (const num of indexGenerator(randomObjectCount)) {
                 const x: types.Dwarf = dummy.randomDwarf();
-                if (!types.isDwarf(x)) {
-                    return errorPromise("random elem isn't of type Dwarf");
-                }
-                // check uuid attribs - start
-                if (typeof x.id !== "string") {
-                    return errorPromise("x.id should be 'string'");
-                }
-                if (typeof x.mine_id !== "string") {
-                    return errorPromise("x.mine_id should be 'string'");
-                }
+                checkDwarfAttribs(x, true);
+                dao_uuid.dwarf2Dao(x);
+                checkDwarfAttribs(x, false);
+                dao_uuid.dao2Dwarf(x);
+                checkDwarfAttribs(x, true);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
         }
         catch (e) {
-            return errorPromise(e);
+            assert.fail(e);
         }
     });
 

@@ -1,33 +1,27 @@
-import { assert, expect } from 'chai';
+/**
+    This file is generated.
+    Template: dao_tests.mako v0.1.0)
+
+    The file provides the tests for the mongodb dao functions.
+*/
+
+import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as dao from "../src_generated/dao"
 import * as dummy from "types_random"
 import * as types from "types"
-import * as mongoDb from "mongodb";
 import * as mongoConnection from "../src/mongo_connection"
 import {logger} from "logger";
-import { rejects } from 'assert';
-import  * as fs from "fs";
 
+const randomInserts = 10;
 
 const envPath1 = "packages/dao/__tests__/singleMongo";
+
 if (fs.existsSync(envPath1)) {
     dotenv.config({ path: `${envPath1}/.env` });
 } else {
     dotenv.config({ path: "__tests__/singleMongo/.env" });
 }
-
-const errorPromise = (msg) => {
-    return new Promise((resovle, reject) => {
-        logger.error(`finish with error: ${msg}`);
-        reject(msg);
-    });
-}
-
-const errorPromise2 = (msg, done) => {
-    done(msg);
-}
-
 
 const testDb = `nibelheim_test_${new Date().getTime()}`;
 
@@ -37,28 +31,28 @@ function* indexGenerator(maxItems) {
       yield index;
       index++;
     }
-  }
+}
 
 describe('Mine', () => {
     it('insertMine', function(done) {
         try {
-            let i = 0;
-            const iMax = 10;
             let promises = [];
-            for (const num of indexGenerator(10)) {
-                const mine: types.Mine = dummy.randomMine()
-                promises.push(dao.insertMine(mine, testDb));
+            for (const num of indexGenerator(randomInserts)) {
+                const x: types.Mine = dummy.randomMine()
+                promises.push(dao.insertMine(x, testDb));
             }
             Promise.all(promises).then(function(){
-                //All operations done
+                // all inserts are done
                 dao.findMine(testDb)
-                .then(mines => {
+                .then(found => {
                     mongoConnection.closeDefaultConnection();
-                    if (mines.length != 10) {
-                        return errorPromise2(`received wrong number of elements. Expected 1000 got ${mines.length}`, done);
+                    if (found.length != randomInserts) {
+                        done(`received wrong number of elements. Expected ${randomInserts} got ${found.length}`);
+                        return;
                     }
-                    if (!types.isMineArray(mines)) {
-                        return errorPromise2("expected Mine array, but got something different", done);
+                    if (!types.isMineArray(found)) {
+                        done("expected Mine array, but got something different");
+                        return;
                     }
                     logger.info("done :)");
                     done();
@@ -67,9 +61,74 @@ describe('Mine', () => {
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();
-            return errorPromise2(`can't connect to db: ${e}`, done);
+            done(`can't connect to db: ${e}`);
         }
     });
-
-
 });
+
+describe('MineSpotRow', () => {
+    it('insertMineSpotRow', function(done) {
+        try {
+            let promises = [];
+            for (const num of indexGenerator(randomInserts)) {
+                const x: types.MineSpotRow = dummy.randomMineSpotRow()
+                promises.push(dao.insertMineSpotRow(x, testDb));
+            }
+            Promise.all(promises).then(function(){
+                // all inserts are done
+                dao.findMineSpotRow(testDb)
+                .then(found => {
+                    mongoConnection.closeDefaultConnection();
+                    if (found.length != randomInserts) {
+                        done(`received wrong number of elements. Expected ${randomInserts} got ${found.length}`);
+                        return;
+                    }
+                    if (!types.isMineSpotRowArray(found)) {
+                        done("expected MineSpotRow array, but got something different");
+                        return;
+                    }
+                    logger.info("done :)");
+                    done();
+                });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+});
+
+describe('Dwarf', () => {
+    it('insertDwarf', function(done) {
+        try {
+            let promises = [];
+            for (const num of indexGenerator(randomInserts)) {
+                const x: types.Dwarf = dummy.randomDwarf()
+                promises.push(dao.insertDwarf(x, testDb));
+            }
+            Promise.all(promises).then(function(){
+                // all inserts are done
+                dao.findDwarf(testDb)
+                .then(found => {
+                    mongoConnection.closeDefaultConnection();
+                    if (found.length != randomInserts) {
+                        done(`received wrong number of elements. Expected ${randomInserts} got ${found.length}`);
+                        return;
+                    }
+                    if (!types.isDwarfArray(found)) {
+                        done("expected Dwarf array, but got something different");
+                        return;
+                    }
+                    logger.info("done :)");
+                    done();
+                });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+});
+
