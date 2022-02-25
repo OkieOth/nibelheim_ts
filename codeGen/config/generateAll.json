@@ -88,11 +88,19 @@
                 }
             },
             {
-                "name": "dao",
-                "description": "generate crud functions to utilize mongodb",
+                "name": "dao_insert",
+                "description": "generate insert functions for mongodb",
                 "singleFileTask": {
-                    "template": "/project/codeGen/dao.mako",
-                    "destFile": "/project/packages/dao/src_generated/dao.ts"
+                    "template": "/project/codeGen/dao_insert.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_insert.ts"
+                }
+            },
+            {
+                "name": "dao_find",
+                "description": "generate find functions query mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_find.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_find.ts"
                 }
             },
             {
