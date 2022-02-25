@@ -7,7 +7,8 @@
 
 import * as fs from "fs";
 import * as dotenv from "dotenv";
-import * as dao from "../src_generated/dao"
+import * as dao_find from "../src_generated/dao_find"
+import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
@@ -39,11 +40,11 @@ describe('Mine', () => {
             let promises = [];
             for (const num of indexGenerator(randomInserts)) {
                 const x: types.Mine = dummy.randomMine()
-                promises.push(dao.insertMine(x, testDb));
+                promises.push(dao_insert.insertMine(x, testDb));
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao.findMine(testDb)
+                dao_find.findMine(testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {
@@ -72,11 +73,11 @@ describe('MineSpotRow', () => {
             let promises = [];
             for (const num of indexGenerator(randomInserts)) {
                 const x: types.MineSpotRow = dummy.randomMineSpotRow()
-                promises.push(dao.insertMineSpotRow(x, testDb));
+                promises.push(dao_insert.insertMineSpotRow(x, testDb));
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao.findMineSpotRow(testDb)
+                dao_find.findMineSpotRow(testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {
@@ -105,11 +106,11 @@ describe('Dwarf', () => {
             let promises = [];
             for (const num of indexGenerator(randomInserts)) {
                 const x: types.Dwarf = dummy.randomDwarf()
-                promises.push(dao.insertDwarf(x, testDb));
+                promises.push(dao_insert.insertDwarf(x, testDb));
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao.findDwarf(testDb)
+                dao_find.findDwarf(testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {

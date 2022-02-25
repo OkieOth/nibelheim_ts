@@ -19,7 +19,8 @@
 
 import * as fs from "fs";
 import * as dotenv from "dotenv";
-import * as dao from "../src_generated/dao"
+import * as dao_find from "../src_generated/dao_find"
+import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
@@ -52,11 +53,11 @@ describe('${currentType.name}', () => {
             let promises = [];
             for (const num of indexGenerator(randomInserts)) {
                 const x: types.${currentType.name} = dummy.random${currentType.name}()
-                promises.push(dao.insert${currentType.name}(x, testDb));
+                promises.push(dao_insert.insert${currentType.name}(x, testDb));
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao.find${currentType.name}(testDb)
+                dao_find.find${currentType.name}(testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {
