@@ -11,14 +11,14 @@ import * as dao_uuid from "./dao_uuid"
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 
-export async function insertMine(x: types.Mine, dbName: string): Promise<mongoDb.ObjectId> {
+export async function insertMine(x: types.Mine, dbName: string, collectionName?: string): Promise<mongoDb.ObjectId> {
     return new Promise(async (resolve, reject) => {
         try {
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collectionName = "Mine";
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertMine");
+            logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertMine");
             logger.debug(() => JSON.stringify(x), "insertMine");
 
             // TODO check if type or child contains UuuiType
@@ -33,14 +33,14 @@ export async function insertMine(x: types.Mine, dbName: string): Promise<mongoDb
     });
 }
 
-export async function insertMineSpotRow(x: types.MineSpotRow, dbName: string): Promise<mongoDb.ObjectId> {
+export async function insertMineSpotRow(x: types.MineSpotRow, dbName: string, collectionName?: string): Promise<mongoDb.ObjectId> {
     return new Promise(async (resolve, reject) => {
         try {
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collectionName = "MineSpotRow";
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertMineSpotRow");
+            logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertMineSpotRow");
             logger.debug(() => JSON.stringify(x), "insertMineSpotRow");
 
             // TODO check if type or child contains UuuiType
@@ -55,14 +55,14 @@ export async function insertMineSpotRow(x: types.MineSpotRow, dbName: string): P
     });
 }
 
-export async function insertDwarf(x: types.Dwarf, dbName: string): Promise<mongoDb.ObjectId> {
+export async function insertDwarf(x: types.Dwarf, dbName: string, collectionName?: string): Promise<mongoDb.ObjectId> {
     return new Promise(async (resolve, reject) => {
         try {
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collectionName = "Dwarf";
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            logger.info(() => `insert into db: ${dbName}, collection: ${collectionName}`, "insertDwarf");
+            logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertDwarf");
             logger.debug(() => JSON.stringify(x), "insertDwarf");
 
             // TODO check if type or child contains UuuiType

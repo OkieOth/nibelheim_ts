@@ -55,16 +55,16 @@ import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 
 % for currentType in mongoTypes:
-export async function find${currentType.name}(dbName: string): Promise<types.${currentType.name}[]> {
+export async function find${currentType.name}(dbName: string, collectionName?: string): Promise<types.${currentType.name}[]> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "${currentType.name}";
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
             const cursor = collection.find({});
             const elemCount = await cursor.count();
-            logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionName}`, "find${currentType.name}");
+            logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
             const array: types.${currentType.name}[] = [];
             await cursor.forEach(doc => {
                 // TODO check if type or child contains UuuiType
@@ -87,12 +87,12 @@ export async function find${currentType.name}(dbName: string): Promise<types.${c
 <%
     keyProperty = modelFuncs.getKeyProperty(currentType)
 %>
-export async function find${currentType.name}ByKey(key: ${printTypescriptType(keyProperty.type, False)}, dbName: string): Promise<types.${currentType.name}> {
+export async function find${currentType.name}ByKey(key: ${printTypescriptType(keyProperty.type, False)}, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "${currentType.name}";
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
     % if isinstance(keyProperty.type, model.UuidType):
             const filter = uuid.from(key);
     % else:
@@ -100,11 +100,11 @@ export async function find${currentType.name}ByKey(key: ${printTypescriptType(ke
     % endif
             const result = await collection.findOne({id: filter});
             if (types.is${currentType.name}(result)) {
-                logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionName}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
+                logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
                 resolve(result);
             }
             else {
-                const errorMsg = `found something in db, but it has wrong type: $${}{dbName}, collection: $${}{collectionName}, ${keyProperty.name}=$${}{key}`;
+                const errorMsg = `found something in db, but it has wrong type: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`;
                 logger.info(errorMsg, "find${currentType.name}ByKey");
                 reject();
             }

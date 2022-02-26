@@ -25,14 +25,14 @@ import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 
 % for currentType in mongoTypes:
-export async function insert${currentType.name}(x: types.${currentType.name}, dbName: string): Promise<mongoDb.ObjectId> {
+export async function insert${currentType.name}(x: types.${currentType.name}, dbName: string, collectionName?: string): Promise<mongoDb.ObjectId> {
     return new Promise(async (resolve, reject) => {
         try {
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collectionName = "${currentType.name}";
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            logger.info(() => `insert into db: $${}{dbName}, collection: $${}{collectionName}`, "insert${currentType.name}");
+            logger.info(() => `insert into db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "insert${currentType.name}");
             logger.debug(() => JSON.stringify(x), "insert${currentType.name}");
 
             // TODO check if type or child contains UuuiType

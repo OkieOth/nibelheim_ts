@@ -12,16 +12,16 @@ import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 
-export async function findMine(dbName: string): Promise<types.Mine[]> {
+export async function findMine(dbName: string, collectionName?: string): Promise<types.Mine[]> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "Mine";
+            const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
             const cursor = collection.find({});
             const elemCount = await cursor.count();
-            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findMine");
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
             const array: types.Mine[] = [];
             await cursor.forEach(doc => {
                 // TODO check if type or child contains UuuiType
@@ -41,20 +41,20 @@ export async function findMine(dbName: string): Promise<types.Mine[]> {
 }
 
 
-export async function findMineByKey(key: string, dbName: string): Promise<types.Mine> {
+export async function findMineByKey(key: string, dbName: string, collectionName?: string): Promise<types.Mine> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "Mine";
+            const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
             if (types.isMine(result)) {
-                logger.info(() => `found element in db: ${dbName}, collection: ${collectionName}, id=${key}`, "findMineByKey");
+                logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findMineByKey");
                 resolve(result);
             }
             else {
-                const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionName}, id=${key}`;
+                const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionNameToUse}, id=${key}`;
                 logger.info(errorMsg, "findMineByKey");
                 reject();
             }
@@ -66,16 +66,16 @@ export async function findMineByKey(key: string, dbName: string): Promise<types.
     });
 }
 
-export async function findMineSpotRow(dbName: string): Promise<types.MineSpotRow[]> {
+export async function findMineSpotRow(dbName: string, collectionName?: string): Promise<types.MineSpotRow[]> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "MineSpotRow";
+            const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
             const cursor = collection.find({});
             const elemCount = await cursor.count();
-            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findMineSpotRow");
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
             const array: types.MineSpotRow[] = [];
             await cursor.forEach(doc => {
                 // TODO check if type or child contains UuuiType
@@ -94,16 +94,16 @@ export async function findMineSpotRow(dbName: string): Promise<types.MineSpotRow
     });
 }
 
-export async function findDwarf(dbName: string): Promise<types.Dwarf[]> {
+export async function findDwarf(dbName: string, collectionName?: string): Promise<types.Dwarf[]> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "Dwarf";
+            const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
             const cursor = collection.find({});
             const elemCount = await cursor.count();
-            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionName}`, "findDwarf");
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
             const array: types.Dwarf[] = [];
             await cursor.forEach(doc => {
                 // TODO check if type or child contains UuuiType
@@ -123,20 +123,20 @@ export async function findDwarf(dbName: string): Promise<types.Dwarf[]> {
 }
 
 
-export async function findDwarfByKey(key: string, dbName: string): Promise<types.Dwarf> {
+export async function findDwarfByKey(key: string, dbName: string, collectionName?: string): Promise<types.Dwarf> {
     return new Promise(async (resolve, reject) => {
         try {
-            const collectionName = "Dwarf";
+            const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
-            const collection: mongoDb.Collection = db.collection(collectionName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
             if (types.isDwarf(result)) {
-                logger.info(() => `found element in db: ${dbName}, collection: ${collectionName}, id=${key}`, "findDwarfByKey");
+                logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findDwarfByKey");
                 resolve(result);
             }
             else {
-                const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionName}, id=${key}`;
+                const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionNameToUse}, id=${key}`;
                 logger.info(errorMsg, "findDwarfByKey");
                 reject();
             }
