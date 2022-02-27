@@ -7,6 +7,7 @@
 
 import * as fs from "fs";
 import * as dotenv from "dotenv";
+import * as uuid from "uuid-mongodb";
 import * as dao_find from "../src_generated/dao_find"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
@@ -67,6 +68,46 @@ describe('Mine', () => {
     });
 });
 
+
+describe('Mine find by key', () => {
+    it('findMineByKey', function(done) {
+        try {
+            const collectionName = 'Mine_findByKey';
+            let insertedElems = [];
+            let promises = [];
+            for (const num of indexGenerator(3)) {
+                const x: types.Mine = dummy.randomMine();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMine(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(){
+                const keyValue = insertedElems[2].id;
+                if (!keyValue) {
+                    mongoConnection.closeDefaultConnection();
+                    return done("key value (id) is undefined or null");
+                }
+                dao_find.findMineByKey(keyValue, testDb)
+                    .then(found => {
+                        mongoConnection.closeDefaultConnection();
+                        if (!types.isMine(found)) {
+                            done("expected Mine, but got something different");
+                            return;
+                        }
+                        logger.info("done :)");
+                        done();
+                    })
+                    .catch(e => {
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+});
+
 describe('MineSpotRow', () => {
     it('insertMineSpotRow', function(done) {
         try {
@@ -100,6 +141,7 @@ describe('MineSpotRow', () => {
     });
 });
 
+
 describe('Dwarf', () => {
     it('insertDwarf', function(done) {
         try {
@@ -124,6 +166,46 @@ describe('Dwarf', () => {
                     logger.info("done :)");
                     done();
                 });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+});
+
+
+describe('Dwarf find by key', () => {
+    it('findDwarfByKey', function(done) {
+        try {
+            const collectionName = 'Dwarf_findByKey';
+            let insertedElems = [];
+            let promises = [];
+            for (const num of indexGenerator(3)) {
+                const x: types.Dwarf = dummy.randomDwarf();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(){
+                const keyValue = insertedElems[2].id;
+                if (!keyValue) {
+                    mongoConnection.closeDefaultConnection();
+                    return done("key value (id) is undefined or null");
+                }
+                dao_find.findDwarfByKey(keyValue, testDb)
+                    .then(found => {
+                        mongoConnection.closeDefaultConnection();
+                        if (!types.isDwarf(found)) {
+                            done("expected Dwarf, but got something different");
+                            return;
+                        }
+                        logger.info("done :)");
+                        done();
+                    })
+                    .catch(e => {
+                        done(e);
+                    });
             });
         }
         catch(e) {

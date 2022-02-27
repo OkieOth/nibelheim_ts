@@ -19,6 +19,7 @@
 
 import * as fs from "fs";
 import * as dotenv from "dotenv";
+import * as uuid from "uuid-mongodb";
 import * as dao_find from "../src_generated/dao_find"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
@@ -79,5 +80,49 @@ describe('${currentType.name}', () => {
         }
     });
 });
+
+    % if modelFuncs.hasKey(currentType):
+<%
+    keyProperty = modelFuncs.getKeyProperty(currentType)
+%>
+describe('${currentType.name} find by key', () => {
+    it('find${currentType.name}ByKey', function(done) {
+        try {
+            const collectionName = '${currentType.name}_findByKey';
+            let insertedElems = [];
+            let promises = [];
+            for (const num of indexGenerator(3)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                insertedElems.push(x);
+                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(){
+                const keyValue = insertedElems[2].${keyProperty.name};
+                if (!keyValue) {
+                    mongoConnection.closeDefaultConnection();
+                    return done("key value (${keyProperty.name}) is undefined or null");
+                }
+                dao_find.find${currentType.name}ByKey(keyValue, testDb)
+                    .then(found => {
+                        mongoConnection.closeDefaultConnection();
+                        if (!types.is${currentType.name}(found)) {
+                            done("expected ${currentType.name}, but got something different");
+                            return;
+                        }
+                        logger.info("done :)");
+                        done();
+                    })
+                    .catch(e => {
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+});
+    % endif
 
 % endfor
