@@ -17,9 +17,9 @@
     The file provides the tests for the mongodb dao functions.
 */
 
+import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
-import * as uuid from "uuid-mongodb";
 import * as dao_find from "../src_generated/dao_find"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
@@ -102,13 +102,16 @@ describe('${currentType.name} find by key', () => {
                     mongoConnection.closeDefaultConnection();
                     return done("key value (${keyProperty.name}) is undefined or null");
                 }
-                dao_find.find${currentType.name}ByKey(keyValue, testDb)
+                dao_find.find${currentType.name}ByKey(keyValue, testDb, collectionName)
                     .then(found => {
+                        if (!found) {
+                            return done(`didn't find value (${keyProperty.name}) in the database: $${}{keyValue}`);
+                        }
                         mongoConnection.closeDefaultConnection();
                         if (!types.is${currentType.name}(found)) {
-                            done("expected ${currentType.name}, but got something different");
-                            return;
+                            return done("expected ${currentType.name}, but got something different");
                         }
+                        assert.deepEqual(insertedElems[2], found);
                         logger.info("done :)");
                         done();
                     })

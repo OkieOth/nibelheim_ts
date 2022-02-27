@@ -99,6 +99,8 @@ export async function find${currentType.name}ByKey(key: ${printTypescriptType(ke
             const filter = key;
     % endif
             const result = await collection.findOne({id: filter});
+            // TODO check if type or child contains UuuiType
+            dao_uuid.dao2${currentType.name}(result);
             if (types.is${currentType.name}(result)) {
                 logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
                 resolve(result);
@@ -106,7 +108,7 @@ export async function find${currentType.name}ByKey(key: ${printTypescriptType(ke
             else {
                 const errorMsg = `found something in db, but it has wrong type: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`;
                 logger.info(errorMsg, "find${currentType.name}ByKey");
-                reject();
+                reject(errorMsg);
             }
         }
         catch(e) {

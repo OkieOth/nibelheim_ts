@@ -5,9 +5,9 @@
     The file provides the tests for the mongodb dao functions.
 */
 
+import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
-import * as uuid from "uuid-mongodb";
 import * as dao_find from "../src_generated/dao_find"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
@@ -86,13 +86,16 @@ describe('Mine find by key', () => {
                     mongoConnection.closeDefaultConnection();
                     return done("key value (id) is undefined or null");
                 }
-                dao_find.findMineByKey(keyValue, testDb)
+                dao_find.findMineByKey(keyValue, testDb, collectionName)
                     .then(found => {
+                        if (!found) {
+                            return done(`didn't find value (id) in the database: ${keyValue}`);
+                        }
                         mongoConnection.closeDefaultConnection();
                         if (!types.isMine(found)) {
-                            done("expected Mine, but got something different");
-                            return;
+                            return done("expected Mine, but got something different");
                         }
+                        assert.deepEqual(insertedElems[2], found);
                         logger.info("done :)");
                         done();
                     })
@@ -193,13 +196,16 @@ describe('Dwarf find by key', () => {
                     mongoConnection.closeDefaultConnection();
                     return done("key value (id) is undefined or null");
                 }
-                dao_find.findDwarfByKey(keyValue, testDb)
+                dao_find.findDwarfByKey(keyValue, testDb, collectionName)
                     .then(found => {
+                        if (!found) {
+                            return done(`didn't find value (id) in the database: ${keyValue}`);
+                        }
                         mongoConnection.closeDefaultConnection();
                         if (!types.isDwarf(found)) {
-                            done("expected Dwarf, but got something different");
-                            return;
+                            return done("expected Dwarf, but got something different");
                         }
+                        assert.deepEqual(insertedElems[2], found);
                         logger.info("done :)");
                         done();
                     })

@@ -49,6 +49,8 @@ export async function findMineByKey(key: string, dbName: string, collectionName?
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
+            // TODO check if type or child contains UuuiType
+            dao_uuid.dao2Mine(result);
             if (types.isMine(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findMineByKey");
                 resolve(result);
@@ -56,7 +58,7 @@ export async function findMineByKey(key: string, dbName: string, collectionName?
             else {
                 const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionNameToUse}, id=${key}`;
                 logger.info(errorMsg, "findMineByKey");
-                reject();
+                reject(errorMsg);
             }
         }
         catch(e) {
@@ -131,6 +133,8 @@ export async function findDwarfByKey(key: string, dbName: string, collectionName
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
+            // TODO check if type or child contains UuuiType
+            dao_uuid.dao2Dwarf(result);
             if (types.isDwarf(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findDwarfByKey");
                 resolve(result);
@@ -138,7 +142,7 @@ export async function findDwarfByKey(key: string, dbName: string, collectionName
             else {
                 const errorMsg = `found something in db, but it has wrong type: ${dbName}, collection: ${collectionNameToUse}, id=${key}`;
                 logger.info(errorMsg, "findDwarfByKey");
-                reject();
+                reject(errorMsg);
             }
         }
         catch(e) {
