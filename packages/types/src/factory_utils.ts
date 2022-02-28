@@ -15,6 +15,7 @@ export function isArray(arrayThing: any): boolean {
     return b1 && b2;
 }
 
+
 export function allArrayElemsAreUUIDs(arrayThing: any): boolean{
     if (!isArray(arrayThing)) return false;
     for (let i=0; i < arrayThing.length; i++) {

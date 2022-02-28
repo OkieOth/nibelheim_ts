@@ -1,6 +1,5 @@
 import * as mongoDB from "mongodb";
 import {logger} from "logger";
-import { resolve } from "path/posix";
 
 
 let defaultClient: mongoDB.MongoClient;

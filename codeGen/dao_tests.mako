@@ -111,7 +111,9 @@ describe('${currentType.name} find by key', () => {
                         if (!types.is${currentType.name}(found)) {
                             return done("expected ${currentType.name}, but got something different");
                         }
-                        assert.deepEqual(insertedElems[2], found);
+                        if (!types.isEqual${currentType.name}(insertedElems[2], found)) {
+                            return done("read value isn't equal inserted value");
+                        }
                         logger.info("done :)");
                         done();
                     })

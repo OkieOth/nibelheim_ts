@@ -95,7 +95,9 @@ describe('Mine find by key', () => {
                         if (!types.isMine(found)) {
                             return done("expected Mine, but got something different");
                         }
-                        assert.deepEqual(insertedElems[2], found);
+                        if (!types.isEqualMine(insertedElems[2], found)) {
+                            return done("read value isn't equal inserted value");
+                        }
                         logger.info("done :)");
                         done();
                     })
@@ -205,7 +207,9 @@ describe('Dwarf find by key', () => {
                         if (!types.isDwarf(found)) {
                             return done("expected Dwarf, but got something different");
                         }
-                        assert.deepEqual(insertedElems[2], found);
+                        if (!types.isEqualDwarf(insertedElems[2], found)) {
+                            return done("read value isn't equal inserted value");
+                        }
                         logger.info("done :)");
                         done();
                     })

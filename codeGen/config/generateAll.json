@@ -60,7 +60,7 @@
                 "description": "generate functions to test if objects are equal",
                 "singleFileTask": {
                     "template": "/project/codeGen/type_equal.mako",
-                    "destFile": "/project/packages/types/src_generated/type_equal.ts"
+                    "destFile": "/project/packages/types/src_generated/equal_funcs.ts"
                 }
             },
             {

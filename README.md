@@ -96,6 +96,7 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 | -------------------- | ------------------------------------------------------ |
 | types_puml           | generate PlantUml file from the used mode              |
 | types                | generate interfaces from the model                     |
+| type_equal           | functions to test equality of objects                  |
 | type_factories       | generate functions to create instances of the types    |
 | type_factories_tests | generate tests for type factories                      |
 | type_quards          | generate functions to validate types                   |

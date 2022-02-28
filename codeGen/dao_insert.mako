@@ -36,8 +36,9 @@ export async function insert${currentType.name}(x: types.${currentType.name}, db
             logger.debug(() => JSON.stringify(x), "insert${currentType.name}");
 
             // TODO check if type or child contains UuuiType
-            dao_uuid.${stringUtils.toLowerCamelCase(currentType.name)}2Dao(x);
-            const result = await collection.insertOne(x);
+            var objToInsert = {...x};
+            dao_uuid.${stringUtils.toLowerCamelCase(currentType.name)}2Dao(objToInsert);
+            const result = await collection.insertOne(objToInsert);
             resolve(result.insertedId);
         }
         catch(e) {
