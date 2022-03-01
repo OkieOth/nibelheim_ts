@@ -49,9 +49,7 @@ export function isEqualMine(obj1: types.Mine, obj2: types.Mine): boolean {
         return false;
     }
     if (obj1.time) {
-        const t2 = typeof (obj2.time)
-        const t1 = typeof (obj1.time)
-        if (obj1.time !== obj2.time) return false;
+        if (obj1.time.getTime() !== obj2.time.getTime()) return false;
     }
     else {
         if (!obj2.time) return true;

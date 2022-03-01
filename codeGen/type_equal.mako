@@ -6,6 +6,12 @@
 
     templateFile = 'type_equal.mako'
     templateVersion = '0.1.0'
+
+    def getCompareFunc(prop):
+        if isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
+            return '.getTime()'
+        else:
+            return ''
 %>/**
     This file is generated.
     It contains functions to test if two objects are equal. The functions are
@@ -45,7 +51,7 @@ export function isEqual${currentType.name}(obj1: types.${currentType.name}, obj2
         if (obj1.${prop.name}.length != obj2.${prop.name}.length) return false;
         for (let i=0; i < obj1.${prop.name}.length; i++) {
                 % if modelFuncs.isBaseType(prop.type) or isinstance(prop.type, model.EnumType):
-            if (obj1.${prop.name}[i] !== obj2.${prop.name}[i]) return false;
+            if (obj1.${prop.name}[i]${getCompareFunc(prop)} !== obj2.${prop.name}[i]${getCompareFunc(prop)}) return false;
                 % elif isinstance(prop.type, model.DictionaryType):
             if (_.isEqual(obj1.${prop.name}, obj2.${prop.name})) return false;
                 % elif isinstance(prop.type, model.ComplexType):
@@ -56,7 +62,7 @@ export function isEqual${currentType.name}(obj1: types.${currentType.name}, obj2
         }
             % else:
                 % if modelFuncs.isBaseType(prop.type) or isinstance(prop.type, model.EnumType):
-        if (obj1.${prop.name} !== obj2.${prop.name}) return false;
+        if (obj1.${prop.name}${getCompareFunc(prop)} !== obj2.${prop.name}${getCompareFunc(prop)}) return false;
                 % elif isinstance(prop.type, model.DictionaryType):
         if (_.isEqual(obj1.${prop.name}, obj2.${prop.name})) return false;
                 % elif isinstance(prop.type, model.ComplexType):
