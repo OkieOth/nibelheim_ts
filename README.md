@@ -96,6 +96,7 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 | -------------------- | ------------------------------------------------------ |
 | types_puml           | generate PlantUml file from the used mode              |
 | types                | generate interfaces from the model                     |
+| type_equal           | functions to test equality of objects                  |
 | type_factories       | generate functions to create instances of the types    |
 | type_factories_tests | generate tests for type factories                      |
 | type_quards          | generate functions to validate types                   |
@@ -104,5 +105,6 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 | types_random_tests   | generate tests for the random data functions           |
 | dao_uuid             | generates the functions to convert uuids               |
 | dao_uuid_tests       | generates the tests for the functions to convert uuids |
-| dao                  | generates the functions to access mongodb              |
+| dao_insert           | generates the functions to insert data into mongodb    |
+| dao_find             | generates the functions to query data from  mongodb    |
 | dao_tests            | generates the functions to test access mongodb         |

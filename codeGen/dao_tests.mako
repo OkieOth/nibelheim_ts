@@ -17,9 +17,11 @@
     The file provides the tests for the mongodb dao functions.
 */
 
+import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
-import * as dao from "../src_generated/dao"
+import * as dao_find from "../src_generated/dao_find"
+import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
@@ -52,11 +54,11 @@ describe('${currentType.name}', () => {
             let promises = [];
             for (const num of indexGenerator(randomInserts)) {
                 const x: types.${currentType.name} = dummy.random${currentType.name}()
-                promises.push(dao.insert${currentType.name}(x, testDb));
+                promises.push(dao_insert.insert${currentType.name}(x, testDb));
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao.find${currentType.name}(testDb)
+                dao_find.find${currentType.name}(testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {
@@ -78,5 +80,83 @@ describe('${currentType.name}', () => {
         }
     });
 });
+
+    % if modelFuncs.hasKey(currentType):
+<%
+    keyProperty = modelFuncs.getKeyProperty(currentType)
+%>
+describe('${currentType.name} find by key', () => {
+    it('find${currentType.name}ByKey equal', function(done) {
+        try {
+            const collectionName = '${currentType.name}_findByKey';
+            let insertedElems = [];
+            let promises = [];
+            for (const num of indexGenerator(3)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                insertedElems.push(x);
+                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(){
+                const keyValue = insertedElems[2].${keyProperty.name};
+                if (!keyValue) {
+                    mongoConnection.closeDefaultConnection();
+                    return done("key value (${keyProperty.name}) is undefined or null");
+                }
+                dao_find.find${currentType.name}ByKey(keyValue, testDb, collectionName)
+                    .then(found => {
+                        if (!found) {
+                            return done(`didn't find value (${keyProperty.name}) in the database: $${}{keyValue}`);
+                        }
+                        mongoConnection.closeDefaultConnection();
+                        if (!types.is${currentType.name}(found)) {
+                            return done("expected ${currentType.name}, but got something different");
+                        }
+                        if (!types.isEqual${currentType.name}(insertedElems[2], found)) {
+                            return done("read value isn't equal inserted value");
+                        }
+                        if (types.isEqual${currentType.name}(insertedElems[1], found)) {
+                            return done("read value is equal to wrong value");
+                        }
+                        logger.info("done :)");
+                        done();
+                    })
+                    .catch(e => {
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+
+    it('find${currentType.name}ByKey not equal', function(done) {
+        try {
+            const collectionName = '${currentType.name}_findByKey';
+            const x: types.${currentType.name} = dummy.random${currentType.name}();
+            const keyValue = x.${keyProperty.name};
+            if (!keyValue) {
+                return done("key value (${keyProperty.name}) is undefined or null");
+            }
+            dao_find.find${currentType.name}ByKey(keyValue, testDb, collectionName)
+                .then(found => {
+                    if (found) {
+                        return done(`found value (${keyProperty.name}) in the database: $${}{keyValue}, even w/o insert`);
+                    }
+                    mongoConnection.closeDefaultConnection();
+                    done();
+                })
+                .catch(e => {
+                    done(e);
+                });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+});
+    % endif
 
 % endfor
