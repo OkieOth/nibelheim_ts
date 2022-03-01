@@ -70,7 +70,7 @@ describe('Mine', () => {
 
 
 describe('Mine find by key', () => {
-    it('findMineByKey', function(done) {
+    it('findMineByKey equal', function(done) {
         try {
             const collectionName = 'Mine_findByKey';
             let insertedElems = [];
@@ -98,6 +98,9 @@ describe('Mine find by key', () => {
                         if (!types.isEqualMine(insertedElems[2], found)) {
                             return done("read value isn't equal inserted value");
                         }
+                        if (types.isEqualMine(insertedElems[1], found)) {
+                            return done("read value is equal to wrong value");
+                        }
                         logger.info("done :)");
                         done();
                     })
@@ -105,6 +108,32 @@ describe('Mine find by key', () => {
                         done(e);
                     });
             });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+
+    it('findMineByKey not equal', function(done) {
+        try {
+            const collectionName = 'Mine_findByKey';
+            const x: types.Mine = dummy.randomMine();
+            const keyValue = x.id;
+            if (!keyValue) {
+                return done("key value (id) is undefined or null");
+            }
+            dao_find.findMineByKey(keyValue, testDb, collectionName)
+                .then(found => {
+                    if (found) {
+                        return done(`found value (id) in the database: ${keyValue}, even w/o insert`);
+                    }
+                    mongoConnection.closeDefaultConnection();
+                    done();
+                })
+                .catch(e => {
+                    done(e);
+                });
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();
@@ -182,7 +211,7 @@ describe('Dwarf', () => {
 
 
 describe('Dwarf find by key', () => {
-    it('findDwarfByKey', function(done) {
+    it('findDwarfByKey equal', function(done) {
         try {
             const collectionName = 'Dwarf_findByKey';
             let insertedElems = [];
@@ -210,6 +239,9 @@ describe('Dwarf find by key', () => {
                         if (!types.isEqualDwarf(insertedElems[2], found)) {
                             return done("read value isn't equal inserted value");
                         }
+                        if (types.isEqualDwarf(insertedElems[1], found)) {
+                            return done("read value is equal to wrong value");
+                        }
                         logger.info("done :)");
                         done();
                     })
@@ -217,6 +249,32 @@ describe('Dwarf find by key', () => {
                         done(e);
                     });
             });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
+    });
+
+    it('findDwarfByKey not equal', function(done) {
+        try {
+            const collectionName = 'Dwarf_findByKey';
+            const x: types.Dwarf = dummy.randomDwarf();
+            const keyValue = x.id;
+            if (!keyValue) {
+                return done("key value (id) is undefined or null");
+            }
+            dao_find.findDwarfByKey(keyValue, testDb, collectionName)
+                .then(found => {
+                    if (found) {
+                        return done(`found value (id) in the database: ${keyValue}, even w/o insert`);
+                    }
+                    mongoConnection.closeDefaultConnection();
+                    done();
+                })
+                .catch(e => {
+                    done(e);
+                });
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();

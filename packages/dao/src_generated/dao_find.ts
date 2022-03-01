@@ -49,6 +49,10 @@ export async function findMineByKey(key: string, dbName: string, collectionName?
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
+            if (!result) {
+                logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findMineByKey");
+                return resolve(null);
+            }
             // TODO check if type or child contains UuuiType
             dao_uuid.dao2Mine(result);
             if (types.isMine(result)) {
@@ -133,6 +137,10 @@ export async function findDwarfByKey(key: string, dbName: string, collectionName
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
             const result = await collection.findOne({id: filter});
+            if (!result) {
+                logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findDwarfByKey");
+                return resolve(null);
+            }
             // TODO check if type or child contains UuuiType
             dao_uuid.dao2Dwarf(result);
             if (types.isDwarf(result)) {

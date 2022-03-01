@@ -86,7 +86,7 @@ describe('${currentType.name}', () => {
     keyProperty = modelFuncs.getKeyProperty(currentType)
 %>
 describe('${currentType.name} find by key', () => {
-    it('find${currentType.name}ByKey', function(done) {
+    it('find${currentType.name}ByKey equal', function(done) {
         try {
             const collectionName = '${currentType.name}_findByKey';
             let insertedElems = [];
@@ -114,6 +114,9 @@ describe('${currentType.name} find by key', () => {
                         if (!types.isEqual${currentType.name}(insertedElems[2], found)) {
                             return done("read value isn't equal inserted value");
                         }
+                        if (types.isEqual${currentType.name}(insertedElems[1], found)) {
+                            return done("read value is equal to wrong value");
+                        }
                         logger.info("done :)");
                         done();
                     })
@@ -121,6 +124,32 @@ describe('${currentType.name} find by key', () => {
                         done(e);
                     });
             });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+
+    it('find${currentType.name}ByKey not equal', function(done) {
+        try {
+            const collectionName = '${currentType.name}_findByKey';
+            const x: types.${currentType.name} = dummy.random${currentType.name}();
+            const keyValue = x.${keyProperty.name};
+            if (!keyValue) {
+                return done("key value (${keyProperty.name}) is undefined or null");
+            }
+            dao_find.find${currentType.name}ByKey(keyValue, testDb, collectionName)
+                .then(found => {
+                    if (found) {
+                        return done(`found value (${keyProperty.name}) in the database: $${}{keyValue}, even w/o insert`);
+                    }
+                    mongoConnection.closeDefaultConnection();
+                    done();
+                })
+                .catch(e => {
+                    done(e);
+                });
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();

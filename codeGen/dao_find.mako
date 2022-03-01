@@ -99,6 +99,10 @@ export async function find${currentType.name}ByKey(key: ${printTypescriptType(ke
             const filter = key;
     % endif
             const result = await collection.findOne({id: filter});
+            if (!result) {
+                logger.info(() => `found no element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
+                return resolve(null);
+            }
             // TODO check if type or child contains UuuiType
             dao_uuid.dao2${currentType.name}(result);
             if (types.is${currentType.name}(result)) {
