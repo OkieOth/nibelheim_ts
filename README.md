@@ -86,6 +86,12 @@ Pull the new latest version (currently 4.0.0) and the problems should be gone.
 
 # run the 'types' and 'types_puml' tasks from the codeGen config
 ./bin/generateAll.sh --tasks types types_puml
+
+# delete all generated files from the repo
+npm run clean
+
+# generate all code
+npm run codeGen
 ```
 
 [More information are here ...](docs/codegen.md)
