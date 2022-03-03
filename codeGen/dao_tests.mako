@@ -20,6 +20,7 @@
 import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
+import * as mongoDb from "mongodb";
 import * as dao_find from "../src_generated/dao_find"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
@@ -81,6 +82,70 @@ describe('${currentType.name}', () => {
     });
 });
 
+describe('${currentType.name} find by _id', () => {
+    it('find${currentType.name}ByObjectId equal', function(done) {
+        try {
+            const collectionName = '${currentType.name}_find';
+            let insertedElems = [];
+            let promises = [];
+            for (const num of indexGenerator(3)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                insertedElems.push(x);
+                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.find${currentType.name}ByObjectId(valuesArray[1], testDb, collectionName)
+                    .then(found => {
+                        if (!found) {
+                            return done(`didn't find value with _id in the database: $${}{valuesArray[1]}`);
+                        }
+                        mongoConnection.closeDefaultConnection();
+                        if (!types.is${currentType.name}(found)) {
+                            return done("expected ${currentType.name}, but got something different");
+                        }
+                        if (!types.isEqual${currentType.name}(insertedElems[1], found)) {
+                            return done("read value isn't equal inserted value");
+                        }
+                        if (types.isEqual${currentType.name}(insertedElems[0], found)) {
+                            return done("read value is equal to wrong value");
+                        }
+                        logger.info("done :)");
+                        done();
+                    })
+                    .catch(e => {
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+
+    it('find${currentType.name}ByObjectId not equal', function(done) {
+        try {
+            const collectionName = '${currentType.name}_find';
+            const objectId = new mongoDb.ObjectId();
+            dao_find.find${currentType.name}ByObjectId(String(objectId), testDb, collectionName)
+                .then(found => {
+                    if (found) {
+                        return done(`found value (_id) in the database: $${}{objectId}, even w/o insert`);
+                    }
+                    mongoConnection.closeDefaultConnection();
+                    done();
+                })
+                .catch(e => {
+                    done(e);
+                });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+});
+
     % if modelFuncs.hasKey(currentType):
 <%
     keyProperty = modelFuncs.getKeyProperty(currentType)
@@ -88,7 +153,7 @@ describe('${currentType.name}', () => {
 describe('${currentType.name} find by key', () => {
     it('find${currentType.name}ByKey equal', function(done) {
         try {
-            const collectionName = '${currentType.name}_findByKey';
+            const collectionName = '${currentType.name}_find';
             let insertedElems = [];
             let promises = [];
             for (const num of indexGenerator(3)) {
@@ -133,7 +198,7 @@ describe('${currentType.name} find by key', () => {
 
     it('find${currentType.name}ByKey not equal', function(done) {
         try {
-            const collectionName = '${currentType.name}_findByKey';
+            const collectionName = '${currentType.name}_find';
             const x: types.${currentType.name} = dummy.random${currentType.name}();
             const keyValue = x.${keyProperty.name};
             if (!keyValue) {
