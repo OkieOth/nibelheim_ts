@@ -9,4 +9,6 @@ then
     echo 'everything fine :)'
 else
     echo 'something went wrong :-('
+    exit 1
+
 fi
