@@ -83,6 +83,37 @@ export async function find${currentType.name}(dbName: string, collectionName?: s
     });
 }
 
+export async function find${currentType.name}ByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+            const filter = new mongoDb.ObjectId(objId);
+            const result = await collection.findOne({_id: filter});
+            if (!result) {
+                logger.info(() => `found no element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "find${currentType.name}ByObjectId");
+                return resolve(null);
+            }
+            // TODO check if type or child contains UuuiType
+            dao_uuid.dao2${currentType.name}(result);
+            if (types.is${currentType.name}(result)) {
+                logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "find${currentType.name}ByObjectId");
+                resolve(result);
+            }
+            else {
+                const errorMsg = `found something in db, but it has wrong type: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`;
+                logger.info(errorMsg, "find${currentType.name}ByObjectId");
+                reject(errorMsg);
+            }
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
     % if modelFuncs.hasKey(currentType):
 <%
     keyProperty = modelFuncs.getKeyProperty(currentType)
@@ -98,7 +129,7 @@ export async function find${currentType.name}ByKey(key: ${printTypescriptType(ke
     % else:
             const filter = key;
     % endif
-            const result = await collection.findOne({id: filter});
+            const result = await collection.findOne({${keyProperty.name}: filter});
             if (!result) {
                 logger.info(() => `found no element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
                 return resolve(null);
