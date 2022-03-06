@@ -104,6 +104,14 @@
                 }
             },
             {
+                "name": "dao_delete",
+                "description": "generate delete functions for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_delete.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_delete.ts"
+                }
+            },
+            {
                 "name": "dao_find",
                 "description": "generate find functions query mongodb",
                 "singleFileTask": {

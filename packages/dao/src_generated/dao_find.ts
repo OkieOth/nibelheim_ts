@@ -72,7 +72,7 @@ export async function findMineByObjectId(objId: string, dbName: string, collecti
 }
 
 
-export async function findMineByKey(key: string, dbName: string, collectionName?: string): Promise<types.Mine> {
+export async function findMineByKey(key: string | any, dbName: string, collectionName?: string): Promise<types.Mine> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
@@ -222,7 +222,7 @@ export async function findDwarfByObjectId(objId: string, dbName: string, collect
 }
 
 
-export async function findDwarfByKey(key: string, dbName: string, collectionName?: string): Promise<types.Dwarf> {
+export async function findDwarfByKey(key: string | any, dbName: string, collectionName?: string): Promise<types.Dwarf> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
