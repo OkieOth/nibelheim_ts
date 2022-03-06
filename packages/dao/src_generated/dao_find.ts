@@ -40,6 +40,24 @@ export async function findMine(dbName: string, collectionName?: string): Promise
     });
 }
 
+export async function countMine(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function findMineByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.Mine> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -131,6 +149,24 @@ export async function findMineSpotRow(dbName: string, collectionName?: string): 
     });
 }
 
+export async function countMineSpotRow(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function findMineSpotRowByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.MineSpotRow> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -182,6 +218,24 @@ export async function findDwarf(dbName: string, collectionName?: string): Promis
             });
             cursor.close();
             resolve(array);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
+export async function countDwarf(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
+            resolve(elemCount);
         }
         catch(e) {
             logger.error(e);

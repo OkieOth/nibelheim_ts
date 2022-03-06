@@ -22,6 +22,7 @@ import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
 import * as dao_find from "../src_generated/dao_find"
+import * as dao_delete from "../src_generated/dao_delete"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
@@ -113,6 +114,7 @@ describe('${currentType.name} find by _id', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -136,8 +138,116 @@ describe('${currentType.name} find by _id', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+});
+
+describe('${currentType.name} delete by _id', () => {
+    it('delete${currentType.name}ByObjectId found', function(done) {
+        try {
+            const collectionName = '${currentType.name}_delete_1';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                insertedElems.push(x);
+                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.count${currentType.name}(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
+                        }
+                        dao_delete.delete${currentType.name}ByObjectId(valuesArray[1], testDb, collectionName)
+                            .then(found => {
+                                if (found !== 1) {
+                                    return done(`didn't delete value with _id in the database: $${}{valuesArray[1]}`);
+                                }
+                                dao_find.count${currentType.name}(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount-1) {
+                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: $${}{e}`);
+        }
+    });
+
+    it('delete${currentType.name}ByObjectId not found', function(done) {
+        try {
+            const collectionName = '${currentType.name}_delete_2';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.${currentType.name} = dummy.random${currentType.name}();
+                insertedElems.push(x);
+                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.count${currentType.name}(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
+                        }
+                        const objectId = new mongoDb.ObjectId();
+                        dao_delete.delete${currentType.name}ByObjectId(String(objectId), testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`deleted something with not inserted _id in the database: $${}{valuesArray[1]}`);
+                                }
+                                dao_find.count${currentType.name}(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
         }
         catch(e) {
             mongoConnection.closeDefaultConnection();
@@ -186,6 +296,7 @@ describe('${currentType.name} find by key', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -213,6 +324,7 @@ describe('${currentType.name} find by key', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -220,6 +332,16 @@ describe('${currentType.name} find by key', () => {
             mongoConnection.closeDefaultConnection();
             done(`can't connect to db: $${}{e}`);
         }
+    });
+});
+
+describe('${currentType.name} delete by key', () => {
+    it('delete${currentType.name}ByKey found', function(done) {
+        done(); // TODO
+    });
+
+    it('delete${currentType.name}ByKey not found', function(done) {
+        done(); // TODO
     });
 });
     % endif

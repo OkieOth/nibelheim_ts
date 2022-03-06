@@ -54,6 +54,24 @@ export async function find${currentType.name}(dbName: string, collectionName?: s
     });
 }
 
+export async function count${currentType.name}(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function find${currentType.name}ByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
     return new Promise(async (resolve, reject) => {
         try {
