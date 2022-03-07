@@ -321,11 +321,117 @@ describe('Mine find by key', () => {
 
 describe('Mine delete by key', () => {
     it('deleteMineByKey found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Mine_delete_3';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Mine = dummy.randomMine();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMine(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countMine(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const keyValue = insertedElems[2].id;
+                        if (!keyValue) {
+                            mongoConnection.closeDefaultConnection();
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_delete.deleteMineByKey(keyValue, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 1) {
+                                    return done(`didn't delete value with key in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countMine(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount-1) {
+                                            return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 
     it('deleteMineByKey not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Mine_delete_4';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Mine = dummy.randomMine();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMine(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countMine(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const x: types.Mine = dummy.randomMine();
+                        const keyValue = x.id;
+                        if (!keyValue) {
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_delete.deleteMineByKey(keyValue, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countMine(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
@@ -820,11 +926,117 @@ describe('Dwarf find by key', () => {
 
 describe('Dwarf delete by key', () => {
     it('deleteDwarfByKey found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Dwarf_delete_3';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Dwarf = dummy.randomDwarf();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countDwarf(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const keyValue = insertedElems[2].id;
+                        if (!keyValue) {
+                            mongoConnection.closeDefaultConnection();
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_delete.deleteDwarfByKey(keyValue, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 1) {
+                                    return done(`didn't delete value with key in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countDwarf(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount-1) {
+                                            return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 
     it('deleteDwarfByKey not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Dwarf_delete_4';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Dwarf = dummy.randomDwarf();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countDwarf(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const x: types.Dwarf = dummy.randomDwarf();
+                        const keyValue = x.id;
+                        if (!keyValue) {
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_delete.deleteDwarfByKey(keyValue, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countDwarf(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
