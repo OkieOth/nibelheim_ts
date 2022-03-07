@@ -112,5 +112,7 @@ npm run codeGen
 | dao_uuid             | generates the functions to convert uuids               |
 | dao_uuid_tests       | generates the tests for the functions to convert uuids |
 | dao_insert           | generates the functions to insert data into mongodb    |
+| dao_delete           | generates the functions to delete data from mongodb    |
+| dao_update           | generates the functions to update data in mongodb      |
 | dao_find             | generates the functions to query data from  mongodb    |
 | dao_tests            | generates the functions to test access mongodb         |
