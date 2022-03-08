@@ -31,14 +31,14 @@ export async function update${currentType.name}ByObjectId(objId: string, newValu
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = new mongoDb.ObjectId(objId);
-            const result = await collection.deleteOne({_id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "delete${currentType.name}ByObjectId");
+            const result = await collection.updateOne({_id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "delete${currentType.name}ByObjectId");
             }
             else {
-                logger.info(() => `deleted  $${}{result.deletedCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "delete${currentType.name}ByObjectId");
+                logger.info(() => `updated  $${}{result.modifiedCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "delete${currentType.name}ByObjectId");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
@@ -62,14 +62,14 @@ export async function update${currentType.name}ByKey(key: ${typescriptFuncs.prin
     % else:
             const filter = key;
     % endif
-            const result = await collection.deleteOne({${keyProperty.name}: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "delete${currentType.name}ByKey");
+            const result = await collection.updateOne({${keyProperty.name}: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "delete${currentType.name}ByKey");
             }
             else {
-                logger.info(() => `deleted  $${}{result.deletedCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "delete${currentType.name}ByKey");
+                logger.info(() => `updated  $${}{result.modifiedCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "delete${currentType.name}ByKey");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);

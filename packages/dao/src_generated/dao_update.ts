@@ -18,14 +18,14 @@ export async function updateMineByObjectId(objId: string, newValues: Partial<typ
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = new mongoDb.ObjectId(objId);
-            const result = await collection.deleteOne({_id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineByObjectId");
+            const result = await collection.updateOne({_id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineByObjectId");
             }
             else {
-                logger.info(() => `deleted  ${result.deletedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineByObjectId");
+                logger.info(() => `updated  ${result.modifiedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineByObjectId");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
@@ -42,14 +42,14 @@ export async function updateMineByKey(key: string | any ,newValues: Partial<type
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
-            const result = await collection.deleteOne({id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteMineByKey");
+            const result = await collection.updateOne({id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteMineByKey");
             }
             else {
-                logger.info(() => `deleted  ${result.deletedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteMineByKey");
+                logger.info(() => `updated  ${result.modifiedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteMineByKey");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
@@ -65,14 +65,14 @@ export async function updateMineSpotRowByObjectId(objId: string, newValues: Part
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = new mongoDb.ObjectId(objId);
-            const result = await collection.deleteOne({_id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineSpotRowByObjectId");
+            const result = await collection.updateOne({_id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineSpotRowByObjectId");
             }
             else {
-                logger.info(() => `deleted  ${result.deletedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineSpotRowByObjectId");
+                logger.info(() => `updated  ${result.modifiedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteMineSpotRowByObjectId");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
@@ -88,14 +88,14 @@ export async function updateDwarfByObjectId(objId: string, newValues: Partial<ty
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = new mongoDb.ObjectId(objId);
-            const result = await collection.deleteOne({_id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteDwarfByObjectId");
+            const result = await collection.updateOne({_id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteDwarfByObjectId");
             }
             else {
-                logger.info(() => `deleted  ${result.deletedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteDwarfByObjectId");
+                logger.info(() => `updated  ${result.modifiedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "deleteDwarfByObjectId");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
@@ -112,14 +112,14 @@ export async function updateDwarfByKey(key: string | any ,newValues: Partial<typ
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
             const filter = uuid.from(key);
-            const result = await collection.deleteOne({id: filter});
-            if (result.deletedCount === 0) {
-                logger.info(() => `found no element to delete in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteDwarfByKey");
+            const result = await collection.updateOne({id: filter}, {"$set": newValues});
+            if (result.modifiedCount === 0) {
+                logger.info(() => `found no element to update in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteDwarfByKey");
             }
             else {
-                logger.info(() => `deleted  ${result.deletedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteDwarfByKey");
+                logger.info(() => `updated  ${result.modifiedCount} elements in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "deleteDwarfByKey");
             }
-            resolve(result.deletedCount);
+            resolve(result.modifiedCount);
         }
         catch(e) {
             logger.error(e);
