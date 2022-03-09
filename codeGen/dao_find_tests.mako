@@ -5,7 +5,7 @@
     import yacg.templateHelper as templateHelper
     import yacg.util.stringUtils as stringUtils
 
-    templateFile = 'dao_tests.mako'
+    templateFile = 'dao_find_tests.mako'
     templateVersion = '0.1.0'
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
@@ -17,7 +17,6 @@
     The file provides the tests for the mongodb dao functions.
 */
 
-import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
@@ -113,6 +112,7 @@ describe('${currentType.name} find by _id', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -136,6 +136,7 @@ describe('${currentType.name} find by _id', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -186,6 +187,7 @@ describe('${currentType.name} find by key', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -213,6 +215,7 @@ describe('${currentType.name} find by key', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -222,6 +225,7 @@ describe('${currentType.name} find by key', () => {
         }
     });
 });
+
     % endif
 
 % endfor

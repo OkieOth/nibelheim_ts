@@ -1,11 +1,10 @@
 /**
     This file is generated.
-    Template: dao_tests.mako v0.1.0)
+    Template: dao_find_tests.mako v0.1.0)
 
     The file provides the tests for the mongodb dao functions.
 */
 
-import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
@@ -100,6 +99,7 @@ describe('Mine find by _id', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -123,6 +123,7 @@ describe('Mine find by _id', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -170,6 +171,7 @@ describe('Mine find by key', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -197,6 +199,7 @@ describe('Mine find by key', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -206,6 +209,7 @@ describe('Mine find by key', () => {
         }
     });
 });
+
 
 describe('MineSpotRow', () => {
     it('insertMineSpotRow', function(done) {
@@ -271,6 +275,7 @@ describe('MineSpotRow find by _id', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -294,6 +299,7 @@ describe('MineSpotRow find by _id', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -369,6 +375,7 @@ describe('Dwarf find by _id', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -392,6 +399,7 @@ describe('Dwarf find by _id', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -439,6 +447,7 @@ describe('Dwarf find by key', () => {
                         done();
                     })
                     .catch(e => {
+                        mongoConnection.closeDefaultConnection();
                         done(e);
                     });
             });
@@ -466,6 +475,7 @@ describe('Dwarf find by key', () => {
                     done();
                 })
                 .catch(e => {
+                    mongoConnection.closeDefaultConnection();
                     done(e);
                 });
         }
@@ -475,4 +485,5 @@ describe('Dwarf find by key', () => {
         }
     });
 });
+
 

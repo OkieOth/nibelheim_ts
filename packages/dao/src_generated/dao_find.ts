@@ -40,6 +40,24 @@ export async function findMine(dbName: string, collectionName?: string): Promise
     });
 }
 
+export async function countMine(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function findMineByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.Mine> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -72,7 +90,7 @@ export async function findMineByObjectId(objId: string, dbName: string, collecti
 }
 
 
-export async function findMineByKey(key: string, dbName: string, collectionName?: string): Promise<types.Mine> {
+export async function findMineByKey(key: string | any, dbName: string, collectionName?: string): Promise<types.Mine> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
@@ -123,6 +141,24 @@ export async function findMineSpotRow(dbName: string, collectionName?: string): 
             });
             cursor.close();
             resolve(array);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
+export async function countMineSpotRow(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
+            resolve(elemCount);
         }
         catch(e) {
             logger.error(e);
@@ -190,6 +226,24 @@ export async function findDwarf(dbName: string, collectionName?: string): Promis
     });
 }
 
+export async function countDwarf(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function findDwarfByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.Dwarf> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -222,7 +276,7 @@ export async function findDwarfByObjectId(objId: string, dbName: string, collect
 }
 
 
-export async function findDwarfByKey(key: string, dbName: string, collectionName?: string): Promise<types.Dwarf> {
+export async function findDwarfByKey(key: string | any, dbName: string, collectionName?: string): Promise<types.Dwarf> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;

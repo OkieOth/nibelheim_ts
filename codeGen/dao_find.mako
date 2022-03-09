@@ -2,6 +2,7 @@
 <%
     import yacg.model.model as model
     import yacg.model.modelFuncs as modelFuncs
+    import yacg.generators.helper.typescriptFuncs as typescriptFuncs
     import yacg.util.stringUtils as stringUtils
     import yacg.templateHelper as templateHelper
 
@@ -10,36 +11,6 @@
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
-    def printTypescriptType(type, isArray):
-        if type is None:
-            return 'unknown' if not isArray else 'unknown[]'
-        elif isinstance(type, model.IntegerType):
-            return 'number' if not isArray else 'number[]'
-        elif isinstance(type, model.ObjectType):
-            return 'Object' if not isArray else 'Object[]'
-        elif isinstance(type, model.NumberType):
-            return 'number' if not isArray else 'number[]'
-        elif isinstance(type, model.BooleanType):
-            return 'boolean' if not isArray else 'boolean[]'
-        elif isinstance(type, model.StringType):
-            return 'string' if not isArray else 'string[]'
-        elif isinstance(type, model.UuidType):
-            # instead of the original type definition, here is only string used
-            return 'string' if not isArray else 'string[] | any[]'
-        elif isinstance(type, model.EnumType):
-            return "{type}".format(type=type.name) if not isArray else "{type}[]".format(type=type.name)
-        elif isinstance(type, model.DateTimeType):
-            return 'Date' if not isArray else 'Date[]'
-        elif isinstance(type, model.DateType):
-            return 'Date' if not isArray else 'Date[]'
-        elif isinstance(type, model.BytesType):
-             return 'number[]' if not isArray else 'number[][]'
-        elif isinstance(type, model.DictionaryType):
-            return "Map<String, {}>".format(printTypescriptType(type.valueType))  if not isArray else "Map<String, {}>[]".format(printTypescriptType(type.valueType))
-        elif isinstance(type, model.ComplexType):
-            return "{type}".format(type=type.name) if not isArray else "{type}[]".format(type=type.name)
-        else:
-            return type
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -83,6 +54,24 @@ export async function find${currentType.name}(dbName: string, collectionName?: s
     });
 }
 
+export async function count${currentType.name}(dbName: string, collectionName?: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
+            const db: mongoDb.Db = await mongoConnection.getDb(dbName);
+            const collection: mongoDb.Collection = db.collection(collectionNameToUse);
+
+            const elemCount = await collection.countDocuments({});
+            logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
+            resolve(elemCount);
+        }
+        catch(e) {
+            logger.error(e);
+            reject(e);
+        }
+    });
+}
+
 export async function find${currentType.name}ByObjectId(objId: string, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -118,7 +107,7 @@ export async function find${currentType.name}ByObjectId(objId: string, dbName: s
 <%
     keyProperty = modelFuncs.getKeyProperty(currentType)
 %>
-export async function find${currentType.name}ByKey(key: ${printTypescriptType(keyProperty.type, False)}, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
+export async function find${currentType.name}ByKey(key: ${typescriptFuncs.printTypescriptType(keyProperty.type, False)}, dbName: string, collectionName?: string): Promise<types.${currentType.name}> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;

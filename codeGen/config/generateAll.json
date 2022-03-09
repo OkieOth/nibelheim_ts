@@ -104,6 +104,38 @@
                 }
             },
             {
+                "name": "dao_delete",
+                "description": "generate delete functions for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_delete.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_delete.ts"
+                }
+            },
+            {
+                "name": "dao_delete_tests",
+                "description": "generate tests for dao delete functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_delete_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao_delete.test.ts"
+                }
+            },
+            {
+                "name": "dao_update",
+                "description": "generate delete functions for mongodb",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_update.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_update.ts"
+                }
+            },
+            {
+                "name": "dao_update_tests",
+                "description": "generate tests for dao update functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_update_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao_update.test.ts"
+                }
+            },
+            {
                 "name": "dao_find",
                 "description": "generate find functions query mongodb",
                 "singleFileTask": {
@@ -112,11 +144,11 @@
                 }
             },
             {
-                "name": "dao_tests",
-                "description": "generate tests for dao functions",
+                "name": "dao_find_tests",
+                "description": "generate tests for dao find functions",
                 "singleFileTask": {
-                    "template": "/project/codeGen/dao_tests.mako",
-                    "destFile": "/project/packages/dao/__tests_generated__/dao.test.ts"
+                    "template": "/project/codeGen/dao_find_tests.mako",
+                    "destFile": "/project/packages/dao/__tests_generated__/dao_find.test.ts"
                 }
             }
         ]
