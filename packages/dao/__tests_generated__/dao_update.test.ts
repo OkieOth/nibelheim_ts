@@ -39,7 +39,7 @@ function* indexGenerator(maxItems) {
 describe('Mine update by _id', () => {
     it('updateMineByObjectId found', function(done) {
         try {
-            const collectionName = 'Mine_delete_1';
+            const collectionName = 'Mine_update_1';
             let insertedElems = [];
             let promises = [];
             const elemCount = 3;
@@ -99,7 +99,57 @@ describe('Mine update by _id', () => {
     });
 
     it('updateMineByObjectId not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Mine_update_2';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Mine = dummy.randomMine();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMine(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countMine(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const objectId = new mongoDb.ObjectId();
+                        const x: types.Mine = dummy.randomMine();
+                        dao_update.updateMineByObjectId(String(objectId), x, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`updated something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countMine(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after update: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
@@ -107,7 +157,7 @@ describe('Mine update by _id', () => {
 describe('Mine update by key', () => {
     it('updateMineByKey found', function(done) {
         try {
-            const collectionName = 'Mine_delete_3';
+            const collectionName = 'Mine_update_3';
             let insertedElems = [];
             let promises = [];
             const elemCount = 3;
@@ -173,7 +223,60 @@ describe('Mine update by key', () => {
     });
 
     it('updateMineByKey not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Mine_update_4';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Mine = dummy.randomMine();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMine(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countMine(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const x: types.Mine = dummy.randomMine();
+                        const keyValue = x.id;
+                        if (!keyValue) {
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_update.updateMineByKey(keyValue, x, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`updated something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countMine(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after update: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
@@ -181,7 +284,7 @@ describe('Mine update by key', () => {
 describe('MineSpotRow update by _id', () => {
     it('updateMineSpotRowByObjectId found', function(done) {
         try {
-            const collectionName = 'MineSpotRow_delete_1';
+            const collectionName = 'MineSpotRow_update_1';
             let insertedElems = [];
             let promises = [];
             const elemCount = 3;
@@ -241,7 +344,57 @@ describe('MineSpotRow update by _id', () => {
     });
 
     it('updateMineSpotRowByObjectId not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'MineSpotRow_update_2';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.MineSpotRow = dummy.randomMineSpotRow();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertMineSpotRow(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countMineSpotRow(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const objectId = new mongoDb.ObjectId();
+                        const x: types.MineSpotRow = dummy.randomMineSpotRow();
+                        dao_update.updateMineSpotRowByObjectId(String(objectId), x, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`updated something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countMineSpotRow(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after update: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
@@ -250,7 +403,7 @@ describe('MineSpotRow update by _id', () => {
 describe('Dwarf update by _id', () => {
     it('updateDwarfByObjectId found', function(done) {
         try {
-            const collectionName = 'Dwarf_delete_1';
+            const collectionName = 'Dwarf_update_1';
             let insertedElems = [];
             let promises = [];
             const elemCount = 3;
@@ -310,7 +463,57 @@ describe('Dwarf update by _id', () => {
     });
 
     it('updateDwarfByObjectId not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Dwarf_update_2';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Dwarf = dummy.randomDwarf();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countDwarf(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const objectId = new mongoDb.ObjectId();
+                        const x: types.Dwarf = dummy.randomDwarf();
+                        dao_update.updateDwarfByObjectId(String(objectId), x, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`updated something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countDwarf(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after update: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
@@ -318,7 +521,7 @@ describe('Dwarf update by _id', () => {
 describe('Dwarf update by key', () => {
     it('updateDwarfByKey found', function(done) {
         try {
-            const collectionName = 'Dwarf_delete_3';
+            const collectionName = 'Dwarf_update_3';
             let insertedElems = [];
             let promises = [];
             const elemCount = 3;
@@ -384,7 +587,60 @@ describe('Dwarf update by key', () => {
     });
 
     it('updateDwarfByKey not found', function(done) {
-        done(); // TODO
+        try {
+            const collectionName = 'Dwarf_update_4';
+            let insertedElems = [];
+            let promises = [];
+            const elemCount = 3;
+            for (const num of indexGenerator(elemCount)) {
+                const x: types.Dwarf = dummy.randomDwarf();
+                insertedElems.push(x);
+                promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
+            }
+            Promise.all(promises).then(function(valuesArray){
+                dao_find.countDwarf(testDb, collectionName)
+                    .then(numberOfElems => {
+                        if (numberOfElems !== elemCount) {
+                            return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
+                        }
+                        const x: types.Dwarf = dummy.randomDwarf();
+                        const keyValue = x.id;
+                        if (!keyValue) {
+                            return done("key value (id) is undefined or null");
+                        }
+                        dao_update.updateDwarfByKey(keyValue, x, testDb, collectionName)
+                            .then(found => {
+                                if (found !== 0) {
+                                    return done(`updated something with not inserted _id in the database: ${valuesArray[1]}`);
+                                }
+                                dao_find.countDwarf(testDb, collectionName)
+                                    .then(numberOfElems2 => {
+                                        if (numberOfElems2 !== elemCount) {
+                                            return done(`wrong number of entries after update: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
+                                        }
+                                        mongoConnection.closeDefaultConnection();
+                                        done();
+                                    })
+                                    .catch(e => {
+                                        mongoConnection.closeDefaultConnection();
+                                        done(e);
+                                    });
+                            })
+                            .catch(e => {
+                                mongoConnection.closeDefaultConnection();
+                                done(e);
+                            });
+                    })
+                    .catch(e => {
+                        mongoConnection.closeDefaultConnection();
+                        done(e);
+                    });
+            });
+        }
+        catch(e) {
+            mongoConnection.closeDefaultConnection();
+            done(`can't connect to db: ${e}`);
+        }
     });
 });
 
