@@ -5,7 +5,6 @@
     The file provides the tests for the mongodb dao functions.
 */
 
-import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
@@ -15,7 +14,6 @@ import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
-import {logger} from "logger";
 
 const randomInserts = 10;
 

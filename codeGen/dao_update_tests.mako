@@ -10,6 +10,16 @@
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
+
+    def getFirstPropNameToChange(currentType):
+        for prop in currentType.properties:
+            if isinstance(prop.type, model.StringType) or isinstance(prop.type, model.EnumType):
+                return prop.name
+        if (len(currentType.properties) > 1):
+            return currentType.properties[1].name
+        else:
+            return currentType.properties[0].name
+
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -17,17 +27,15 @@
     The file provides the tests for the mongodb dao update functions.
 */
 
-import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
 import * as dao_find from "../src_generated/dao_find"
-import * as dao_delete from "../src_generated/dao_delete"
+import * as dao_update from "../src_generated/dao_update"
 import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
-import {logger} from "logger";
 
 const randomInserts = 10;
 
@@ -50,6 +58,9 @@ function* indexGenerator(maxItems) {
 }
 
 % for currentType in mongoTypes:
+<%
+    firstPropNameToChange = getFirstPropNameToChange(currentType)
+%>
 describe('${currentType.name} update by _id', () => {
     it('update${currentType.name}ByObjectId found', function(done) {
         try {
@@ -63,20 +74,29 @@ describe('${currentType.name} update by _id', () => {
                 promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
-                    .then(numberOfElems => {
-                        if (numberOfElems !== elemCount) {
-                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
+                const randomValue: types.${currentType.name} = dummy.random${currentType.name}();
+                const x: Partial<types.${currentType.name}> = {};
+                x.${firstPropNameToChange} = randomValue.${firstPropNameToChange};
+                dao_update.update${currentType.name}ByObjectId(valuesArray[1], x, testDb, collectionName)
+                    .then(found => {
+                        if (found !== 1) {
+                            return done(`didn't update value with _id in the database: $${}{valuesArray[1]}`);
                         }
-                        dao_delete.delete${currentType.name}ByObjectId(valuesArray[1], testDb, collectionName)
-                            .then(found => {
-                                if (found !== 1) {
-                                    return done(`didn't delete value with _id in the database: $${}{valuesArray[1]}`);
+                        dao_find.count${currentType.name}(testDb, collectionName)
+                            .then(numberOfElems2 => {
+                                if (numberOfElems2 !== elemCount) {
+                                    return done(`wrong number of entries after update: expected=$${}{elemCount}, retrieved=$${}{numberOfElems2}`)
                                 }
-                                dao_find.count${currentType.name}(testDb, collectionName)
-                                    .then(numberOfElems2 => {
-                                        if (numberOfElems2 !== elemCount-1) {
-                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
+                                dao_find.find${currentType.name}ByObjectId(valuesArray[1], testDb, collectionName)
+                                    .then(updatedEntry => {
+                                        if (types.isEqual${currentType.name}(insertedElems[1], updatedEntry)) {
+                                            mongoConnection.closeDefaultConnection();
+                                            return done("value wasn't change while update");
+                                        }
+                                        insertedElems[1].${firstPropNameToChange} = randomValue.${firstPropNameToChange}
+                                        if (!types.isEqual${currentType.name}(insertedElems[1], updatedEntry)) {
+                                            mongoConnection.closeDefaultConnection();
+                                            return done("updated value isn't equal the inserted value");
                                         }
                                         mongoConnection.closeDefaultConnection();
                                         done();
@@ -103,57 +123,8 @@ describe('${currentType.name} update by _id', () => {
         }
     });
 
-    it('delete${currentType.name}ByObjectId not found', function(done) {
-        try {
-            const collectionName = '${currentType.name}_delete_2';
-            let insertedElems = [];
-            let promises = [];
-            const elemCount = 3;
-            for (const num of indexGenerator(elemCount)) {
-                const x: types.${currentType.name} = dummy.random${currentType.name}();
-                insertedElems.push(x);
-                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
-            }
-            Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
-                    .then(numberOfElems => {
-                        if (numberOfElems !== elemCount) {
-                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
-                        }
-                        const objectId = new mongoDb.ObjectId();
-                        dao_delete.delete${currentType.name}ByObjectId(String(objectId), testDb, collectionName)
-                            .then(found => {
-                                if (found !== 0) {
-                                    return done(`deleted something with not inserted _id in the database: $${}{valuesArray[1]}`);
-                                }
-                                dao_find.count${currentType.name}(testDb, collectionName)
-                                    .then(numberOfElems2 => {
-                                        if (numberOfElems2 !== elemCount) {
-                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
-                                        }
-                                        mongoConnection.closeDefaultConnection();
-                                        done();
-                                    })
-                                    .catch(e => {
-                                        mongoConnection.closeDefaultConnection();
-                                        done(e);
-                                    });
-                            })
-                            .catch(e => {
-                                mongoConnection.closeDefaultConnection();
-                                done(e);
-                            });
-                    })
-                    .catch(e => {
-                        mongoConnection.closeDefaultConnection();
-                        done(e);
-                    });
-            });
-        }
-        catch(e) {
-            mongoConnection.closeDefaultConnection();
-            done(`can't connect to db: $${}{e}`);
-        }
+    it('update${currentType.name}ByObjectId not found', function(done) {
+        done(); // TODO
     });
 });
 
@@ -174,25 +145,35 @@ describe('${currentType.name} update by key', () => {
                 promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
-                    .then(numberOfElems => {
-                        if (numberOfElems !== elemCount) {
-                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
+                const keyValue = insertedElems[2].${keyProperty.name};
+                if (!keyValue) {
+                    mongoConnection.closeDefaultConnection();
+                    return done("key value (${keyProperty.name}) is undefined or null");
+                }
+                const randomValue: types.${currentType.name} = dummy.random${currentType.name}();
+                const x: Partial<types.${currentType.name}> = {};
+                x.${firstPropNameToChange} = randomValue.${firstPropNameToChange};
+
+                dao_update.update${currentType.name}ByKey(keyValue, x, testDb, collectionName)
+                    .then(found => {
+                        if (found !== 1) {
+                            return done(`didn't update value with key in the database: $${}{valuesArray[1]}`);
                         }
-                        const keyValue = insertedElems[2].${keyProperty.name};
-                        if (!keyValue) {
-                            mongoConnection.closeDefaultConnection();
-                            return done("key value (${keyProperty.name}) is undefined or null");
-                        }
-                        dao_delete.delete${currentType.name}ByKey(keyValue, testDb, collectionName)
-                            .then(found => {
-                                if (found !== 1) {
-                                    return done(`didn't delete value with key in the database: $${}{valuesArray[1]}`);
+                        dao_find.count${currentType.name}(testDb, collectionName)
+                            .then(numberOfElems2 => {
+                                if (numberOfElems2 !== elemCount) {
+                                    return done(`wrong number of entries after update: expected=$${}{elemCount}, retrieved=$${}{numberOfElems2}`)
                                 }
-                                dao_find.count${currentType.name}(testDb, collectionName)
-                                    .then(numberOfElems2 => {
-                                        if (numberOfElems2 !== elemCount-1) {
-                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
+                                dao_find.find${currentType.name}ByKey(keyValue, testDb, collectionName)
+                                    .then(updatedEntry => {
+                                        if (types.isEqual${currentType.name}(insertedElems[2], updatedEntry)) {
+                                            mongoConnection.closeDefaultConnection();
+                                            return done("value wasn't change while update");
+                                        }
+                                        insertedElems[2].${firstPropNameToChange} = randomValue.${firstPropNameToChange}
+                                        if (!types.isEqual${currentType.name}(insertedElems[2], updatedEntry)) {
+                                            mongoConnection.closeDefaultConnection();
+                                            return done("updated value isn't equal the inserted value");
                                         }
                                         mongoConnection.closeDefaultConnection();
                                         done();
@@ -220,60 +201,7 @@ describe('${currentType.name} update by key', () => {
     });
 
     it('update${currentType.name}ByKey not found', function(done) {
-        try {
-            const collectionName = '${currentType.name}_delete_4';
-            let insertedElems = [];
-            let promises = [];
-            const elemCount = 3;
-            for (const num of indexGenerator(elemCount)) {
-                const x: types.${currentType.name} = dummy.random${currentType.name}();
-                insertedElems.push(x);
-                promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
-            }
-            Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
-                    .then(numberOfElems => {
-                        if (numberOfElems !== elemCount) {
-                            return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
-                        }
-                        const x: types.${currentType.name} = dummy.random${currentType.name}();
-                        const keyValue = x.${keyProperty.name};
-                        if (!keyValue) {
-                            return done("key value (${keyProperty.name}) is undefined or null");
-                        }
-                        dao_delete.delete${currentType.name}ByKey(keyValue, testDb, collectionName)
-                            .then(found => {
-                                if (found !== 0) {
-                                    return done(`deleted something with not inserted _id in the database: $${}{valuesArray[1]}`);
-                                }
-                                dao_find.count${currentType.name}(testDb, collectionName)
-                                    .then(numberOfElems2 => {
-                                        if (numberOfElems2 !== elemCount) {
-                                            return done(`wrong number of entries after delete: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
-                                        }
-                                        mongoConnection.closeDefaultConnection();
-                                        done();
-                                    })
-                                    .catch(e => {
-                                        mongoConnection.closeDefaultConnection();
-                                        done(e);
-                                    });
-                            })
-                            .catch(e => {
-                                mongoConnection.closeDefaultConnection();
-                                done(e);
-                            });
-                    })
-                    .catch(e => {
-                        mongoConnection.closeDefaultConnection();
-                        done(e);
-                    });
-            });
-        }
-        catch(e) {
-            mongoConnection.closeDefaultConnection();
-            done(`can't connect to db: $${}{e}`);
-        }
+        done(); // TODO
     });
 });
     % endif

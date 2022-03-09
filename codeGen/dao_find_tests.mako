@@ -17,7 +17,6 @@
     The file provides the tests for the mongodb dao functions.
 */
 
-import { assert } from "chai";
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
