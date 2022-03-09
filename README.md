@@ -92,6 +92,12 @@ npm run clean
 
 # generate all code
 npm run codeGen
+
+# count the lines of contained template code
+npm run countTemplateLines
+
+# count the lines of generated code
+npm run countGeneratedLines
 ```
 
 [More information are here ...](docs/codegen.md)

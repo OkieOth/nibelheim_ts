@@ -9,6 +9,8 @@
     "test": "npx lerna run test",
     "build": "npx lerna run tsc",
     "clean": "find packages -name \"*_generated*\" -type d -exec find \"{}\" -name \"*.ts\" \\; | xargs rm -f",
+    "countGeneratedLines": "find packages -name \"*_generated*\" -type d -exec find \"{}\" -name \"*.ts\" \\; | xargs cat | wc -l",
+    "countTemplateLines": "find codeGen -name \"*.mako\" | xargs cat | wc -l",
     "codeGen": "bash bin/generateAll.sh"
   },
   "author": "Eiko Thomas",
