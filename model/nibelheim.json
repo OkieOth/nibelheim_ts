@@ -13,7 +13,8 @@
           "x-key": true
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "storage": {
           "description": "storage for already digged gems and stuff",
@@ -22,7 +23,8 @@
         "time": {
           "description": "current time in the Mine simulation",
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "dwarfs": {
           "$comment": "only put to the model to have a uuid array for mongo :D",
@@ -84,15 +86,18 @@
         "mine_id": {
           "type": "string",
           "format": "uuid",
-          "x-ref": "#/definitions/Mine.id"
+          "x-ref": "#/definitions/Mine.id",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "row_number": {
           "description": "order of the rows in one level",
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "level": {
           "description": "level of the row to make the mine 3 dimensional",
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "columns": {
           "type": "array",
@@ -114,12 +119,14 @@
           "x-key": true
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "mine_id": {
           "type": "string",
           "format": "uuid",
-          "x-ref": "#/definitions/Mine.id"
+          "x-ref": "#/definitions/Mine.id",
+          "x-tags": ["daoFilter"]
         },
         "pocket": {
           "description": "small storage of mined material",
@@ -133,22 +140,26 @@
         "currentStrongness": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 100
+          "maximum": 100,
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "hunger": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 100
+          "maximum": 100,
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "healthiness": {
           "type": "number",
           "minimum": 0,
-          "maximum": 1.0
+          "maximum": 1.0,
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "motivation": {
           "type": "number",
           "minimum": 0,
-          "maximum": 1.0
+          "maximum": 1.0,
+          "x-tags": ["daoFilter", "daoSort"]
         },
         "way": {
           "description": "ids of the minespots, from the entry/storage to the current spot",
@@ -193,6 +204,31 @@
         },
         "cupper":  {
           "type": "integer"
+        }
+      }
+    },
+    "History": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "change": {
+          "type": "string",
+          "enum": ["insert", "edit", "delete"]
+        },
+        "dwarf": {
+          "description": "stores the old value if a Dwarf entry was changed",
+          "$ref": "#/definitions/Dwarf"
+        },
+        "mineSpotRow": {
+          "description": "stores the old value if a MineSpotRow entry was changed",
+          "$ref": "#/definitions/MineSpotRow"
+        },
+        "mine": {
+          "description": "stores the old value if a Mine entry was changed",
+          "$ref": "#/definitions/Mine"
         }
       }
     }
