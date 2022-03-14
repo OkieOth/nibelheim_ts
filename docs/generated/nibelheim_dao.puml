@@ -5,7 +5,7 @@ hide empty methods
 title "\nCreated Mongodb Collections\n\n"
 
 package "Collection: Mine" {
-    
+
     class "Mine" as Mine_Mine {
             UuidType id
             StringType name
@@ -21,13 +21,13 @@ package "Collection: Mine" {
             IntegerType iron
             IntegerType cupper
     }
-        
+
     Mine_Mine  *--  Mine_Storage
-                
-        
+
+
 }
 package "Collection: MineSpotRow" {
-    
+
     class "MineSpotRow" as MineSpotRow_MineSpotRow {
             UuidType mine_id
             IntegerType row_number
@@ -49,16 +49,16 @@ package "Collection: MineSpotRow" {
         CUPPER
         ROCK
     }
-        
+
     MineSpotRow_MineSpotRow "0" *-- "n" MineSpotRow_MineSpot
-                
-        
+
+
     MineSpotRow_MineSpot  *--  MineSpotRow_MineSpotMaterial
-                
-        
+
+
 }
 package "Collection: Dwarf" {
-    
+
     class "Dwarf" as Dwarf_Dwarf {
             UuidType id
             StringType name
@@ -84,13 +84,13 @@ package "Collection: Dwarf" {
             IntegerType spot
             IntegerType level
     }
-        
+
     Dwarf_Dwarf  *--  Dwarf_Storage
-                
+
     Dwarf_Dwarf "0" *-- "n" Dwarf_DwarfWay
-                
-        
-        
+
+
+
 }
 
 footer \ngenerated with yacg (https://github.com/OkieOth/yacg),\n(template: plantUml_dao.mako v0.1.0)\npowered by plantuml (https://plantuml.com/)

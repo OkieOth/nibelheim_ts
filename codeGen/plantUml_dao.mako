@@ -17,9 +17,9 @@ title "\nCreated Mongodb Collections\n\n"
 
 % for type1 in mongoTypes:
 package "Collection: ${type1.name}" {
-    <%
+<%
         relatedTypes = modelFuncs.getTypeAndAllChildTypes(type1)
-    %>
+%>
     % for type in relatedTypes:
         % if modelFuncs.isEnumType(type):
     enum "${modelFuncs.getTypeName(type)}" as ${type1.name}_${modelFuncs.getTypeName(type)} {
@@ -38,19 +38,19 @@ package "Collection: ${type1.name}" {
         % endif
     % endfor
     % for type in relatedTypes:
-        <%
+<%
             ## array to store already printed links between the objects
             alreadyLinkedTypes=[]
-        %>
+%>
         % if hasattr(type,'properties'):
             % for prop in type.properties:
                 % if (not modelFuncs.isBaseType(prop.type)):
                     % if prop.type.name not in alreadyLinkedTypes:
     ${type1.name}_${modelFuncs.getTypeName(type)} ${ '"0"' if prop.isArray else '' } *-- ${'"n"' if prop.isArray else ''} ${type1.name}_${modelFuncs.getTypeName(prop.type)}
-                <%
+<%
                     ## add the current type name to the already linked types
                     alreadyLinkedTypes.append(modelFuncs.getTypeName(prop.type))
-                %>
+%>
                     % endif
                 % endif
             % endfor
