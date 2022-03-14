@@ -354,4 +354,62 @@ it('serialize/deserialize arrays of DwarfWay', () => {
         });
 });
 
+it('serialize/deserialize History', () => {
+    const randomValue: types.History = dummy.randomHistory();
+    assert.isNotNull(randomValue, 'randomValue returns null');
+    const serialized = JSON.stringify(randomValue);
+
+    types.parseHistory(serialized)
+        .then((deserialized: types.History) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomValue, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+});
+
+it('serialize/deserialize arrays of History', () => {
+    const randomValue1: types.History = dummy.randomHistory();
+    assert.isNotNull(randomValue1, 'randomValue1 returns null');
+
+    const randomValue2: types.History = dummy.randomHistory();
+    assert.isNotNull(randomValue2, 'randomValue2 returns null');
+
+    const randomValue3: types.History = dummy.randomHistory();
+    assert.isNotNull(randomValue3, 'randomValue3 returns null');
+
+    const randomArray: types.History[] = [randomValue1, randomValue2, randomValue3];
+    const serialized = JSON.stringify(randomArray);
+
+    types.parseHistoryArray(serialized)
+        .then((deserialized: types.History[]) => {
+            assert.isNotNull(deserialized);
+            assert.deepEqual(randomArray, deserialized);
+        })
+        .catch((error) => {
+            assert.fail(error)
+        });
+
+
+    const serialized2 = JSON.stringify(randomValue1);
+    types.parseHistoryArray(serialized2)
+        .then((deserialized: types.History[]) => {
+            assert.fail("parseHistoryArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseHistoryArray detect none array")
+        });
+
+
+    const serialized3 = JSON.stringify([randomValue1, randomValue2, "xxx", randomValue3]);
+    types.parseHistoryArray(serialized3)
+        .then((deserialized: types.History[]) => {
+            assert.fail("parseHistoryArray (1) didn't raise an error")
+        })
+        .catch((error) => {
+            console.log("parseHistoryArray detect array with wrong elements")
+        });
+});
+
 

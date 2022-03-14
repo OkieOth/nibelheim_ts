@@ -148,3 +148,30 @@ export function randomDwarfWay(randomizeOptionalAttribs = false): types.DwarfWay
     return ret;
 }
 
+export function randomHistory(randomizeOptionalAttribs = false): types.History {
+    const chance = new Chance();
+    const ret: types.History = {
+    }
+
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.timestamp = chance.date();
+    };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.change = randomEnum(types.HistoryChangeEnum);
+    };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.dwarf = randomDwarf();
+    };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.mineSpotRow = randomMineSpotRow();
+    };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.mine = randomMine();
+    };
+    return ret;
+}
+
+export function randomHistoryChangeEnum(): types.HistoryChangeEnum {
+    return randomEnum(types.HistoryChangeEnum);
+}
+

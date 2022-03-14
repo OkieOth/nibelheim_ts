@@ -586,6 +586,103 @@ export function isDwarfWay(value: any): value is types.DwarfWay {
     return true;
 }
 
+export function isHistory(value: any): value is types.History {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isHistory";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if ("timestamp" in obj) {
+        const attrib: any = obj["timestamp"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'timestamp' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (utils.isDate(attrib)) ) {
+            logger.error(() => `'timestamp' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if ("change" in obj) {
+        const attrib: any = obj["change"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'change' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isHistoryChangeEnum(attrib)) ) {
+            logger.error(() => `'change' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if ("dwarf" in obj) {
+        const attrib: any = obj["dwarf"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'dwarf' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isDwarf(attrib)) ) {
+            logger.error(() => `'dwarf' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if ("mineSpotRow" in obj) {
+        const attrib: any = obj["mineSpotRow"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'mineSpotRow' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isMineSpotRow(attrib)) ) {
+            logger.error(() => `'mineSpotRow' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if ("mine" in obj) {
+        const attrib: any = obj["mine"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'mine' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isMine(attrib)) ) {
+            logger.error(() => `'mine' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isHistoryChangeEnum(value: any): value is types.HistoryChangeEnum {
+    if (value == null || value == undefined)
+        return true;
+    if (!(typeof value === 'string' || value instanceof String)) {
+        logger.error(() => `input is no string HistoryChangeEnum: ${value}`, "isHistoryChangeEnum");
+        return false;
+    }
+    if (value  == "insert")
+        return true;
+    if (value  == "edit")
+        return true;
+    if (value  == "delete")
+        return true;
+    return false;
+}
+
 
 export function isMineArray(value: any): value is types.Mine[] {
     const caller = "isMineArray";
@@ -731,6 +828,50 @@ export function isDwarfWayArray(value: any): value is types.DwarfWay[] {
         value.forEach(elem => {
             if (!isDwarfWay(elem)) {
                 logger.error(() => `input is not of DwarfWay type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isHistoryArray(value: any): value is types.History[] {
+    const caller = "isHistoryArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isHistory(elem)) {
+                logger.error(() => `input is not of History type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isHistoryChangeEnumArray(value: any): value is types.HistoryChangeEnum[] {
+    const caller = "isHistoryChangeEnumArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isHistoryChangeEnum(elem)) {
+                logger.error(() => `input is not of HistoryChangeEnum type: ${elem}`, caller);
                 throw new Error("wrong type");
             }
         });

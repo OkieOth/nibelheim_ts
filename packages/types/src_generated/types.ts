@@ -115,3 +115,29 @@ export interface DwarfWay {
     level?: number;
 }
 
+export interface History {
+    timestamp?: Date;
+    change?: HistoryChangeEnum;
+
+    /**
+     stores the old value if a Dwarf entry was changed
+    */
+    dwarf?: Dwarf;
+
+    /**
+     stores the old value if a MineSpotRow entry was changed
+    */
+    mineSpotRow?: MineSpotRow;
+
+    /**
+     stores the old value if a Mine entry was changed
+    */
+    mine?: Mine;
+}
+
+export enum HistoryChangeEnum {
+        insert = "insert",
+        edit = "edit",
+        delete = "delete",
+}
+

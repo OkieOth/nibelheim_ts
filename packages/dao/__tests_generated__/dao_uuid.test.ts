@@ -51,6 +51,15 @@ const checkDwarfAttribs = (x, isType) => {
     }
 };
 
+const checkHistoryAttribs = (x, isType) => {
+    if (types.isHistory(x) != isType) {
+        assert.fail("random elem isn't of type History");
+    }
+    // TODO check complex attrib
+    // TODO check complex attrib
+    // TODO check complex attrib
+};
+
 
 describe('test uuid convert', () => {
     it('Mine', () => {
@@ -94,6 +103,22 @@ describe('test uuid convert', () => {
                 checkDwarfAttribs(x, false);
                 dao_uuid.dao2Dwarf(x);
                 checkDwarfAttribs(x, true);
+            }
+        }
+        catch (e) {
+            assert.fail(e);
+        }
+    });
+
+    it('History', () => {
+        try {
+            for (const num of indexGenerator(randomObjectCount)) {
+                const x: types.History = dummy.randomHistory();
+                checkHistoryAttribs(x, true);
+                dao_uuid.history2Dao(x);
+                checkHistoryAttribs(x, false);
+                dao_uuid.dao2History(x);
+                checkHistoryAttribs(x, true);
             }
         }
         catch (e) {

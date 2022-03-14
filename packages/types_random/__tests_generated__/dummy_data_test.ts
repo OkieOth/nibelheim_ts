@@ -127,6 +127,40 @@ describe('Dummy data creation with random optional attributes', () => {
         assert.isTrue(types.isDwarfWayArray([x,y]));
     });
 
+    it('test History', () => {
+        const x: types.History = dummy.randomHistory();
+        const y: types.History = dummy.randomHistory();
+        assert.isNotNull(x, 'randomHistory 1 returns null');
+        assert.isNotNull(y, 'randomHistory 2 returns null');
+        assert.isTrue(types.isHistory(x));
+        assert.isTrue(types.isHistory(y));
+        assert.isFalse(types.isHistory([y]));
+        assert.isFalse(types.isHistory([x,y]));
+        assert.isFalse(types.isHistory("test"));
+        assert.isFalse(types.isHistoryArray(x));
+        assert.isFalse(types.isHistoryArray(y));
+        assert.isTrue(types.isHistoryArray([x]));
+        assert.isTrue(types.isHistoryArray([y]));
+        assert.isTrue(types.isHistoryArray([x,y]));
+    });
+
+    it('test HistoryChangeEnum', () => {
+        const x: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        const y: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x, 'randomHistoryChangeEnum 1 returns null');
+        assert.isNotNull(y, 'randomHistoryChangeEnum 2 returns null');
+        assert.isTrue(types.isHistoryChangeEnum(x));
+        assert.isTrue(types.isHistoryChangeEnum(y));
+        assert.isFalse(types.isHistoryChangeEnum([y]));
+        assert.isFalse(types.isHistoryChangeEnum([x,y]));
+        assert.isFalse(types.isHistoryChangeEnum("test"));
+        assert.isFalse(types.isHistoryChangeEnumArray(x));
+        assert.isFalse(types.isHistoryChangeEnumArray(y));
+        assert.isTrue(types.isHistoryChangeEnumArray([x]));
+        assert.isTrue(types.isHistoryChangeEnumArray([y]));
+        assert.isTrue(types.isHistoryChangeEnumArray([x,y]));
+    });
+
 });
 
 describe('Dummy data for enums create different values', () => {
@@ -144,6 +178,21 @@ describe('Dummy data for enums create different values', () => {
         assert.isNotNull(x5, 'randomMineSpotMaterial returns null');
         const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
         assert.isNotTrue(valuesAreEqual, 'randomMineSpotMaterial creates constant values')
+    });
+    it('random enum test HistoryChangeEnum', () => {
+        const x: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x, 'randomHistoryChangeEnum returns null');
+        // test that the enum is generated with different values
+        const x2: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x2, 'randomHistoryChangeEnum returns null');
+        const x3: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x3, 'randomHistoryChangeEnum returns null');
+        const x4: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x4, 'randomHistoryChangeEnum returns null');
+        const x5: types.HistoryChangeEnum = dummy.randomHistoryChangeEnum();
+        assert.isNotNull(x5, 'randomHistoryChangeEnum returns null');
+        const valuesAreEqual = (x === x2) && (x2 === x3) && (x3 === x4) && (x4 === x5);
+        assert.isNotTrue(valuesAreEqual, 'randomHistoryChangeEnum creates constant values')
     });
 });
 
@@ -171,5 +220,9 @@ describe('Dummy data creation with randomized optional attributes', () => {
     it('test type (2) DwarfWay', () => {
         const x: types.DwarfWay = dummy.randomDwarfWay(true);
         assert.isNotNull(x, 'randomDwarfWay (2) returns null');
+    });
+    it('test type (2) History', () => {
+        const x: types.History = dummy.randomHistory(true);
+        assert.isNotNull(x, 'randomHistory (2) returns null');
     });
 });

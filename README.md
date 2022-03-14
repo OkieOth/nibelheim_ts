@@ -115,6 +115,7 @@ npm run countGeneratedLines
 | type_guards_tests    | generate tests for type validation                     |
 | types_random         | generate functions to create random data               |
 | types_random_tests   | generate tests for the random data functions           |
+| dao_puml             | specific puml to illustrate dao types                  |
 | dao_uuid             | generates the functions to convert uuids               |
 | dao_uuid_tests       | generates the tests for the functions to convert uuids |
 | dao_insert           | generates the functions to insert data into mongodb    |

@@ -12,7 +12,16 @@
                 "description": "create Puml",
                 "singleFileTask": {
                     "template": "plantUml",
-                    "destFile": "/project/docs/generated/nibelheim.puml"
+                    "destFile": "/project/docs/generated/nibelheim.puml",
+                    "templateParams": [
+                        {
+                            "name": "printTypeTags",
+                            "value": "true"
+                        },
+                        {
+                            "name": "printPropertyTags",
+                            "value": "true"
+                        }]
                 }
             },
             {
@@ -77,6 +86,14 @@
                 "singleFileTask": {
                     "template": "/project/codeGen/random_instances_tests.mako",
                     "destFile": "/project/packages/types_random/__tests_generated__/dummy_data_test.ts"
+                }
+            },
+            {
+                "name": "dao_puml",
+                "description": "create Puml for mongodb serialized types",
+                "singleFileTask": {
+                    "template": "/project/codeGen/plantUml_dao.mako",
+                    "destFile": "/project/docs/generated/nibelheim_dao.puml"
                 }
             },
             {

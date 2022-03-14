@@ -194,3 +194,34 @@ export async function parseDwarfWayArray(json: string): Promise<types.DwarfWay[]
     });
 }
 
+export async function parseHistory(json: string): Promise<types.History> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (guards.isHistory(parsedData)) {
+            resolve(parsedData as types.History);
+        }
+        else {
+            logger.error(() => `input doesn't match expected type: ${json}`, "parseHistory");
+            reject("input doesn't match expected type");
+        }
+    });
+}
+
+export async function parseHistoryArray(json: string): Promise<types.History[]> {
+    return new Promise((resolve, reject) => {
+        const parsedData = JSON.parse(json, utils.reviver);
+        if (!utils.isArray(parsedData)) {
+            logger.error(() => `input is no array: ${json}`, "parseHistoryArray");
+            reject("input is no array");
+        }
+        parsedData.forEach(elem => {
+            if (!guards.isHistory(elem)) {
+                const errorMsg = "input is not of History type";
+                logger.error(errorMsg, "parseHistoryArray");
+                reject(errorMsg);
+            }
+        });
+        resolve(parsedData as types.History[]);
+    });
+}
+

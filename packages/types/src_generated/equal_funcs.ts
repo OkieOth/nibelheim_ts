@@ -362,3 +362,58 @@ export function isEqualDwarfWay(obj1: types.DwarfWay, obj2: types.DwarfWay): boo
     return true;
 }
 
+export function isEqualHistory(obj1: types.History, obj2: types.History): boolean {
+    const caller = "isEqualHistory";
+
+    if (obj1 == null && obj2 != null) return false;
+    if (obj1 != null && obj2 == null) return false;
+    if (obj1 == null && obj2 == null) return true;
+    if (!type_guards.isHistory(obj1)) {
+        logger.error("obj1 has wrong type", caller)
+        logger.debug(() => JSON.stringify(obj1), caller)
+        return false;
+    }
+    if (!type_guards.isHistory(obj2)) {
+        logger.error("obj2 has wrong type", caller)
+        logger.debug(() => JSON.stringify(obj2), caller)
+        return false;
+    }
+    if (obj1.timestamp) {
+        if (obj1.timestamp.getTime() !== obj2.timestamp.getTime()) return false;
+    }
+    else {
+        if (!obj2.timestamp) return true;
+        return false;
+    }
+    if (obj1.change) {
+        if (obj1.change !== obj2.change) return false;
+    }
+    else {
+        if (!obj2.change) return true;
+        return false;
+    }
+    if (obj1.dwarf) {
+        if (!isEqualDwarf(obj1.dwarf, obj2.dwarf)) return false;
+    }
+    else {
+        if (!obj2.dwarf) return true;
+        return false;
+    }
+    if (obj1.mineSpotRow) {
+        if (!isEqualMineSpotRow(obj1.mineSpotRow, obj2.mineSpotRow)) return false;
+    }
+    else {
+        if (!obj2.mineSpotRow) return true;
+        return false;
+    }
+    if (obj1.mine) {
+        if (!isEqualMine(obj1.mine, obj2.mine)) return false;
+    }
+    else {
+        if (!obj2.mine) return true;
+        return false;
+    }
+    return true;
+}
+
+

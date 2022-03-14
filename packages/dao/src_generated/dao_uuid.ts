@@ -97,3 +97,39 @@ export function dao2Dwarf (x: any) {
     }
 }
 
+export function history2Dao(x: types.History) {
+    try {
+        if (x.dwarf) {
+            dwarf2Dao(x.dwarf);
+        };
+        if (x.mineSpotRow) {
+            mineSpotRow2Dao(x.mineSpotRow);
+        };
+        if (x.mine) {
+            mine2Dao(x.mine);
+        };
+    }
+    catch(e) {
+        logger.error(e, "history2Dao");
+        throw new Error(e);
+    }
+}
+
+export function dao2History (x: any) {
+    try {
+            if (x.dwarf) {
+                dao2Dwarf(x.dwarf);
+            };
+            if (x.mineSpotRow) {
+                dao2MineSpotRow(x.mineSpotRow);
+            };
+            if (x.mine) {
+                dao2Mine(x.mine);
+            };
+    }
+    catch(e) {
+        logger.error(e,"dao2History");
+        throw new Error(e);
+    }
+}
+

@@ -91,5 +91,29 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isTrue(guards.isDwarfWayArray([]));
     });
 
+    it('test guards.isHistory', () => {
+        assert.isFalse(guards.isHistory("x"));
+        assert.isTrue(guards.isHistory(null));
+    });
+
+    it('test guards.isHistoryArray', () => {
+        assert.isFalse(guards.isHistoryArray("x"));
+        assert.isFalse(guards.isHistoryArray(["x"]));
+        assert.isTrue(guards.isHistoryArray(null));
+        assert.isTrue(guards.isHistoryArray([]));
+    });
+
+    it('test guards.isHistoryChangeEnum', () => {
+        assert.isFalse(guards.isHistoryChangeEnum("x"));
+        assert.isTrue(guards.isHistoryChangeEnum(null));
+    });
+
+    it('test guards.isHistoryChangeEnumArray', () => {
+        assert.isFalse(guards.isHistoryChangeEnumArray("x"));
+        assert.isFalse(guards.isHistoryChangeEnumArray(["x"]));
+        assert.isTrue(guards.isHistoryChangeEnumArray(null));
+        assert.isTrue(guards.isHistoryChangeEnumArray([]));
+    });
+
 });
 
