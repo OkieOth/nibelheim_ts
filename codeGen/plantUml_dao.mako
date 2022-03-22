@@ -8,6 +8,16 @@
     templateFile = 'plantUml_dao.mako'
     templateVersion = '0.1.0'
 
+    def printFilterAndSortInfo(prop):
+        ret = '<color:grey>"" // {}""</color>'
+        tmp = ''
+        if modelFuncs.hasTag('daoFilter',prop):
+            tmp = 'filter'
+        if modelFuncs.hasTag('daoSort',prop):
+            tmp = '{}, sort'.format(tmp) if tmp != '' else 'sort'
+        return ret.format(tmp) if tmp != '' else tmp
+
+
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 %>
 @startuml
@@ -31,7 +41,7 @@ package "Collection: ${type1.name}" {
     class "${modelFuncs.getTypeName(type)}" as ${type1.name}_${modelFuncs.getTypeName(type)} {
             % if hasattr(type,'properties'):
                 % for prop in type.properties:
-            ${modelFuncs.getTypeName(prop.type)}${'[]' if prop.isArray else ''} ${prop.name}
+            ${modelFuncs.getTypeName(prop.type)}${'[]' if prop.isArray else ''} ${prop.name}${printFilterAndSortInfo(prop)}
                 % endfor
             % endif
     }

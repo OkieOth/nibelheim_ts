@@ -11,8 +11,16 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
+import * as dao_query_types from "./dao_query_types"
+import {SortDirection, FieldSort} from "../src/mongo_helper";
 
-export async function findMine(dbName: string, collectionName?: string): Promise<types.Mine[]> {
+export async function findMine(
+    filter: dao_query_types.MineFilter[], 
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<types.Mine[]> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Mine" : collectionName;

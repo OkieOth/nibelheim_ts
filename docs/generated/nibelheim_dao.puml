@@ -8,10 +8,10 @@ package "Collection: Mine" {
 
     class "Mine" as Mine_Mine {
             UuidType id
-            StringType name
+            StringType name<color:grey>"" // filter, sort""</color>
             Storage storage
-            DateTimeType time
-            UuidType[] dwarfs
+            DateTimeType time<color:grey>"" // filter, sort""</color>
+            UuidType[] dwarfs<color:grey>"" // filter""</color>
     }
     class "Storage" as Mine_Storage {
             IntegerType mithril
@@ -29,13 +29,13 @@ package "Collection: Mine" {
 package "Collection: MineSpotRow" {
 
     class "MineSpotRow" as MineSpotRow_MineSpotRow {
-            UuidType mine_id
-            IntegerType row_number
-            IntegerType level
+            UuidType mine_id<color:grey>"" // filter, sort""</color>
+            IntegerType row_number<color:grey>"" // filter, sort""</color>
+            IntegerType level<color:grey>"" // filter, sort""</color>
             MineSpot[] columns
     }
     class "MineSpot" as MineSpotRow_MineSpot {
-            MineSpotMaterial material
+            MineSpotMaterial material<color:grey>"" // filter""</color>
             IntegerType initialAmountOfMaterial
             IntegerType currentAmountOfMaterial
             NumberType miningDifficulty
@@ -61,14 +61,14 @@ package "Collection: Dwarf" {
 
     class "Dwarf" as Dwarf_Dwarf {
             UuidType id
-            StringType name
-            UuidType mine_id
+            StringType name<color:grey>"" // filter, sort""</color>
+            UuidType mine_id<color:grey>"" // filter""</color>
             Storage pocket
             IntegerType strongness
-            IntegerType currentStrongness
-            IntegerType hunger
-            NumberType healthiness
-            NumberType motivation
+            IntegerType currentStrongness<color:grey>"" // filter, sort""</color>
+            IntegerType hunger<color:grey>"" // filter, sort""</color>
+            NumberType healthiness<color:grey>"" // filter, sort""</color>
+            NumberType motivation<color:grey>"" // filter, sort""</color>
             DwarfWay[] way
     }
     class "Storage" as Dwarf_Storage {

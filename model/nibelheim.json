@@ -32,7 +32,8 @@
           "items": {
             "type": "string",
             "format": "uuid"
-          }
+          },
+          "x-tags": ["daoFilter"]
         }
       },
       "required": ["id", "name", "time"],
@@ -55,7 +56,8 @@
       "type": "object",
       "properties": {
         "material": {
-          "$ref": "#/definitions/MineSpotMaterial"
+          "$ref": "#/definitions/MineSpotMaterial",
+          "x-tags": ["daoFilter"]
         },
         "initialAmountOfMaterial": {
           "description": "how many material contained the spot in the beginning",
