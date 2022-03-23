@@ -12,10 +12,10 @@ import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
 import * as dao_query_types from "./dao_query_types"
-import {SortDirection, FieldSort} from "../src/mongo_helper";
+import {FieldSort} from "../src/mongo_helper";
 
 export async function findMine(
-    filter: dao_query_types.MineFilter[], 
+    filter: dao_query_types.MineFilter[],
     sort: FieldSort[],
     start: number,
     limit: number,
@@ -48,7 +48,13 @@ export async function findMine(
     });
 }
 
-export async function countMine(dbName: string, collectionName?: string): Promise<number> {
+export async function countMine(
+    filter: dao_query_types.MineFilter[],
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Mine" : collectionName;
@@ -129,7 +135,13 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
     });
 }
 
-export async function findMineSpotRow(dbName: string, collectionName?: string): Promise<types.MineSpotRow[]> {
+export async function findMineSpotRow(
+    filter: dao_query_types.MineSpotRowFilter[],
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<types.MineSpotRow[]> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
@@ -157,7 +169,13 @@ export async function findMineSpotRow(dbName: string, collectionName?: string): 
     });
 }
 
-export async function countMineSpotRow(dbName: string, collectionName?: string): Promise<number> {
+export async function countMineSpotRow(
+    filter: dao_query_types.MineSpotRowFilter[],
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "MineSpotRow" : collectionName;
@@ -206,7 +224,13 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
     });
 }
 
-export async function findDwarf(dbName: string, collectionName?: string): Promise<types.Dwarf[]> {
+export async function findDwarf(
+    filter: dao_query_types.DwarfFilter[],
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<types.Dwarf[]> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;
@@ -234,7 +258,13 @@ export async function findDwarf(dbName: string, collectionName?: string): Promis
     });
 }
 
-export async function countDwarf(dbName: string, collectionName?: string): Promise<number> {
+export async function countDwarf(
+    filter: dao_query_types.DwarfFilter[],
+    sort: FieldSort[],
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "Dwarf" : collectionName;

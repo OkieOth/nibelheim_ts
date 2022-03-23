@@ -161,6 +161,14 @@
                 }
             },
             {
+                "name": "dao_find_types",
+                "description": "generate filter helper types",
+                "singleFileTask": {
+                    "template": "/project/codeGen/dao_find_types.mako",
+                    "destFile": "/project/packages/dao/src_generated/dao_find_types.ts"
+                }
+            },
+            {
                 "name": "dao_find_tests",
                 "description": "generate tests for dao find functions",
                 "singleFileTask": {

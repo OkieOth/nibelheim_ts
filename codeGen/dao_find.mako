@@ -24,9 +24,21 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection"
+import * as dao_query_types from "./dao_query_types"
+import {FieldSort} from "../src/mongo_helper";
 
 % for currentType in mongoTypes:
-export async function find${currentType.name}(dbName: string, collectionName?: string): Promise<types.${currentType.name}[]> {
+export async function find${currentType.name}(
+    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+    filter: dao_query_types.${currentType.name}Filter[],
+    % endif
+    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+    sort: FieldSort[],
+    % endif
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<types.${currentType.name}[]> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;
@@ -54,7 +66,17 @@ export async function find${currentType.name}(dbName: string, collectionName?: s
     });
 }
 
-export async function count${currentType.name}(dbName: string, collectionName?: string): Promise<number> {
+export async function count${currentType.name}(
+    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+    filter: dao_query_types.${currentType.name}Filter[],
+    % endif
+    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+    sort: FieldSort[],
+    % endif
+    start: number,
+    limit: number,
+    dbName: string,
+    collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
         try {
             const collectionNameToUse = ! collectionName ? "${currentType.name}" : collectionName;

@@ -6,10 +6,10 @@ export enum NumericFilterOperator {
     "SMALLER" = "<",
     "LARGER_EQUAL" = ">=",
     "LARGER" = ">",
-    "BETWEEN_INCLUSIVE" = "<>",
+    "BETWEEN_INCLUSIVE" = ">=<",
     "BETWEEN_EXCLUSIVE" = "><",
-    "IN" = "in",
-    "NOT_IN" = "!in",
+    "IN" = "in",                    // attrib is in one of the values
+    "NOT_IN" = "!in",               // attrib isn't in one of the values
 }
 
 export interface NumericFilterField {
