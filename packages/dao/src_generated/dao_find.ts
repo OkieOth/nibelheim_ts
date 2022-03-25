@@ -17,7 +17,7 @@ import {FieldSort} from "../src/mongo_helper";
 export async function findMine(
     filter: dao_find_types.MineFilter[],
     sort: FieldSort[],
-    start: number,
+    skip: number,
     limit: number,
     dbName: string,
     collectionName?: string): Promise<types.Mine[]> {
@@ -27,7 +27,7 @@ export async function findMine(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({});
+            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
             const array: types.Mine[] = [];
@@ -135,7 +135,7 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
 export async function findMineSpotRow(
     filter: dao_find_types.MineSpotRowFilter[],
     sort: FieldSort[],
-    start: number,
+    skip: number,
     limit: number,
     dbName: string,
     collectionName?: string): Promise<types.MineSpotRow[]> {
@@ -145,7 +145,7 @@ export async function findMineSpotRow(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({});
+            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
             const array: types.MineSpotRow[] = [];
@@ -221,7 +221,7 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
 export async function findDwarf(
     filter: dao_find_types.DwarfFilter[],
     sort: FieldSort[],
-    start: number,
+    skip: number,
     limit: number,
     dbName: string,
     collectionName?: string): Promise<types.Dwarf[]> {
@@ -231,7 +231,7 @@ export async function findDwarf(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({});
+            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
             const array: types.Dwarf[] = [];

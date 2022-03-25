@@ -35,7 +35,7 @@ export async function find${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
     sort: FieldSort[],
     % endif
-    start: number,
+    skip: number,
     limit: number,
     dbName: string,
     collectionName?: string): Promise<types.${currentType.name}[]> {
@@ -45,7 +45,7 @@ export async function find${currentType.name}(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({});
+            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
             const array: types.${currentType.name}[] = [];
