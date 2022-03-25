@@ -124,4 +124,5 @@ npm run countGeneratedLines
 | dao_update           | generates the functions to update data in mongodb      |
 | dao_update_tests     | generates the tests for the mongo update functions     |
 | dao_find             | generates the functions to query data from  mongodb    |
+| dao_find_types       | generates additional types needed to query mongodb     |
 | dao_find_tests       | generates the tests for the mongo find functions       |
