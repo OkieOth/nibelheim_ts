@@ -11,11 +11,11 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
-import * as dao_query_types from "./dao_find_types";
+import * as dao_find_types from "./dao_find_types";
 import {FieldSort} from "../src/mongo_helper";
 
 export async function findMine(
-    filter: dao_query_types.MineFilter[],
+    filter: dao_find_types.MineFilter[],
     sort: FieldSort[],
     start: number,
     limit: number,
@@ -49,10 +49,7 @@ export async function findMine(
 }
 
 export async function countMine(
-    filter: dao_query_types.MineFilter[],
-    sort: FieldSort[],
-    start: number,
-    limit: number,
+    filter: dao_find_types.MineFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -136,7 +133,7 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
 }
 
 export async function findMineSpotRow(
-    filter: dao_query_types.MineSpotRowFilter[],
+    filter: dao_find_types.MineSpotRowFilter[],
     sort: FieldSort[],
     start: number,
     limit: number,
@@ -170,10 +167,7 @@ export async function findMineSpotRow(
 }
 
 export async function countMineSpotRow(
-    filter: dao_query_types.MineSpotRowFilter[],
-    sort: FieldSort[],
-    start: number,
-    limit: number,
+    filter: dao_find_types.MineSpotRowFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -225,7 +219,7 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
 }
 
 export async function findDwarf(
-    filter: dao_query_types.DwarfFilter[],
+    filter: dao_find_types.DwarfFilter[],
     sort: FieldSort[],
     start: number,
     limit: number,
@@ -259,10 +253,7 @@ export async function findDwarf(
 }
 
 export async function countDwarf(
-    filter: dao_query_types.DwarfFilter[],
-    sort: FieldSort[],
-    start: number,
-    limit: number,
+    filter: dao_find_types.DwarfFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {

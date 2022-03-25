@@ -36,6 +36,7 @@ import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
+import {NO_FILTER} from "../src/mongo_helper";
 
 const randomInserts = 10;
 
@@ -82,7 +83,7 @@ describe('${currentType.name} update by _id', () => {
                         if (found !== 1) {
                             return done(`didn't update value with _id in the database: $${}{valuesArray[1]}`);
                         }
-                        dao_find.count${currentType.name}(testDb, collectionName)
+                        dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                             .then(numberOfElems2 => {
                                 if (numberOfElems2 !== elemCount) {
                                     return done(`wrong number of entries after update: expected=$${}{elemCount}, retrieved=$${}{numberOfElems2}`)
@@ -135,7 +136,7 @@ describe('${currentType.name} update by _id', () => {
                 promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
+                dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
@@ -147,7 +148,7 @@ describe('${currentType.name} update by _id', () => {
                                 if (found !== 0) {
                                     return done(`updated something with not inserted _id in the database: $${}{valuesArray[1]}`);
                                 }
-                                dao_find.count${currentType.name}(testDb, collectionName)
+                                dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after update: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)
@@ -209,7 +210,7 @@ describe('${currentType.name} update by key', () => {
                         if (found !== 1) {
                             return done(`didn't update value with key in the database: $${}{valuesArray[1]}`);
                         }
-                        dao_find.count${currentType.name}(testDb, collectionName)
+                        dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                             .then(numberOfElems2 => {
                                 if (numberOfElems2 !== elemCount) {
                                     return done(`wrong number of entries after update: expected=$${}{elemCount}, retrieved=$${}{numberOfElems2}`)
@@ -262,7 +263,7 @@ describe('${currentType.name} update by key', () => {
                 promises.push(dao_insert.insert${currentType.name}(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.count${currentType.name}(testDb, collectionName)
+                dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=$${}{elemCount}, retrieved=$${}{numberOfElems}`)
@@ -277,7 +278,7 @@ describe('${currentType.name} update by key', () => {
                                 if (found !== 0) {
                                     return done(`updated something with not inserted _id in the database: $${}{valuesArray[1]}`);
                                 }
-                                dao_find.count${currentType.name}(testDb, collectionName)
+                                dao_find.count${currentType.name}(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after update: expected=$${}{elemCount-1}, retrieved=$${}{numberOfElems2}`)

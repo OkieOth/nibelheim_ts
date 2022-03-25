@@ -13,7 +13,7 @@ class Mine {
         **#mongodb**
         
         --- // Property-Tags // ---
-        **#daoFilter**: name, time
+        **#daoFilter**: name, time, dwarfs
         --
         **#daoSort**: name, time
 }
@@ -49,6 +49,8 @@ class MineSpot {
         IntegerType currentAmountOfMaterial
         NumberType miningDifficulty
         
+        --- // Property-Tags // ---
+        **#daoFilter**: material
 }
 
 note top: Brick, from which the mine\nis built

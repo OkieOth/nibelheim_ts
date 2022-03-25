@@ -14,6 +14,7 @@ import * as dao_insert from "../src_generated/dao_insert"
 import * as dummy from "types_random"
 import * as types from "types"
 import * as mongoConnection from "../src/mongo_connection"
+import {NO_FILTER} from "../src/mongo_helper";
 
 const randomInserts = 10;
 
@@ -48,7 +49,7 @@ describe('Mine delete by _id', () => {
                 promises.push(dao_insert.insertMine(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMine(testDb, collectionName)
+                dao_find.countMine(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -58,7 +59,7 @@ describe('Mine delete by _id', () => {
                                 if (found !== 1) {
                                     return done(`didn't delete value with _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMine(testDb, collectionName)
+                                dao_find.countMine(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount-1) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -100,7 +101,7 @@ describe('Mine delete by _id', () => {
                 promises.push(dao_insert.insertMine(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMine(testDb, collectionName)
+                dao_find.countMine(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -111,7 +112,7 @@ describe('Mine delete by _id', () => {
                                 if (found !== 0) {
                                     return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMine(testDb, collectionName)
+                                dao_find.countMine(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -156,7 +157,7 @@ describe('Mine delete by key', () => {
                 promises.push(dao_insert.insertMine(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMine(testDb, collectionName)
+                dao_find.countMine(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -171,7 +172,7 @@ describe('Mine delete by key', () => {
                                 if (found !== 1) {
                                     return done(`didn't delete value with key in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMine(testDb, collectionName)
+                                dao_find.countMine(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount-1) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -213,7 +214,7 @@ describe('Mine delete by key', () => {
                 promises.push(dao_insert.insertMine(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMine(testDb, collectionName)
+                dao_find.countMine(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -228,7 +229,7 @@ describe('Mine delete by key', () => {
                                 if (found !== 0) {
                                     return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMine(testDb, collectionName)
+                                dao_find.countMine(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -272,7 +273,7 @@ describe('MineSpotRow delete by _id', () => {
                 promises.push(dao_insert.insertMineSpotRow(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMineSpotRow(testDb, collectionName)
+                dao_find.countMineSpotRow(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -282,7 +283,7 @@ describe('MineSpotRow delete by _id', () => {
                                 if (found !== 1) {
                                     return done(`didn't delete value with _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMineSpotRow(testDb, collectionName)
+                                dao_find.countMineSpotRow(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount-1) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -324,7 +325,7 @@ describe('MineSpotRow delete by _id', () => {
                 promises.push(dao_insert.insertMineSpotRow(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countMineSpotRow(testDb, collectionName)
+                dao_find.countMineSpotRow(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -335,7 +336,7 @@ describe('MineSpotRow delete by _id', () => {
                                 if (found !== 0) {
                                     return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countMineSpotRow(testDb, collectionName)
+                                dao_find.countMineSpotRow(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -380,7 +381,7 @@ describe('Dwarf delete by _id', () => {
                 promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countDwarf(testDb, collectionName)
+                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -390,7 +391,7 @@ describe('Dwarf delete by _id', () => {
                                 if (found !== 1) {
                                     return done(`didn't delete value with _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countDwarf(testDb, collectionName)
+                                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount-1) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -432,7 +433,7 @@ describe('Dwarf delete by _id', () => {
                 promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countDwarf(testDb, collectionName)
+                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -443,7 +444,7 @@ describe('Dwarf delete by _id', () => {
                                 if (found !== 0) {
                                     return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countDwarf(testDb, collectionName)
+                                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -488,7 +489,7 @@ describe('Dwarf delete by key', () => {
                 promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countDwarf(testDb, collectionName)
+                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -503,7 +504,7 @@ describe('Dwarf delete by key', () => {
                                 if (found !== 1) {
                                     return done(`didn't delete value with key in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countDwarf(testDb, collectionName)
+                                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount-1) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)
@@ -545,7 +546,7 @@ describe('Dwarf delete by key', () => {
                 promises.push(dao_insert.insertDwarf(x, testDb, collectionName));
             }
             Promise.all(promises).then(function(valuesArray){
-                dao_find.countDwarf(testDb, collectionName)
+                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                     .then(numberOfElems => {
                         if (numberOfElems !== elemCount) {
                             return done(`wrong number of entries after insert: expected=${elemCount}, retrieved=${numberOfElems}`)
@@ -560,7 +561,7 @@ describe('Dwarf delete by key', () => {
                                 if (found !== 0) {
                                     return done(`deleted something with not inserted _id in the database: ${valuesArray[1]}`);
                                 }
-                                dao_find.countDwarf(testDb, collectionName)
+                                dao_find.countDwarf(NO_FILTER, testDb, collectionName)
                                     .then(numberOfElems2 => {
                                         if (numberOfElems2 !== elemCount) {
                                             return done(`wrong number of entries after delete: expected=${elemCount-1}, retrieved=${numberOfElems2}`)

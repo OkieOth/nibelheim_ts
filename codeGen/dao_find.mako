@@ -24,13 +24,13 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
-import * as dao_query_types from "./dao_find_types";
+import * as dao_find_types from "./dao_find_types";
 import {FieldSort} from "../src/mongo_helper";
 
 % for currentType in mongoTypes:
 export async function find${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    filter: dao_query_types.${currentType.name}Filter[],
+    filter: dao_find_types.${currentType.name}Filter[],
     % endif
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
     sort: FieldSort[],
@@ -68,13 +68,8 @@ export async function find${currentType.name}(
 
 export async function count${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    filter: dao_query_types.${currentType.name}Filter[],
+    filter: dao_find_types.${currentType.name}Filter[],
     % endif
-    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    sort: FieldSort[],
-    % endif
-    start: number,
-    limit: number,
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
