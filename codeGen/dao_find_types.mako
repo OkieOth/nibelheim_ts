@@ -11,21 +11,33 @@
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
+
+    def getPropTypeStr(prop):
+        typeStr = typescriptFuncs.printTypescriptType(prop.type, False)
+        if typeStr == 'string | any':
+            typeStr = 'string' # handling of UUID types
+        return typeStr
+
+    def getOperatorForTypeStr(typeStr):
+        if (typeStr == 'string'):
+            return 'StringFilterOperator'
+        elif (typeStr == 'number') or (typeStr == 'Date'):
+            return 'NumericFilterOperator'
+        else:
+            return '!!!UNSUPPORTED_FILTER_TYPE!!!'
+
     def getFilterTupels(typeObj):
         propTypes = {}
         for prop in typeObj.properties:
             if modelFuncs.hasTag("daoFilter", prop):
-                typeStr = typescriptFuncs.printTypescriptType(prop.type, False)
-                if typeStr == 'string | any':
-                    typeStr = 'string' # handling of UUID types
+                typeStr = getPropTypeStr(prop)
                 if prop.type not in propTypes.keys():
-                    if (typeStr == 'string'):
-                        propTypes[typeStr] = 'StringFilterOperator'
-                    elif (typeStr == 'number') or (typeStr == 'Date'):
-                        propTypes[typeStr] = 'NumericFilterOperator'
-                    else:
-                        propTypes[typeStr] = '!!!UNSUPPORTED_FILTER_TYPE!!!'
+                    propTypes[typeStr] = getOperatorForTypeStr(typeStr)
         return propTypes
+
+    def getPropFilterOp(prop):
+        typeStr = getPropTypeStr(prop)
+        return getOperatorForTypeStr(typeStr)
 
 %>/**
     This file is generated.
@@ -44,14 +56,29 @@ import {
 
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    export type ${currentType.name}Filter =<%
+export type ${currentType.name}Filter =<%
         filterTupelDict = getFilterTupels(currentType)
         keyList = list(filterTupelDict.keys())
         lastKey = keyList[len(keyList)-1]
         %>
         % for fieldType in filterTupelDict.keys():
-                    FieldFilter<${fieldType}, ${filterTupelDict[fieldType]}>${' |' if fieldType != lastKey else ';'}
+                FieldFilter<${fieldType}, ${filterTupelDict[fieldType]}>${' |' if fieldType != lastKey else ';'}
         % endfor
    % endif
 
+% endfor
+
+% for currentType in mongoTypes:
+    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+        % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: ${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}[]): FieldFilter<${getPropFilterOp(prop)}, ${getPropTypeStr(prop)}> {
+    return {
+        field: "${prop.name}",
+        operator: op,
+        values: v
+    };
+}
+
+        % endfor
+   % endif
 % endfor

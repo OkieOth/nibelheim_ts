@@ -10,8 +10,8 @@ import * as mongoDb from "mongodb";
 import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
-import * as mongoConnection from "../src/mongo_connection"
-import * as dao_query_types from "./dao_query_types"
+import * as mongoConnection from "../src/mongo_connection";
+import * as dao_query_types from "./dao_find_types";
 import {FieldSort} from "../src/mongo_helper";
 
 export async function findMine(
