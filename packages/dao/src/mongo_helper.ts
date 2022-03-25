@@ -1,4 +1,10 @@
 
+export const NO_LIMIT=-1;
+
+export const NO_FILTER=[];
+
+export const NO_SORT=[];
+
 export enum NumericFilterOperator {
     "EQUAL" = "==",
     "NOT_EQUAL" = "!=",

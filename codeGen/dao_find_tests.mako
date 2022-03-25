@@ -20,12 +20,13 @@
 import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as mongoDb from "mongodb";
-import * as dao_find from "../src_generated/dao_find"
-import * as dao_insert from "../src_generated/dao_insert"
-import * as dummy from "types_random"
-import * as types from "types"
-import * as mongoConnection from "../src/mongo_connection"
+import * as dao_find from "../src_generated/dao_find";
+import * as dao_insert from "../src_generated/dao_insert";
+import * as dummy from "types_random";
+import * as types from "types";
+import * as mongoConnection from "../src/mongo_connection";
 import {logger} from "logger";
+import {NO_FILTER, NO_LIMIT, NO_SORT} from "../src/mongo_helper";
 
 const randomInserts = 10;
 
@@ -58,7 +59,7 @@ describe('${currentType.name}', () => {
             }
             Promise.all(promises).then(function(){
                 // all inserts are done
-                dao_find.find${currentType.name}(testDb)
+                dao_find.find${currentType.name}(NO_FILTER, NO_SORT, 0, NO_LIMIT,testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
                     if (found.length != randomInserts) {
