@@ -63,22 +63,24 @@ packageJson=$dirToPrepare/package.json
 if ! [ -f $packageJson ]; then
     echo "can't find package.json: '$packageJson', cancel"
 fi
-if ! cat $packageJson | grep "__tests__ __tests_generated__"; then
+if ! cat $packageJson | grep "__tests__ __tests_generated__" > /dev/null; then
     cat $packageJson | jq '.directories.test="__tests__ __tests_generated__"' > $packageJson.tmp
     mv $packageJson.tmp $packageJson
 fi
 
-if ! cat $packageJson | grep "lib/src/index.js"; then
+if ! cat $packageJson | grep "lib/src/index.js" > /dev/null; then
     cat $packageJson | jq '.main="lib/src/index.js"' > $packageJson.tmp
     mv $packageJson.tmp $packageJson
 fi
 
-if ! cat $packageJson | grep '"tsc"'; then
-    cat packages/filter/package.json | jq '.scripts.tsc="tsc"'
+if ! cat $packageJson | grep '"tsc"' > /dev/null; then
+    cat packages/filter/package.json | jq '.scripts.tsc="tsc"' > $packageJson.tmp
+    mv $packageJson.tmp $packageJson
 fi
 
-if ! cat $packageJson | grep 'mocha -r ts-node/register'; then
-    cat packages/filter/package.json | jq ".scripts.tsc=\"env TS_NODE_COMPILER_OPTIONS='{\\\"module\\\": \\\"commonjs\\\" }' mocha -r ts-node/register '__tests*__/**/*.ts'\""
+if ! cat $packageJson | grep 'mocha -r ts-node/register' > /dev/null; then
+    cat packages/filter/package.json | jq ".scripts.test=\"env TS_NODE_COMPILER_OPTIONS='{\\\"module\\\": \\\"commonjs\\\" }' mocha -r ts-node/register '__tests*__/**/*.ts'\"" > $packageJson.tmp
+    mv $packageJson.tmp $packageJson
 fi
 
 rm -rf "$dirToPrepare/lib/*"
