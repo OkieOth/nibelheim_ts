@@ -1,0 +1,122 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Query Types",
+    "description": "Helper types to query data",
+    "definitions": {
+        "NumericFilterOperator": {
+            "description": "EQ: ==, NE: !=, LT: <, LE: <=, GT: >, GE: <=, IB: between inclusive, EB: between exclusive, IN: in, NI: not in",
+            "enum": [
+                "EQ",
+                "NE",
+                "LT",
+                "LE",
+                "GT",
+                "GE",
+                "IB",
+                "EB",
+                "IN",
+                "NI"
+            ]
+        },
+        "StringFilterOperator": {
+            "description": "EQ: ==, NE: !=, MA: regex match, NM: not match regex , IN: in, NI: not in",
+            "enum": [
+                "EQ",
+                "NE",
+                "MA",
+                "NM",
+                "IN",
+                "NI"
+            ]
+        },
+        "BooleanFilterOperator": {
+            "description": "EQ: ==, NE: !=",
+            "enum": [
+                "EQ",
+                "NE"
+            ]
+        },
+        "SortDirection": {
+            "enum": [
+                "ASC",
+                "DESC"
+            ]
+        },
+        "FieldFilter": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "#/definitions/StringFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "#/definitions/NumericFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "#/definitions/NumericFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "booleanOperator": {
+                            "$ref": "#/definitions/BooleanFilterOperator"
+                        },
+                        "value": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            ],
+            "properties": {
+                "field": {
+                    "type": "string"
+                }
+            }
+        },
+        "FieldSort": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "description": "field used for sorting",
+                    "type": "string"
+                },
+                "direction": {
+                    "$ref": "#/definitions/SortDirection"
+                }
+            }
+        }
+    }
+}

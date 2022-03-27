@@ -1,0 +1,71 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Query Types",
+    "description": "Describes a field filter with oneOf element. This is critical because union-types are not easy supported over all programming languages",
+    "definitions": {
+        "FieldFilter": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "./query_types.json#/definitions/StringFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "./query_types.json#/definitions/NumericFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "operator": {
+                            "$ref": "./query_types.json#/definitions/NumericFilterOperator"
+                        },
+                        "values": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "booleanOperator": {
+                            "$ref": "./query_types.json#/definitions/BooleanFilterOperator"
+                        },
+                        "value": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            ],
+            "properties": {
+                "field": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

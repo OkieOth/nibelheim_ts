@@ -1,7 +1,57 @@
 [
     {
-        "name": "yacg models types",
-        "description": "code gen configuration for yacg base model types",
+        "name": "additional filter types",
+        "description": "code gen configuration to create addtional filter types",
+        "models": [ {
+            "schema": "/project/model/filter.json"
+            }
+        ],
+        "tasks": [
+            {
+                "name": "filter_types_puml",
+                "description": "create Puml for additional filter types",
+                "singleFileTask": {
+                    "template": "plantUml",
+                    "destFile": "/project/docs/generated/filter_types.puml"
+                }
+            },
+            {
+                "name": "filter_types",
+                "description": "generate types",
+                "singleFileTask": {
+                    "template": "/project/codeGen/ts_types.mako",
+                    "destFile": "/project/packages/filter/src_generated/filter_types.ts"
+                }
+            },
+            {
+                "name": "filter_type_guards",
+                "description": "generate type validation functions",
+                "singleFileTask": {
+                    "template": "/project/codeGen/type_guards.mako",
+                    "destFile": "/project/packages/filter/src_generated/filter_type_guards.ts"
+                }
+            },
+            {
+                "name": "filter_type_guards_tests",
+                "description": "generate tests for type guards",
+                "singleFileTask": {
+                    "template": "/project/codeGen/type_guards_tests.mako",
+                    "destFile": "/project/packages/filter/__tests_generated__/type_guards_test.ts"
+                }
+            },
+            {
+                "name": "type_equal",
+                "description": "generate functions to test if objects are equal",
+                "singleFileTask": {
+                    "template": "/project/codeGen/type_equal.mako",
+                    "destFile": "/project/packages/types/src_generated/equal_funcs.ts"
+                }
+            }
+        ]
+    },
+    {
+        "name": "nibelheim models types",
+        "description": "code gen configuration for nibelheim model types",
         "models": [ {
             "schema": "/project/model/nibelheim.json"
             }

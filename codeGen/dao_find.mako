@@ -32,7 +32,7 @@ export async function find${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
     filter: dao_find_types.${currentType.name}Filter[],
     % endif
-    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
+    % if modelFuncs.hasPropertyWithTag("daoSort", currentType):
     sort: FieldSort[],
     % endif
     skip: number,
