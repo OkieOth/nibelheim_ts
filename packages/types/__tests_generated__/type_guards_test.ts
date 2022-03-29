@@ -2,7 +2,6 @@
     This file is generated.
     Template: type_factories_tests.mako v0.1.0)
 */
-import * as types from '../src_generated/types';
 import * as guards from '../src_generated/type_guards';
 import { assert } from 'chai';
 

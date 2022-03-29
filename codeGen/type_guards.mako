@@ -59,12 +59,16 @@
                 return 'typeof attrib === "object"'
             else:
                 return "<< ERROR UNKOWN TYPE: {type}".format(type=type.name)
+
+    packagePrefix = templateParameters.get('packagePrefix','')
+    typesPackage = templateParameters.get('typesPackage','../src/factory_utils')
+
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
 */
-import * as types from "./types";
-import * as utils from "../src/factory_utils";
+import * as types from "./${packagePrefix}types";
+import * as utils from "${typesPackage}";
 import {logger} from "logger";
 
 % for currentType in modelTypes:

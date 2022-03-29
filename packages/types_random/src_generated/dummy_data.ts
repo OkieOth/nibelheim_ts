@@ -28,6 +28,9 @@ export function randomMine(randomizeOptionalAttribs = false): types.Mine {
             ret.dwarfs.push(chance.guid({version: 4}));
         }
     };
+    if ((!randomizeOptionalAttribs) || chance.bool()) {
+        ret.active = chance.bool();
+    };
     return ret;
 }
 

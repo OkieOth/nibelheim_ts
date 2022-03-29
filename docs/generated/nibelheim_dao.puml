@@ -12,6 +12,7 @@ package "Collection: Mine" {
             Storage storage
             DateTimeType time<color:grey>"" // filter, sort""</color>
             UuidType[] dwarfs<color:grey>"" // filter""</color>
+            BooleanType active<color:grey>"" // filter""</color>
     }
     class "Storage" as Mine_Storage {
             IntegerType mithril

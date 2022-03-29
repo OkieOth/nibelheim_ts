@@ -25,6 +25,7 @@
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
   },
   "dependencies": {
+    "filter": "^1.0.0-rc.1",
     "logger": "^1.0.0-rc.1",
     "mongodb": "^4.3.1",
     "types": "^1.0.0-rc.1",

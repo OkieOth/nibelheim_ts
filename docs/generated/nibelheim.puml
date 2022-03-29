@@ -8,12 +8,13 @@ class Mine {
         Storage storage
         DateTimeType time
         UuidType[] dwarfs
+        BooleanType active
 
         == // Type-Tags // ==
         **#mongodb**
         
         --- // Property-Tags // ---
-        **#daoFilter**: name, time, dwarfs
+        **#daoFilter**: name, time, dwarfs, active
         --
         **#daoSort**: name, time
 }
@@ -128,6 +129,7 @@ enum HistoryChangeEnum {
 
 Mine  *--  Storage
             
+
 
 
 

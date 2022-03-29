@@ -1,0 +1,126 @@
+
+@startuml
+hide empty methods
+
+class FieldFilter {
+        StringType field
+        FieldFilterStrFilter strFilter
+        FieldFilterNumFilter numFilter
+        FieldFilterDateFilter dateFilter
+        FieldFilterBooleanFilter booleanFilter
+}
+
+
+class FieldFilterStrFilter {
+        StringFilterOperator operator
+        StringType[] values
+}
+
+
+enum NumericFilterOperator {
+    EQ
+    NE
+    LT
+    LE
+    GT
+    GE
+    IB
+    EB
+    IN
+    NI
+}
+
+
+enum StringFilterOperator {
+    EQ
+    NE
+    MA
+    NM
+    IN
+    NI
+}
+
+
+enum BooleanFilterOperator {
+    EQ
+    NE
+}
+
+
+enum SortDirection {
+    ASC
+    DESC
+}
+
+
+class FieldSort {
+        StringType field
+        SortDirection direction
+}
+
+
+class FieldFilterNumFilter {
+        NumericFilterOperator operator
+        NumberType[] values
+}
+
+
+class FieldFilterDateFilter {
+        NumericFilterOperator operator
+        DateTimeType[] values
+}
+
+
+class FieldFilterBooleanFilter {
+        BooleanFilterOperator booleanOperator
+        BooleanType value
+}
+
+
+
+    
+
+FieldFilter  *--  FieldFilterStrFilter
+            
+
+FieldFilter  *--  FieldFilterNumFilter
+            
+
+FieldFilter  *--  FieldFilterDateFilter
+            
+
+FieldFilter  *--  FieldFilterBooleanFilter
+            
+
+    
+FieldFilterStrFilter  *--  StringFilterOperator
+            
+
+
+    
+    
+    
+    
+    
+
+FieldSort  *--  SortDirection
+            
+
+    
+FieldFilterNumFilter  *--  NumericFilterOperator
+            
+
+
+    
+FieldFilterDateFilter  *--  NumericFilterOperator
+            
+
+
+    
+FieldFilterBooleanFilter  *--  BooleanFilterOperator
+            
+
+
+
+footer \ngenerated with yacg (https://github.com/OkieOth/yacg),\n(template: plantUml.mako v1.1.0)\npowered by plantuml (https://plantuml.com/)
+@enduml

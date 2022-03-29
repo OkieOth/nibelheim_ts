@@ -23,17 +23,10 @@
             return 'StringFilterOperator'
         elif (typeStr == 'number') or (typeStr == 'Date'):
             return 'NumericFilterOperator'
+        elif typeStr == 'boolean':
+            return 'BooleanFilterOperator'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
-
-    def getFilterTupels(typeObj):
-        propTypes = {}
-        for prop in typeObj.properties:
-            if modelFuncs.hasTag("daoFilter", prop):
-                typeStr = getPropTypeStr(prop)
-                if prop.type not in propTypes.keys():
-                    propTypes[typeStr] = getOperatorForTypeStr(typeStr)
-        return propTypes
 
     def getPropFilterOp(prop):
         typeStr = getPropTypeStr(prop)
@@ -47,36 +40,21 @@
     tagged with 'mongodb' are included. For filter are properties with a 'x-tag' 'daoFilter'
     included.
 */
-import {
-    StringFilterOperator,
-    NumericFilterOperator,
-    FieldFilter,
-    SortDirection,
-    FieldSort} from "../src/mongo_helper";
+import * as filter from "filter";
 
-% for currentType in mongoTypes:
-    % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-export type ${currentType.name}Filter =<%
-        filterTupelDict = getFilterTupels(currentType)
-        keyList = list(filterTupelDict.keys())
-        lastKey = keyList[len(keyList)-1]
-        %>
-        % for fieldType in filterTupelDict.keys():
-                FieldFilter<${fieldType}, ${filterTupelDict[fieldType]}>${' |' if fieldType != lastKey else ';'}
-        % endfor
-   % endif
-
-% endfor
 
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
         % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: ${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}[]): FieldFilter<${getPropFilterOp(prop)}, ${getPropTypeStr(prop)}> {
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "${prop.name}",
         operator: op,
         values: v
     };
+*/
 }
 
         % endfor

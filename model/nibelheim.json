@@ -34,6 +34,11 @@
             "format": "uuid"
           },
           "x-tags": ["daoFilter"]
+        },
+        "active": {
+          "$comment": "only put to the model to have a boolean filter for mongo :D",
+          "type": "boolean",
+          "x-tags": ["daoFilter"]
         }
       },
       "required": ["id", "name", "time"],

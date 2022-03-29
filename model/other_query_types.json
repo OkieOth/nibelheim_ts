@@ -1,0 +1,152 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Query Types",
+    "description": "Helper types to query data",
+    "definitions": {
+        "NumericOneValueFilterOp": {
+            "enum": [
+                "EQ",
+                "NE",
+                "LT",
+                "LE",
+                "GT",
+                "GE"
+            ]
+        },
+        "NumericOneValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/NumericOneValueFilterOp"
+                },
+                "value": {
+                    "type": "number"
+                }
+            }
+        },
+        "NumericTwoValueFilterOp": {
+            "enum": [
+                "IB",
+                "EB"
+            ]
+        },
+        "NumericTwoValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/NumericTwoValueFilterOp"
+                },
+                "from": {
+                    "type": "number"
+                },
+                "to": {
+                    "type": "number"
+                }
+            }
+        },
+        "NumericListValueFilterOp": {
+            "enum": [
+                "IN",
+                "NI"
+            ]
+        },
+        "NumericListValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/NumericListValueFilterOp"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "StringOneValueFilterOp": {
+            "description": "EQ: ==, NE: !=, MA: regex match, NM: not match regex",
+            "enum": [
+                "EQ",
+                "NE",
+                "MA",
+                "NM"
+            ]
+        },
+        "StringOneValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/StringOneValueFilterOp"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "StringListValueFilterOp": {
+            "description": "IN: in, NI: not in",
+            "enum": [
+                "IN",
+                "NI"
+            ]
+        },
+        "StringListValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/StringListValueFilterOp"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "BooleanFilterOp": {
+            "description": "EQ: ==, NE: !=",
+            "enum": [
+                "EQ",
+                "NE"
+            ]
+        },
+        "BooleanValueFilter": {
+            "type": "object",
+            "properties": {
+                "op": {
+                    "$ref": "#definitions/BooleanFilterOp"
+                },
+                "value": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Filter": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "$ref": "#definitions/NumericOneValueFilter"
+                },
+                {
+                    "$ref": "#definitions/NumericTwoValueFilter"
+                },
+                {
+                    "$ref": "#definitions/NumericListValueFilter"
+                },
+                {
+                    "$ref": "#definitions/StringOneValueFilter"
+                },
+                {
+                    "$ref": "#definitions/StringListValueFilter"
+                }
+            ],
+            "properties": {
+                "field": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

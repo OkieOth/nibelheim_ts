@@ -96,6 +96,19 @@ export function isMine(value: any): value is types.Mine {
             return false;
         }
     }
+    if ("active" in obj) {
+        const attrib: any = obj["active"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'active' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (typeof attrib === "boolean") ) {
+            logger.error(() => `'active' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
     return true;
 }
 

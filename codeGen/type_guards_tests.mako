@@ -7,12 +7,13 @@
     templateFile = 'type_factories_tests.mako'
     templateVersion = '0.1.0'
 
+    packagePrefix = templateParameters.get('packagePrefix','')
+
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
 */
-import * as types from '../src_generated/types';
-import * as guards from '../src_generated/type_guards';
+import * as guards from '../src_generated/${packagePrefix}type_guards';
 import { assert } from 'chai';
 
 describe('Test of type factories and their helper funcs', () => {

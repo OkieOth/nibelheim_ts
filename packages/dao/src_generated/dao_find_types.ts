@@ -6,119 +6,149 @@
     tagged with 'mongodb' are included. For filter are properties with a 'x-tag' 'daoFilter'
     included.
 */
-import {
-    StringFilterOperator,
-    NumericFilterOperator,
-    FieldFilter,
-    SortDirection,
-    FieldSort} from "../src/mongo_helper";
-
-export type MineFilter =
-                FieldFilter<string, StringFilterOperator> |
-                FieldFilter<Date, NumericFilterOperator>;
-
-export type MineSpotRowFilter =
-                FieldFilter<string, StringFilterOperator> |
-                FieldFilter<number, NumericFilterOperator>;
-
-export type DwarfFilter =
-                FieldFilter<string, StringFilterOperator> |
-                FieldFilter<number, NumericFilterOperator>;
+import * as filter from "filter";
 
 
-export function createMineFilterName(op: StringFilterOperator, v: string[]): FieldFilter<StringFilterOperator, string> {
+export function createMineFilterName(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "name",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createMineFilterTime(op: NumericFilterOperator, v: Date[]): FieldFilter<NumericFilterOperator, Date> {
+export function createMineFilterTime(op: filter.NumericFilterOperator, v: Date[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "time",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createMineFilterDwarfs(op: StringFilterOperator, v: string[]): FieldFilter<StringFilterOperator, string> {
+export function createMineFilterDwarfs(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "dwarfs",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createMineSpotRowFilterMine_id(op: StringFilterOperator, v: string[]): FieldFilter<StringFilterOperator, string> {
+export function createMineFilterActive(op: filter.BooleanFilterOperator, v: boolean[]): filter.FieldFilter {
+    return null;
+/*
+    return {
+        field: "active",
+        operator: op,
+        values: v
+    };
+*/
+}
+
+export function createMineSpotRowFilterMine_id(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "mine_id",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createMineSpotRowFilterRow_number(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createMineSpotRowFilterRow_number(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "row_number",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createMineSpotRowFilterLevel(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createMineSpotRowFilterLevel(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "level",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterName(op: StringFilterOperator, v: string[]): FieldFilter<StringFilterOperator, string> {
+export function createDwarfFilterName(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "name",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterMine_id(op: StringFilterOperator, v: string[]): FieldFilter<StringFilterOperator, string> {
+export function createDwarfFilterMine_id(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "mine_id",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterCurrentStrongness(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createDwarfFilterCurrentStrongness(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "currentStrongness",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterHunger(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createDwarfFilterHunger(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "hunger",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterHealthiness(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createDwarfFilterHealthiness(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "healthiness",
         operator: op,
         values: v
     };
+*/
 }
 
-export function createDwarfFilterMotivation(op: NumericFilterOperator, v: number[]): FieldFilter<NumericFilterOperator, number> {
+export function createDwarfFilterMotivation(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+    return null;
+/*
     return {
         field: "motivation",
         operator: op,
         values: v
     };
+*/
 }
 

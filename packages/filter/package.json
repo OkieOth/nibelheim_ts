@@ -23,5 +23,9 @@
   },
   "bugs": {
     "url": "https://github.com/OkieOth/nibelheim_ts/issues"
+  },
+  "dependencies": {
+    "logger": "^1.0.0-rc.1",
+    "types": "^1.0.0-rc.1"
   }
 }

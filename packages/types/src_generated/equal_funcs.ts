@@ -66,6 +66,13 @@ export function isEqualMine(obj1: types.Mine, obj2: types.Mine): boolean {
         if (!obj2.dwarfs) return true;
         return false;
     }
+    if (obj1.active) {
+        if (obj1.active !== obj2.active) return false;
+    }
+    else {
+        if (!obj2.active) return true;
+        return false;
+    }
     return true;
 }
 

@@ -20,6 +20,7 @@ export interface Mine {
     */
     time: Date;
     dwarfs?: string[] | any[];
+    active?: boolean;
 }
 
 /**
