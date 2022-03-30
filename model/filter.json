@@ -10,60 +10,77 @@
                     "type": "string"
                 },
                 "strFilter": {
-                    "type": "object",
-                    "properties": {
-                        "operator": {
-                            "$ref": "./query_types.json#/definitions/StringFilterOperator"
-                        },
-                        "values": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
+                    "$ref": "#/definitions/StringFilter"
                 },
                 "numFilter": {
-                    "type": "object",
-                    "properties": {
-                        "operator": {
-                            "$ref": "./query_types.json#/definitions/NumericFilterOperator"
-                        },
-                        "values": {
-                            "type": "array",
-                            "items": {
-                                "type": "number"
-                            }
-                        }
-                    }
+                    "$ref": "#/definitions/NumericFilter"
                 },
                 "dateFilter": {
-                    "type": "object",
-                    "properties": {
-                        "operator": {
-                            "$ref": "./query_types.json#/definitions/NumericFilterOperator"
-                        },
-                        "values": {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "format": "date-time"
-                            }
-                        }
-                    }
+                    "$ref": "#/definitions/DateFilter"
                 },
-                "booleanFilter": {
-                    "type": "object",
-                    "properties": {
-                        "booleanOperator": {
-                            "$ref": "./query_types.json#/definitions/BooleanFilterOperator"
-                        },
-                        "value": {
-                            "type": "boolean"
-                        }
+                "boolFilter": {
+                    "$ref": "#/definitions/BooleanFilter"
+                }
+            },
+            "required": ["field"]
+        },
+        "StringFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/StringFilterOperator"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
                     }
                 }
-            }
+            },
+            "required": ["operator", "values"]
+        },
+        "NumericFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/NumericFilterOperator"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            },
+            "required": ["operator", "values"]
+        },
+        "DateFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/NumericFilterOperator"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "required": ["operator", "values"]
+        },
+        "BooleanFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/BooleanFilterOperator"
+                },
+                "value": {
+                    "type": "boolean"
+                }
+            },
+            "required": ["operator", "value"]
         }
     }
 }

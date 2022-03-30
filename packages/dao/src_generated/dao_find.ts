@@ -12,11 +12,11 @@ import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
 import * as dao_find_types from "./dao_find_types";
-import {FieldSort} from "../src/mongo_helper";
+import * as filter from "filter";
 
 export async function findMine(
-    filter: dao_find_types.MineFilter[],
-    sort: FieldSort[],
+    filter: filter.FieldFilter[],
+    sort: filter.FieldSort[],
     skip: number,
     limit: number,
     dbName: string,
@@ -49,7 +49,7 @@ export async function findMine(
 }
 
 export async function countMine(
-    filter: dao_find_types.MineFilter[],
+    filter: filter.FieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -133,8 +133,8 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
 }
 
 export async function findMineSpotRow(
-    filter: dao_find_types.MineSpotRowFilter[],
-    sort: FieldSort[],
+    filter: filter.FieldFilter[],
+    sort: filter.FieldSort[],
     skip: number,
     limit: number,
     dbName: string,
@@ -167,7 +167,7 @@ export async function findMineSpotRow(
 }
 
 export async function countMineSpotRow(
-    filter: dao_find_types.MineSpotRowFilter[],
+    filter: filter.FieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -219,8 +219,8 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
 }
 
 export async function findDwarf(
-    filter: dao_find_types.DwarfFilter[],
-    sort: FieldSort[],
+    filter: filter.FieldFilter[],
+    sort: filter.FieldSort[],
     skip: number,
     limit: number,
     dbName: string,
@@ -253,7 +253,7 @@ export async function findDwarf(
 }
 
 export async function countDwarf(
-    filter: dao_find_types.DwarfFilter[],
+    filter: filter.FieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {

@@ -19,6 +19,10 @@ export function isFieldFilter(value: any): value is types.FieldFilter {
         return false;
     }
     const obj = value as Object;
+    if (!("field" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'field': ${value}`, caller);
+        return false;
+    }
     if ("field" in obj) {
         const attrib: any = obj["field"];
         // check for the right multiplicity
@@ -40,7 +44,7 @@ export function isFieldFilter(value: any): value is types.FieldFilter {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isFieldFilterStrFilter(attrib)) ) {
+        if ( ! (isStringFilter(attrib)) ) {
             logger.error(() => `'strFilter' has wrong type: ${value}`, caller);
             return false;
         }
@@ -53,7 +57,7 @@ export function isFieldFilter(value: any): value is types.FieldFilter {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isFieldFilterNumFilter(attrib)) ) {
+        if ( ! (isNumericFilter(attrib)) ) {
             logger.error(() => `'numFilter' has wrong type: ${value}`, caller);
             return false;
         }
@@ -66,31 +70,31 @@ export function isFieldFilter(value: any): value is types.FieldFilter {
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isFieldFilterDateFilter(attrib)) ) {
+        if ( ! (isDateFilter(attrib)) ) {
             logger.error(() => `'dateFilter' has wrong type: ${value}`, caller);
             return false;
         }
     }
-    if ("booleanFilter" in obj) {
-        const attrib: any = obj["booleanFilter"];
+    if ("boolFilter" in obj) {
+        const attrib: any = obj["boolFilter"];
         // check for the right multiplicity
         if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            logger.error(() => `'booleanFilter' has wrong multiplicity: ${value}`, caller);
+            logger.error(() => `'boolFilter' has wrong multiplicity: ${value}`, caller);
             return false;
         }
         // check if the the attribs has the right type
-        if ( ! (isFieldFilterBooleanFilter(attrib)) ) {
-            logger.error(() => `'booleanFilter' has wrong type: ${value}`, caller);
+        if ( ! (isBooleanFilter(attrib)) ) {
+            logger.error(() => `'boolFilter' has wrong type: ${value}`, caller);
             return false;
         }
     }
     return true;
 }
 
-export function isFieldFilterStrFilter(value: any): value is types.FieldFilterStrFilter {
+export function isStringFilter(value: any): value is types.StringFilter {
     if (value == null || value == undefined)
         return true;
-    const caller = "isFieldFilterStrFilter";
+    const caller = "isStringFilter";
     if (!(typeof value === 'object')) {
         logger.error(() => `input is not of type object: ${value}`, caller);
         return false;
@@ -100,6 +104,10 @@ export function isFieldFilterStrFilter(value: any): value is types.FieldFilterSt
         return false;
     }
     const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
     if ("operator" in obj) {
         const attrib: any = obj["operator"];
         // check for the right multiplicity
@@ -113,6 +121,10 @@ export function isFieldFilterStrFilter(value: any): value is types.FieldFilterSt
             return false;
         }
     }
+    if (!("values" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'values': ${value}`, caller);
+        return false;
+    }
     if ("values" in obj) {
         const attrib: any = obj["values"];
         // check for the right multiplicity
@@ -123,6 +135,156 @@ export function isFieldFilterStrFilter(value: any): value is types.FieldFilterSt
         // check if the the attribs has the right type
         if ( ! (typeof attrib === "string") ) {
             logger.error(() => `'values' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isNumericFilter(value: any): value is types.NumericFilter {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isNumericFilter";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
+    if ("operator" in obj) {
+        const attrib: any = obj["operator"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isNumericFilterOperator(attrib)) ) {
+            logger.error(() => `'operator' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if (!("values" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'values': ${value}`, caller);
+        return false;
+    }
+    if ("values" in obj) {
+        const attrib: any = obj["values"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != true)) {
+            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (utils.allArrayElemsAreNumbers(attrib)) ) {
+            logger.error(() => `'values' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isDateFilter(value: any): value is types.DateFilter {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isDateFilter";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
+    if ("operator" in obj) {
+        const attrib: any = obj["operator"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isNumericFilterOperator(attrib)) ) {
+            logger.error(() => `'operator' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if (!("values" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'values': ${value}`, caller);
+        return false;
+    }
+    if ("values" in obj) {
+        const attrib: any = obj["values"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != true)) {
+            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (utils.isDate(attrib)) ) {
+            logger.error(() => `'values' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isBooleanFilter(value: any): value is types.BooleanFilter {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isBooleanFilter";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
+    if ("operator" in obj) {
+        const attrib: any = obj["operator"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isBooleanFilterOperator(attrib)) ) {
+            logger.error(() => `'operator' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if (!("value" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'value': ${value}`, caller);
+        return false;
+    }
+    if ("value" in obj) {
+        const attrib: any = obj["value"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'value' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (typeof attrib === "boolean") ) {
+            logger.error(() => `'value' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -222,6 +384,10 @@ export function isFieldSort(value: any): value is types.FieldSort {
         return false;
     }
     const obj = value as Object;
+    if (!("field" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'field': ${value}`, caller);
+        return false;
+    }
     if ("field" in obj) {
         const attrib: any = obj["field"];
         // check for the right multiplicity
@@ -235,6 +401,10 @@ export function isFieldSort(value: any): value is types.FieldSort {
             return false;
         }
     }
+    if (!("direction" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'direction': ${value}`, caller);
+        return false;
+    }
     if ("direction" in obj) {
         const attrib: any = obj["direction"];
         // check for the right multiplicity
@@ -245,132 +415,6 @@ export function isFieldSort(value: any): value is types.FieldSort {
         // check if the the attribs has the right type
         if ( ! (isSortDirection(attrib)) ) {
             logger.error(() => `'direction' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    return true;
-}
-
-export function isFieldFilterNumFilter(value: any): value is types.FieldFilterNumFilter {
-    if (value == null || value == undefined)
-        return true;
-    const caller = "isFieldFilterNumFilter";
-    if (!(typeof value === 'object')) {
-        logger.error(() => `input is not of type object: ${value}`, caller);
-        return false;
-    }
-    if (Array.isArray(value)) {
-        logger.error(() => `input is an array: ${value}`, caller);
-        return false;
-    }
-    const obj = value as Object;
-    if ("operator" in obj) {
-        const attrib: any = obj["operator"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (isNumericFilterOperator(attrib)) ) {
-            logger.error(() => `'operator' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    if ("values" in obj) {
-        const attrib: any = obj["values"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (utils.allArrayElemsAreNumbers(attrib)) ) {
-            logger.error(() => `'values' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    return true;
-}
-
-export function isFieldFilterDateFilter(value: any): value is types.FieldFilterDateFilter {
-    if (value == null || value == undefined)
-        return true;
-    const caller = "isFieldFilterDateFilter";
-    if (!(typeof value === 'object')) {
-        logger.error(() => `input is not of type object: ${value}`, caller);
-        return false;
-    }
-    if (Array.isArray(value)) {
-        logger.error(() => `input is an array: ${value}`, caller);
-        return false;
-    }
-    const obj = value as Object;
-    if ("operator" in obj) {
-        const attrib: any = obj["operator"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (isNumericFilterOperator(attrib)) ) {
-            logger.error(() => `'operator' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    if ("values" in obj) {
-        const attrib: any = obj["values"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != true)) {
-            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (utils.isDate(attrib)) ) {
-            logger.error(() => `'values' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    return true;
-}
-
-export function isFieldFilterBooleanFilter(value: any): value is types.FieldFilterBooleanFilter {
-    if (value == null || value == undefined)
-        return true;
-    const caller = "isFieldFilterBooleanFilter";
-    if (!(typeof value === 'object')) {
-        logger.error(() => `input is not of type object: ${value}`, caller);
-        return false;
-    }
-    if (Array.isArray(value)) {
-        logger.error(() => `input is an array: ${value}`, caller);
-        return false;
-    }
-    const obj = value as Object;
-    if ("booleanOperator" in obj) {
-        const attrib: any = obj["booleanOperator"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            logger.error(() => `'booleanOperator' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (isBooleanFilterOperator(attrib)) ) {
-            logger.error(() => `'booleanOperator' has wrong type: ${value}`, caller);
-            return false;
-        }
-    }
-    if ("value" in obj) {
-        const attrib: any = obj["value"];
-        // check for the right multiplicity
-        if ((attrib != null) && (Array.isArray(attrib) != false)) {
-            logger.error(() => `'value' has wrong multiplicity: ${value}`, caller);
-            return false;
-        }
-        // check if the the attribs has the right type
-        if ( ! (typeof attrib === "boolean") ) {
-            logger.error(() => `'value' has wrong type: ${value}`, caller);
             return false;
         }
     }
@@ -400,8 +444,8 @@ export function isFieldFilterArray(value: any): value is types.FieldFilter[] {
     return true;
 }
 
-export function isFieldFilterStrFilterArray(value: any): value is types.FieldFilterStrFilter[] {
-    const caller = "isFieldFilterStrFilterArray";
+export function isStringFilterArray(value: any): value is types.StringFilter[] {
+    const caller = "isStringFilterArray";
     if (value == null || value == undefined)
         return true;
     if (!utils.isArray(value)) {
@@ -410,8 +454,74 @@ export function isFieldFilterStrFilterArray(value: any): value is types.FieldFil
     }
     try {
         value.forEach(elem => {
-            if (!isFieldFilterStrFilter(elem)) {
-                logger.error(() => `input is not of FieldFilterStrFilter type: ${elem}`, caller);
+            if (!isStringFilter(elem)) {
+                logger.error(() => `input is not of StringFilter type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isNumericFilterArray(value: any): value is types.NumericFilter[] {
+    const caller = "isNumericFilterArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isNumericFilter(elem)) {
+                logger.error(() => `input is not of NumericFilter type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isDateFilterArray(value: any): value is types.DateFilter[] {
+    const caller = "isDateFilterArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isDateFilter(elem)) {
+                logger.error(() => `input is not of DateFilter type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isBooleanFilterArray(value: any): value is types.BooleanFilter[] {
+    const caller = "isBooleanFilterArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isBooleanFilter(elem)) {
+                logger.error(() => `input is not of BooleanFilter type: ${elem}`, caller);
                 throw new Error("wrong type");
             }
         });
@@ -522,72 +632,6 @@ export function isFieldSortArray(value: any): value is types.FieldSort[] {
         value.forEach(elem => {
             if (!isFieldSort(elem)) {
                 logger.error(() => `input is not of FieldSort type: ${elem}`, caller);
-                throw new Error("wrong type");
-            }
-        });
-    }
-    catch(e) {
-        return false;
-    }
-    return true;
-}
-
-export function isFieldFilterNumFilterArray(value: any): value is types.FieldFilterNumFilter[] {
-    const caller = "isFieldFilterNumFilterArray";
-    if (value == null || value == undefined)
-        return true;
-    if (!utils.isArray(value)) {
-        logger.error(() => `input is no array: ${value}`, caller);
-        return false;
-    }
-    try {
-        value.forEach(elem => {
-            if (!isFieldFilterNumFilter(elem)) {
-                logger.error(() => `input is not of FieldFilterNumFilter type: ${elem}`, caller);
-                throw new Error("wrong type");
-            }
-        });
-    }
-    catch(e) {
-        return false;
-    }
-    return true;
-}
-
-export function isFieldFilterDateFilterArray(value: any): value is types.FieldFilterDateFilter[] {
-    const caller = "isFieldFilterDateFilterArray";
-    if (value == null || value == undefined)
-        return true;
-    if (!utils.isArray(value)) {
-        logger.error(() => `input is no array: ${value}`, caller);
-        return false;
-    }
-    try {
-        value.forEach(elem => {
-            if (!isFieldFilterDateFilter(elem)) {
-                logger.error(() => `input is not of FieldFilterDateFilter type: ${elem}`, caller);
-                throw new Error("wrong type");
-            }
-        });
-    }
-    catch(e) {
-        return false;
-    }
-    return true;
-}
-
-export function isFieldFilterBooleanFilterArray(value: any): value is types.FieldFilterBooleanFilter[] {
-    const caller = "isFieldFilterBooleanFilterArray";
-    if (value == null || value == undefined)
-        return true;
-    if (!utils.isArray(value)) {
-        logger.error(() => `input is no array: ${value}`, caller);
-        return false;
-    }
-    try {
-        value.forEach(elem => {
-            if (!isFieldFilterBooleanFilter(elem)) {
-                logger.error(() => `input is not of FieldFilterBooleanFilter type: ${elem}`, caller);
                 throw new Error("wrong type");
             }
         });

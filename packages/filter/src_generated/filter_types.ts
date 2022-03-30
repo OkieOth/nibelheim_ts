@@ -4,16 +4,31 @@
 */
 
 export interface FieldFilter {
-    field?: string;
-    strFilter?: FieldFilterStrFilter;
-    numFilter?: FieldFilterNumFilter;
-    dateFilter?: FieldFilterDateFilter;
-    booleanFilter?: FieldFilterBooleanFilter;
+    field: string;
+    strFilter?: StringFilter;
+    numFilter?: NumericFilter;
+    dateFilter?: DateFilter;
+    boolFilter?: BooleanFilter;
 }
 
-export interface FieldFilterStrFilter {
-    operator?: StringFilterOperator;
-    values?: string[];
+export interface StringFilter {
+    operator: StringFilterOperator;
+    values: string[];
+}
+
+export interface NumericFilter {
+    operator: NumericFilterOperator;
+    values: number[];
+}
+
+export interface DateFilter {
+    operator: NumericFilterOperator;
+    values: Date[];
+}
+
+export interface BooleanFilter {
+    operator: BooleanFilterOperator;
+    value: boolean;
 }
 
 export enum NumericFilterOperator {
@@ -53,22 +68,7 @@ export interface FieldSort {
     /**
      field used for sorting
     */
-    field?: string;
-    direction?: SortDirection;
-}
-
-export interface FieldFilterNumFilter {
-    operator?: NumericFilterOperator;
-    values?: number[];
-}
-
-export interface FieldFilterDateFilter {
-    operator?: NumericFilterOperator;
-    values?: Date[];
-}
-
-export interface FieldFilterBooleanFilter {
-    booleanOperator?: BooleanFilterOperator;
-    value?: boolean;
+    field: string;
+    direction: SortDirection;
 }
 

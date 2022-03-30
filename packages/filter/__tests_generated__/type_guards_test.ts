@@ -18,16 +18,52 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isTrue(guards.isFieldFilterArray([]));
     });
 
-    it('test guards.isFieldFilterStrFilter', () => {
-        assert.isFalse(guards.isFieldFilterStrFilter("x"));
-        assert.isTrue(guards.isFieldFilterStrFilter(null));
+    it('test guards.isStringFilter', () => {
+        assert.isFalse(guards.isStringFilter("x"));
+        assert.isTrue(guards.isStringFilter(null));
     });
 
-    it('test guards.isFieldFilterStrFilterArray', () => {
-        assert.isFalse(guards.isFieldFilterStrFilterArray("x"));
-        assert.isFalse(guards.isFieldFilterStrFilterArray(["x"]));
-        assert.isTrue(guards.isFieldFilterStrFilterArray(null));
-        assert.isTrue(guards.isFieldFilterStrFilterArray([]));
+    it('test guards.isStringFilterArray', () => {
+        assert.isFalse(guards.isStringFilterArray("x"));
+        assert.isFalse(guards.isStringFilterArray(["x"]));
+        assert.isTrue(guards.isStringFilterArray(null));
+        assert.isTrue(guards.isStringFilterArray([]));
+    });
+
+    it('test guards.isNumericFilter', () => {
+        assert.isFalse(guards.isNumericFilter("x"));
+        assert.isTrue(guards.isNumericFilter(null));
+    });
+
+    it('test guards.isNumericFilterArray', () => {
+        assert.isFalse(guards.isNumericFilterArray("x"));
+        assert.isFalse(guards.isNumericFilterArray(["x"]));
+        assert.isTrue(guards.isNumericFilterArray(null));
+        assert.isTrue(guards.isNumericFilterArray([]));
+    });
+
+    it('test guards.isDateFilter', () => {
+        assert.isFalse(guards.isDateFilter("x"));
+        assert.isTrue(guards.isDateFilter(null));
+    });
+
+    it('test guards.isDateFilterArray', () => {
+        assert.isFalse(guards.isDateFilterArray("x"));
+        assert.isFalse(guards.isDateFilterArray(["x"]));
+        assert.isTrue(guards.isDateFilterArray(null));
+        assert.isTrue(guards.isDateFilterArray([]));
+    });
+
+    it('test guards.isBooleanFilter', () => {
+        assert.isFalse(guards.isBooleanFilter("x"));
+        assert.isTrue(guards.isBooleanFilter(null));
+    });
+
+    it('test guards.isBooleanFilterArray', () => {
+        assert.isFalse(guards.isBooleanFilterArray("x"));
+        assert.isFalse(guards.isBooleanFilterArray(["x"]));
+        assert.isTrue(guards.isBooleanFilterArray(null));
+        assert.isTrue(guards.isBooleanFilterArray([]));
     });
 
     it('test guards.isNumericFilterOperator', () => {
@@ -88,42 +124,6 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isFalse(guards.isFieldSortArray(["x"]));
         assert.isTrue(guards.isFieldSortArray(null));
         assert.isTrue(guards.isFieldSortArray([]));
-    });
-
-    it('test guards.isFieldFilterNumFilter', () => {
-        assert.isFalse(guards.isFieldFilterNumFilter("x"));
-        assert.isTrue(guards.isFieldFilterNumFilter(null));
-    });
-
-    it('test guards.isFieldFilterNumFilterArray', () => {
-        assert.isFalse(guards.isFieldFilterNumFilterArray("x"));
-        assert.isFalse(guards.isFieldFilterNumFilterArray(["x"]));
-        assert.isTrue(guards.isFieldFilterNumFilterArray(null));
-        assert.isTrue(guards.isFieldFilterNumFilterArray([]));
-    });
-
-    it('test guards.isFieldFilterDateFilter', () => {
-        assert.isFalse(guards.isFieldFilterDateFilter("x"));
-        assert.isTrue(guards.isFieldFilterDateFilter(null));
-    });
-
-    it('test guards.isFieldFilterDateFilterArray', () => {
-        assert.isFalse(guards.isFieldFilterDateFilterArray("x"));
-        assert.isFalse(guards.isFieldFilterDateFilterArray(["x"]));
-        assert.isTrue(guards.isFieldFilterDateFilterArray(null));
-        assert.isTrue(guards.isFieldFilterDateFilterArray([]));
-    });
-
-    it('test guards.isFieldFilterBooleanFilter', () => {
-        assert.isFalse(guards.isFieldFilterBooleanFilter("x"));
-        assert.isTrue(guards.isFieldFilterBooleanFilter(null));
-    });
-
-    it('test guards.isFieldFilterBooleanFilterArray', () => {
-        assert.isFalse(guards.isFieldFilterBooleanFilterArray("x"));
-        assert.isFalse(guards.isFieldFilterBooleanFilterArray(["x"]));
-        assert.isTrue(guards.isFieldFilterBooleanFilterArray(null));
-        assert.isTrue(guards.isFieldFilterBooleanFilterArray([]));
     });
 
 });

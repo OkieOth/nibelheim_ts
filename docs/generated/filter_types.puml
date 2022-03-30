@@ -4,16 +4,34 @@ hide empty methods
 
 class FieldFilter {
         StringType field
-        FieldFilterStrFilter strFilter
-        FieldFilterNumFilter numFilter
-        FieldFilterDateFilter dateFilter
-        FieldFilterBooleanFilter booleanFilter
+        StringFilter strFilter
+        NumericFilter numFilter
+        DateFilter dateFilter
+        BooleanFilter boolFilter
 }
 
 
-class FieldFilterStrFilter {
+class StringFilter {
         StringFilterOperator operator
         StringType[] values
+}
+
+
+class NumericFilter {
+        NumericFilterOperator operator
+        NumberType[] values
+}
+
+
+class DateFilter {
+        NumericFilterOperator operator
+        DateTimeType[] values
+}
+
+
+class BooleanFilter {
+        BooleanFilterOperator operator
+        BooleanType value
 }
 
 
@@ -59,41 +77,38 @@ class FieldSort {
 }
 
 
-class FieldFilterNumFilter {
-        NumericFilterOperator operator
-        NumberType[] values
-}
-
-
-class FieldFilterDateFilter {
-        NumericFilterOperator operator
-        DateTimeType[] values
-}
-
-
-class FieldFilterBooleanFilter {
-        BooleanFilterOperator booleanOperator
-        BooleanType value
-}
-
-
 
     
 
-FieldFilter  *--  FieldFilterStrFilter
+FieldFilter  *--  StringFilter
             
 
-FieldFilter  *--  FieldFilterNumFilter
+FieldFilter  *--  NumericFilter
             
 
-FieldFilter  *--  FieldFilterDateFilter
+FieldFilter  *--  DateFilter
             
 
-FieldFilter  *--  FieldFilterBooleanFilter
+FieldFilter  *--  BooleanFilter
             
 
     
-FieldFilterStrFilter  *--  StringFilterOperator
+StringFilter  *--  StringFilterOperator
+            
+
+
+    
+NumericFilter  *--  NumericFilterOperator
+            
+
+
+    
+DateFilter  *--  NumericFilterOperator
+            
+
+
+    
+BooleanFilter  *--  BooleanFilterOperator
             
 
 
@@ -105,21 +120,6 @@ FieldFilterStrFilter  *--  StringFilterOperator
 
 FieldSort  *--  SortDirection
             
-
-    
-FieldFilterNumFilter  *--  NumericFilterOperator
-            
-
-
-    
-FieldFilterDateFilter  *--  NumericFilterOperator
-            
-
-
-    
-FieldFilterBooleanFilter  *--  BooleanFilterOperator
-            
-
 
 
 footer \ngenerated with yacg (https://github.com/OkieOth/yacg),\n(template: plantUml.mako v1.1.0)\npowered by plantuml (https://plantuml.com/)

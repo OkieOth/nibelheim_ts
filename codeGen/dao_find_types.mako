@@ -32,6 +32,22 @@
         typeStr = getPropTypeStr(prop)
         return getOperatorForTypeStr(typeStr)
 
+    def printArrayIfNotBool(prop):
+        return '' if isinstance(prop.type, model.BooleanType) else '[]'
+
+    def getFilterAttribName(prop):
+        typeStr = getPropTypeStr(prop)
+        if (typeStr == 'string'):
+            return 'strFilter'
+        elif (typeStr == 'number'):
+            return 'numFilter'
+        elif (typeStr == 'Date'):
+            return 'dateFilter'
+        elif typeStr == 'boolean':
+            return 'boolFilter'
+        else:
+            return '!!!UNSUPPORTED_FILTER_TYPE!!!'
+
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -46,15 +62,14 @@ import * as filter from "filter";
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
         % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}[]): filter.FieldFilter {
-    return null;
-/*
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}${printArrayIfNotBool(prop)}): filter.FieldFilter {
     return {
         field: "${prop.name}",
-        operator: op,
-        values: v
+        ${getFilterAttribName(prop)}: {
+            operator: op,
+            value${'' if isinstance(prop.type, model.BooleanType) else 's'}: v
+        }
     };
-*/
 }
 
         % endfor
