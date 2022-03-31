@@ -26,11 +26,12 @@ import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
 import * as dao_find_types from "./dao_find_types";
 import * as filter from "filter";
+import * as filterExt from "../src/filter_types_ext"
 
 % for currentType in mongoTypes:
 export async function find${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     % endif
     % if modelFuncs.hasPropertyWithTag("daoSort", currentType):
     sort: filter.FieldSort[],
@@ -68,7 +69,7 @@ export async function find${currentType.name}(
 
 export async function count${currentType.name}(
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     % endif
     dbName: string,
     collectionName?: string): Promise<number> {

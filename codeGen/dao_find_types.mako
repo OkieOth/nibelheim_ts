@@ -37,16 +37,40 @@
 
     def getFilterAttribName(prop):
         typeStr = getPropTypeStr(prop)
-        if (typeStr == 'string'):
+        if typeStr == 'string':
             return 'strFilter'
-        elif (typeStr == 'number'):
+        elif typeStr == 'number':
             return 'numFilter'
-        elif (typeStr == 'Date'):
+        elif typeStr == 'Date':
             return 'dateFilter'
         elif typeStr == 'boolean':
             return 'boolFilter'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
+
+    def convertFunctionByType(type):
+        if type is None:
+            return '!!!UNSUPPORTED_FILTER_TYPE!!!'
+        elif isinstance(type, model.IntegerType):
+            return 'convertNumValue'
+        elif isinstance(type, model.NumberType):
+            return 'convertNumValue'
+        elif isinstance(type, model.BooleanType):
+            return 'convertBooleanValue'
+        elif isinstance(type, model.StringType):
+            return 'convertStrValue'
+        elif isinstance(type, model.UuidType):
+            # instead of the original type definition, here is only string used
+            return 'convertUUIDValue'
+        elif isinstance(type, model.EnumType):
+            return 'convertStrValue'
+        elif isinstance(type, model.DateTimeType):
+            return 'convertDateValue'
+        elif isinstance(type, model.DateType):
+            return 'convertDateValue'
+        else:
+            return "!!!UNSUPPORTED_FILTER_TYPE '{}'!!!".format(type)
+
 
 %>/**
     This file is generated.
@@ -57,18 +81,20 @@
     included.
 */
 import * as filter from "filter";
+import * as filterExt from "../src/filter_types_ext"
 
 
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
         % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}${printArrayIfNotBool(prop)}): filter.FieldFilter {
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}${printArrayIfNotBool(prop)}): filterExt.DaoFieldFilter {
     return {
         field: "${prop.name}",
         ${getFilterAttribName(prop)}: {
             operator: op,
             value${'' if isinstance(prop.type, model.BooleanType) else 's'}: v
-        }
+        },
+        convertValue: filterExt.${convertFunctionByType(prop.type)}
     };
 }
 

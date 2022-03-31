@@ -13,9 +13,10 @@ import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
 import * as dao_find_types from "./dao_find_types";
 import * as filter from "filter";
+import * as filterExt from "../src/filter_types_ext"
 
 export async function findMine(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     sort: filter.FieldSort[],
     skip: number,
     limit: number,
@@ -49,7 +50,7 @@ export async function findMine(
 }
 
 export async function countMine(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -133,7 +134,7 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
 }
 
 export async function findMineSpotRow(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     sort: filter.FieldSort[],
     skip: number,
     limit: number,
@@ -167,7 +168,7 @@ export async function findMineSpotRow(
 }
 
 export async function countMineSpotRow(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {
@@ -219,7 +220,7 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
 }
 
 export async function findDwarf(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     sort: filter.FieldSort[],
     skip: number,
     limit: number,
@@ -253,7 +254,7 @@ export async function findDwarf(
 }
 
 export async function countDwarf(
-    filter: filter.FieldFilter[],
+    filter: filterExt.DaoFieldFilter[],
     dbName: string,
     collectionName?: string): Promise<number> {
     return new Promise(async (resolve, reject) => {

@@ -7,135 +7,149 @@
     included.
 */
 import * as filter from "filter";
+import * as filterExt from "../src/filter_types_ext"
 
 
-export function createMineFilterName(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+export function createMineFilterName(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "name",
         strFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertStrValue
     };
 }
 
-export function createMineFilterTime(op: filter.NumericFilterOperator, v: Date[]): filter.FieldFilter {
+export function createMineFilterTime(op: filter.NumericFilterOperator, v: Date[]): filterExt.DaoFieldFilter {
     return {
         field: "time",
         dateFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertDateValue
     };
 }
 
-export function createMineFilterDwarfs(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+export function createMineFilterDwarfs(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "dwarfs",
         strFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertUUIDValue
     };
 }
 
-export function createMineFilterActive(op: filter.BooleanFilterOperator, v: boolean): filter.FieldFilter {
+export function createMineFilterActive(op: filter.BooleanFilterOperator, v: boolean): filterExt.DaoFieldFilter {
     return {
         field: "active",
         boolFilter: {
             operator: op,
             value: v
-        }
+        },
+        convertValue: filterExt.convertBooleanValue
     };
 }
 
-export function createMineSpotRowFilterMine_id(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+export function createMineSpotRowFilterMine_id(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "mine_id",
         strFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertUUIDValue
     };
 }
 
-export function createMineSpotRowFilterRow_number(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createMineSpotRowFilterRow_number(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "row_number",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
-export function createMineSpotRowFilterLevel(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createMineSpotRowFilterLevel(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "level",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
-export function createDwarfFilterName(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+export function createDwarfFilterName(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "name",
         strFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertStrValue
     };
 }
 
-export function createDwarfFilterMine_id(op: filter.StringFilterOperator, v: string[]): filter.FieldFilter {
+export function createDwarfFilterMine_id(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "mine_id",
         strFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertUUIDValue
     };
 }
 
-export function createDwarfFilterCurrentStrongness(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createDwarfFilterCurrentStrongness(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "currentStrongness",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
-export function createDwarfFilterHunger(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createDwarfFilterHunger(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "hunger",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
-export function createDwarfFilterHealthiness(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createDwarfFilterHealthiness(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "healthiness",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
-export function createDwarfFilterMotivation(op: filter.NumericFilterOperator, v: number[]): filter.FieldFilter {
+export function createDwarfFilterMotivation(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
     return {
         field: "motivation",
         numFilter: {
             operator: op,
             values: v
-        }
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
