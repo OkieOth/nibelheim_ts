@@ -21,7 +21,6 @@ export async function insertMine(x: types.Mine, dbName: string, collectionName?:
             logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertMine");
             logger.debug(() => JSON.stringify(x), "insertMine");
 
-            // TODO check if type or child contains UuuiType
             var objToInsert = {...x};
             dao_uuid.mine2Dao(objToInsert);
             const result = await collection.insertOne(objToInsert);
@@ -44,7 +43,6 @@ export async function insertMineSpotRow(x: types.MineSpotRow, dbName: string, co
             logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertMineSpotRow");
             logger.debug(() => JSON.stringify(x), "insertMineSpotRow");
 
-            // TODO check if type or child contains UuuiType
             var objToInsert = {...x};
             dao_uuid.mineSpotRow2Dao(objToInsert);
             const result = await collection.insertOne(objToInsert);
@@ -67,7 +65,6 @@ export async function insertDwarf(x: types.Dwarf, dbName: string, collectionName
             logger.info(() => `insert into db: ${dbName}, collection: ${collectionNameToUse}`, "insertDwarf");
             logger.debug(() => JSON.stringify(x), "insertDwarf");
 
-            // TODO check if type or child contains UuuiType
             var objToInsert = {...x};
             dao_uuid.dwarf2Dao(objToInsert);
             const result = await collection.insertOne(objToInsert);

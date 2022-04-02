@@ -33,7 +33,6 @@ export async function findMine(
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
             const array: types.Mine[] = [];
             await cursor.forEach(doc => {
-                // TODO check if type or child contains UuuiType
                 dao_uuid.dao2Mine(doc);
                 if (types.isMine(doc)) {
                     array.push(doc);
@@ -82,7 +81,6 @@ export async function findMineByObjectId(objId: string, dbName: string, collecti
                 logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findMineByObjectId");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
             dao_uuid.dao2Mine(result);
             if (types.isMine(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findMineByObjectId");
@@ -114,7 +112,6 @@ export async function findMineByKey(key: string | any, dbName: string, collectio
                 logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findMineByKey");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
             dao_uuid.dao2Mine(result);
             if (types.isMine(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findMineByKey");
@@ -151,7 +148,6 @@ export async function findMineSpotRow(
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
             const array: types.MineSpotRow[] = [];
             await cursor.forEach(doc => {
-                // TODO check if type or child contains UuuiType
                 dao_uuid.dao2MineSpotRow(doc);
                 if (types.isMineSpotRow(doc)) {
                     array.push(doc);
@@ -200,7 +196,6 @@ export async function findMineSpotRowByObjectId(objId: string, dbName: string, c
                 logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findMineSpotRowByObjectId");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
             dao_uuid.dao2MineSpotRow(result);
             if (types.isMineSpotRow(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findMineSpotRowByObjectId");
@@ -237,7 +232,6 @@ export async function findDwarf(
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
             const array: types.Dwarf[] = [];
             await cursor.forEach(doc => {
-                // TODO check if type or child contains UuuiType
                 dao_uuid.dao2Dwarf(doc);
                 if (types.isDwarf(doc)) {
                     array.push(doc);
@@ -286,7 +280,6 @@ export async function findDwarfByObjectId(objId: string, dbName: string, collect
                 logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findDwarfByObjectId");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
             dao_uuid.dao2Dwarf(result);
             if (types.isDwarf(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, _id=${objId}`, "findDwarfByObjectId");
@@ -318,7 +311,6 @@ export async function findDwarfByKey(key: string | any, dbName: string, collecti
                 logger.info(() => `found no element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findDwarfByKey");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
             dao_uuid.dao2Dwarf(result);
             if (types.isDwarf(result)) {
                 logger.info(() => `found element in db: ${dbName}, collection: ${collectionNameToUse}, id=${key}`, "findDwarfByKey");

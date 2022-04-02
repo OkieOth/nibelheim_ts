@@ -11,6 +11,11 @@
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
+    typesWithUuids = []
+    for t in modelTypes:
+        if modelFuncs.doesTypeOrAttribContainsType(t, model.UuidType):
+            typesWithUuids.append(t.name)
+
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -51,8 +56,9 @@ export async function find${currentType.name}(
             logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
             const array: types.${currentType.name}[] = [];
             await cursor.forEach(doc => {
-                // TODO check if type or child contains UuuiType
+        % if currentType.name in typesWithUuids:
                 dao_uuid.dao2${currentType.name}(doc);
+        % endif
                 if (types.is${currentType.name}(doc)) {
                     array.push(doc);
                 }
@@ -102,8 +108,9 @@ export async function find${currentType.name}ByObjectId(objId: string, dbName: s
                 logger.info(() => `found no element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "find${currentType.name}ByObjectId");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
+        % if currentType.name in typesWithUuids:
             dao_uuid.dao2${currentType.name}(result);
+        % endif
             if (types.is${currentType.name}(result)) {
                 logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, _id=$${}{objId}`, "find${currentType.name}ByObjectId");
                 resolve(result);
@@ -141,8 +148,9 @@ export async function find${currentType.name}ByKey(key: ${typescriptFuncs.printT
                 logger.info(() => `found no element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
                 return resolve(null);
             }
-            // TODO check if type or child contains UuuiType
+        % if currentType.name in typesWithUuids:
             dao_uuid.dao2${currentType.name}(result);
+        % endif
             if (types.is${currentType.name}(result)) {
                 logger.info(() => `found element in db: $${}{dbName}, collection: $${}{collectionNameToUse}, ${keyProperty.name}=$${}{key}`, "find${currentType.name}ByKey");
                 resolve(result);

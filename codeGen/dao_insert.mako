@@ -10,7 +10,10 @@
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
-
+    typesWithUuids = []
+    for t in modelTypes:
+        if modelFuncs.doesTypeOrAttribContainsType(t, model.UuidType):
+            typesWithUuids.append(t.name)
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -35,9 +38,10 @@ export async function insert${currentType.name}(x: types.${currentType.name}, db
             logger.info(() => `insert into db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "insert${currentType.name}");
             logger.debug(() => JSON.stringify(x), "insert${currentType.name}");
 
-            // TODO check if type or child contains UuuiType
+        % if currentType.name in typesWithUuids:
             var objToInsert = {...x};
             dao_uuid.${stringUtils.toLowerCamelCase(currentType.name)}2Dao(objToInsert);
+        % endif
             const result = await collection.insertOne(objToInsert);
             resolve(result.insertedId);
         }
