@@ -5,7 +5,7 @@
     import yacg.util.stringUtils as stringUtils
     import yacg.templateHelper as templateHelper
 
-    templateFile = 'dao.mako'
+    templateFile = 'dao_insert.mako'
     templateVersion = '0.1.0'
 
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
