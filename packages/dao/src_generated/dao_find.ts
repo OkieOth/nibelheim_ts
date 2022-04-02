@@ -11,7 +11,7 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
-import * as dao_find_types from "./dao_find_types";
+import * as mongoHelper from "../src/mongo_helper";
 import * as filter from "filter";
 import * as filterExt from "../src/filter_types_ext"
 
@@ -28,7 +28,9 @@ export async function findMine(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const sortObj = mongoHelper.getMongoSort(sort);
+            const cursor = collection.find(filterObj).sort(sortObj).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
             const array: types.Mine[] = [];
@@ -58,7 +60,8 @@ export async function countMine(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const elemCount = await collection.countDocuments({});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const elemCount = await collection.countDocuments(filterObj);
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMine");
             resolve(elemCount);
         }
@@ -143,7 +146,9 @@ export async function findMineSpotRow(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const sortObj = mongoHelper.getMongoSort(sort);
+            const cursor = collection.find(filterObj).sort(sortObj).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
             const array: types.MineSpotRow[] = [];
@@ -173,7 +178,8 @@ export async function countMineSpotRow(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const elemCount = await collection.countDocuments({});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const elemCount = await collection.countDocuments(filterObj);
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findMineSpotRow");
             resolve(elemCount);
         }
@@ -227,7 +233,9 @@ export async function findDwarf(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const sortObj = mongoHelper.getMongoSort(sort);
+            const cursor = collection.find(filterObj).sort(sortObj).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
             const array: types.Dwarf[] = [];
@@ -257,7 +265,8 @@ export async function countDwarf(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const elemCount = await collection.countDocuments({});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const elemCount = await collection.countDocuments(filterObj);
             logger.info(() => `found ${elemCount} elements in db: ${dbName}, collection: ${collectionNameToUse}`, "findDwarf");
             resolve(elemCount);
         }

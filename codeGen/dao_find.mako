@@ -29,7 +29,7 @@ import * as uuid from "uuid-mongodb";
 import * as dao_uuid from "./dao_uuid";
 import {logger} from "logger";
 import * as mongoConnection from "../src/mongo_connection";
-import * as dao_find_types from "./dao_find_types";
+import * as mongoHelper from "../src/mongo_helper";
 import * as filter from "filter";
 import * as filterExt from "../src/filter_types_ext"
 
@@ -51,7 +51,9 @@ export async function find${currentType.name}(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const cursor = collection.find({}).skip(skip).limit(limit).project({_id: 0});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const sortObj = mongoHelper.getMongoSort(sort);
+            const cursor = collection.find(filterObj).sort(sortObj).skip(skip).limit(limit).project({_id: 0});
             const elemCount = await cursor.count();
             logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
             const array: types.${currentType.name}[] = [];
@@ -85,7 +87,8 @@ export async function count${currentType.name}(
             const db: mongoDb.Db = await mongoConnection.getDb(dbName);
             const collection: mongoDb.Collection = db.collection(collectionNameToUse);
 
-            const elemCount = await collection.countDocuments({});
+            const filterObj = mongoHelper.getMongoFilter(filter);
+            const elemCount = await collection.countDocuments(filterObj);
             logger.info(() => `found $${}{elemCount} elements in db: $${}{dbName}, collection: $${}{collectionNameToUse}`, "find${currentType.name}");
             resolve(elemCount);
         }
