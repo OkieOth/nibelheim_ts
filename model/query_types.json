@@ -29,6 +29,24 @@
                 "NI"
             ]
         },
+        "EnumFilterOperator": {
+            "description": "EQ: ==, NE: !=, IN: in, NI: not in",
+            "enum": [
+                "EQ",
+                "NE",
+                "IN",
+                "NI"
+            ]
+        },
+        "UuidFilterOperator": {
+            "description": "EQ: ==, NE: !=, IN: in, NI: not in",
+            "enum": [
+                "EQ",
+                "NE",
+                "IN",
+                "NI"
+            ]
+        },
         "BooleanFilterOperator": {
             "description": "EQ: ==, NE: !=",
             "enum": [

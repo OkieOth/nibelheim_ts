@@ -12,6 +12,12 @@
                 "strFilter": {
                     "$ref": "#/definitions/StringFilter"
                 },
+                "enumFilter": {
+                    "$ref": "#/definitions/EnumFilter"
+                },
+                "uuidFilter": {
+                    "$ref": "#/definitions/UuidFilter"
+                },
                 "numFilter": {
                     "$ref": "#/definitions/NumericFilter"
                 },
@@ -29,6 +35,36 @@
             "properties": {
                 "operator": {
                     "$ref": "./query_types.json#/definitions/StringFilterOperator"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": ["operator", "values"]
+        },
+        "EnumFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/EnumFilterOperator"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": ["operator", "values"]
+        },
+        "UuidFilter": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "$ref": "./query_types.json#/definitions/UuidFilterOperator"
                 },
                 "values": {
                     "type": "array",
