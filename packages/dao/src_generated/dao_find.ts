@@ -1,6 +1,6 @@
 /**
     This file is generated.
-    Template: dao.mako v0.1.0)
+    Template: dao_find.mako v0.1.0)
 
     The file provides functions to query types objects from mongodb. All types that are
     tagged with 'mongodb' are included.

@@ -49,6 +49,32 @@ export function isFieldFilter(value: any): value is types.FieldFilter {
             return false;
         }
     }
+    if ("enumFilter" in obj) {
+        const attrib: any = obj["enumFilter"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'enumFilter' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isEnumFilter(attrib)) ) {
+            logger.error(() => `'enumFilter' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if ("uuidFilter" in obj) {
+        const attrib: any = obj["uuidFilter"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'uuidFilter' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isUuidFilter(attrib)) ) {
+            logger.error(() => `'uuidFilter' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
     if ("numFilter" in obj) {
         const attrib: any = obj["numFilter"];
         // check for the right multiplicity
@@ -117,6 +143,106 @@ export function isStringFilter(value: any): value is types.StringFilter {
         }
         // check if the the attribs has the right type
         if ( ! (isStringFilterOperator(attrib)) ) {
+            logger.error(() => `'operator' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if (!("values" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'values': ${value}`, caller);
+        return false;
+    }
+    if ("values" in obj) {
+        const attrib: any = obj["values"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != true)) {
+            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (typeof attrib === "string") ) {
+            logger.error(() => `'values' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isEnumFilter(value: any): value is types.EnumFilter {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isEnumFilter";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
+    if ("operator" in obj) {
+        const attrib: any = obj["operator"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isEnumFilterOperator(attrib)) ) {
+            logger.error(() => `'operator' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    if (!("values" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'values': ${value}`, caller);
+        return false;
+    }
+    if ("values" in obj) {
+        const attrib: any = obj["values"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != true)) {
+            logger.error(() => `'values' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (typeof attrib === "string") ) {
+            logger.error(() => `'values' has wrong type: ${value}`, caller);
+            return false;
+        }
+    }
+    return true;
+}
+
+export function isUuidFilter(value: any): value is types.UuidFilter {
+    if (value == null || value == undefined)
+        return true;
+    const caller = "isUuidFilter";
+    if (!(typeof value === 'object')) {
+        logger.error(() => `input is not of type object: ${value}`, caller);
+        return false;
+    }
+    if (Array.isArray(value)) {
+        logger.error(() => `input is an array: ${value}`, caller);
+        return false;
+    }
+    const obj = value as Object;
+    if (!("operator" in obj)) { // check required attribute
+        logger.error(() => `missing required attribute 'operator': ${value}`, caller);
+        return false;
+    }
+    if ("operator" in obj) {
+        const attrib: any = obj["operator"];
+        // check for the right multiplicity
+        if ((attrib != null) && (Array.isArray(attrib) != false)) {
+            logger.error(() => `'operator' has wrong multiplicity: ${value}`, caller);
+            return false;
+        }
+        // check if the the attribs has the right type
+        if ( ! (isUuidFilterOperator(attrib)) ) {
             logger.error(() => `'operator' has wrong type: ${value}`, caller);
             return false;
         }
@@ -343,6 +469,42 @@ export function isStringFilterOperator(value: any): value is types.StringFilterO
     return false;
 }
 
+export function isEnumFilterOperator(value: any): value is types.EnumFilterOperator {
+    if (value == null || value == undefined)
+        return true;
+    if (!(typeof value === 'string' || value instanceof String)) {
+        logger.error(() => `input is no string EnumFilterOperator: ${value}`, "isEnumFilterOperator");
+        return false;
+    }
+    if (value  == "EQ")
+        return true;
+    if (value  == "NE")
+        return true;
+    if (value  == "IN")
+        return true;
+    if (value  == "NI")
+        return true;
+    return false;
+}
+
+export function isUuidFilterOperator(value: any): value is types.UuidFilterOperator {
+    if (value == null || value == undefined)
+        return true;
+    if (!(typeof value === 'string' || value instanceof String)) {
+        logger.error(() => `input is no string UuidFilterOperator: ${value}`, "isUuidFilterOperator");
+        return false;
+    }
+    if (value  == "EQ")
+        return true;
+    if (value  == "NE")
+        return true;
+    if (value  == "IN")
+        return true;
+    if (value  == "NI")
+        return true;
+    return false;
+}
+
 export function isBooleanFilterOperator(value: any): value is types.BooleanFilterOperator {
     if (value == null || value == undefined)
         return true;
@@ -466,6 +628,50 @@ export function isStringFilterArray(value: any): value is types.StringFilter[] {
     return true;
 }
 
+export function isEnumFilterArray(value: any): value is types.EnumFilter[] {
+    const caller = "isEnumFilterArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isEnumFilter(elem)) {
+                logger.error(() => `input is not of EnumFilter type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isUuidFilterArray(value: any): value is types.UuidFilter[] {
+    const caller = "isUuidFilterArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isUuidFilter(elem)) {
+                logger.error(() => `input is not of UuidFilter type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
 export function isNumericFilterArray(value: any): value is types.NumericFilter[] {
     const caller = "isNumericFilterArray";
     if (value == null || value == undefined)
@@ -566,6 +772,50 @@ export function isStringFilterOperatorArray(value: any): value is types.StringFi
         value.forEach(elem => {
             if (!isStringFilterOperator(elem)) {
                 logger.error(() => `input is not of StringFilterOperator type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isEnumFilterOperatorArray(value: any): value is types.EnumFilterOperator[] {
+    const caller = "isEnumFilterOperatorArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isEnumFilterOperator(elem)) {
+                logger.error(() => `input is not of EnumFilterOperator type: ${elem}`, caller);
+                throw new Error("wrong type");
+            }
+        });
+    }
+    catch(e) {
+        return false;
+    }
+    return true;
+}
+
+export function isUuidFilterOperatorArray(value: any): value is types.UuidFilterOperator[] {
+    const caller = "isUuidFilterOperatorArray";
+    if (value == null || value == undefined)
+        return true;
+    if (!utils.isArray(value)) {
+        logger.error(() => `input is no array: ${value}`, caller);
+        return false;
+    }
+    try {
+        value.forEach(elem => {
+            if (!isUuidFilterOperator(elem)) {
+                logger.error(() => `input is not of UuidFilterOperator type: ${elem}`, caller);
                 throw new Error("wrong type");
             }
         });

@@ -5,6 +5,8 @@ hide empty methods
 class FieldFilter {
         StringType field
         StringFilter strFilter
+        EnumFilter enumFilter
+        UuidFilter uuidFilter
         NumericFilter numFilter
         DateFilter dateFilter
         BooleanFilter boolFilter
@@ -13,6 +15,18 @@ class FieldFilter {
 
 class StringFilter {
         StringFilterOperator operator
+        StringType[] values
+}
+
+
+class EnumFilter {
+        EnumFilterOperator operator
+        StringType[] values
+}
+
+
+class UuidFilter {
+        UuidFilterOperator operator
         StringType[] values
 }
 
@@ -59,6 +73,22 @@ enum StringFilterOperator {
 }
 
 
+enum EnumFilterOperator {
+    EQ
+    NE
+    IN
+    NI
+}
+
+
+enum UuidFilterOperator {
+    EQ
+    NE
+    IN
+    NI
+}
+
+
 enum BooleanFilterOperator {
     EQ
     NE
@@ -83,6 +113,12 @@ class FieldSort {
 FieldFilter  *--  StringFilter
             
 
+FieldFilter  *--  EnumFilter
+            
+
+FieldFilter  *--  UuidFilter
+            
+
 FieldFilter  *--  NumericFilter
             
 
@@ -94,6 +130,16 @@ FieldFilter  *--  BooleanFilter
 
     
 StringFilter  *--  StringFilterOperator
+            
+
+
+    
+EnumFilter  *--  EnumFilterOperator
+            
+
+
+    
+UuidFilter  *--  UuidFilterOperator
             
 
 
@@ -112,6 +158,8 @@ BooleanFilter  *--  BooleanFilterOperator
             
 
 
+    
+    
     
     
     

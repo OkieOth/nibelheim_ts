@@ -18,32 +18,35 @@
             typeStr = 'string' # handling of UUID types
         return typeStr
 
-    def getOperatorForTypeStr(typeStr):
-        if (typeStr == 'string'):
+    def getPropFilterOp(prop):
+        if isinstance(prop, model.UuidType):
+            return 'UuidFilterOperator'
+        elif isinstance(prop, model.StringType):
             return 'StringFilterOperator'
-        elif (typeStr == 'number') or (typeStr == 'Date'):
+        elif isinstance(prop, model.EnumType):
+            return 'EnumFilterOperator'
+        elif isinstance(prop, model.IntegerType) or isinstance(prop, model.NumberType) or isinstance(prop, model.DateType) or isinstance(prop, model.DateTimeType):
             return 'NumericFilterOperator'
-        elif typeStr == 'boolean':
+        elif isinstance(prop, model.BooleanType):
             return 'BooleanFilterOperator'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
-
-    def getPropFilterOp(prop):
-        typeStr = getPropTypeStr(prop)
-        return getOperatorForTypeStr(typeStr)
 
     def printArrayIfNotBool(prop):
         return '' if isinstance(prop.type, model.BooleanType) else '[]'
 
     def getFilterAttribName(prop):
-        typeStr = getPropTypeStr(prop)
-        if typeStr == 'string':
+        if isinstance(prop, model.UuidType):
+            return 'uuidFilter'
+        elif isinstance(prop, model.StringType):
             return 'strFilter'
-        elif typeStr == 'number':
+        elif isinstance(prop, model.EnumType):
+            return 'enumFilter'
+        elif isinstance(prop, model.IntegerType) or isinstance(prop, model.NumberType):
             return 'numFilter'
-        elif typeStr == 'Date':
+        elif isinstance(prop, model.DateType) or isinstance(prop, model.DateTimeType):
             return 'dateFilter'
-        elif typeStr == 'boolean':
+        elif isinstance(prop, model.BooleanType):
             return 'boolFilter'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
@@ -63,7 +66,7 @@
             # instead of the original type definition, here is only string used
             return 'convertUUIDValue'
         elif isinstance(type, model.EnumType):
-            return 'convertStrValue'
+            return 'convertEnumValue'
         elif isinstance(type, model.DateTimeType):
             return 'convertDateValue'
         elif isinstance(type, model.DateType):

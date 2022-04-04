@@ -6,6 +6,8 @@
 export interface FieldFilter {
     field: string;
     strFilter?: StringFilter;
+    enumFilter?: EnumFilter;
+    uuidFilter?: UuidFilter;
     numFilter?: NumericFilter;
     dateFilter?: DateFilter;
     boolFilter?: BooleanFilter;
@@ -13,6 +15,16 @@ export interface FieldFilter {
 
 export interface StringFilter {
     operator: StringFilterOperator;
+    values: string[];
+}
+
+export interface EnumFilter {
+    operator: EnumFilterOperator;
+    values: string[];
+}
+
+export interface UuidFilter {
+    operator: UuidFilterOperator;
     values: string[];
 }
 
@@ -49,6 +61,20 @@ export enum StringFilterOperator {
         NE = "NE",
         MA = "MA",
         NM = "NM",
+        IN = "IN",
+        NI = "NI",
+}
+
+export enum EnumFilterOperator {
+        EQ = "EQ",
+        NE = "NE",
+        IN = "IN",
+        NI = "NI",
+}
+
+export enum UuidFilterOperator {
+        EQ = "EQ",
+        NE = "NE",
         IN = "IN",
         NI = "NI",
 }

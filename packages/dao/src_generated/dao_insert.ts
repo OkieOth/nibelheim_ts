@@ -1,6 +1,6 @@
 /**
     This file is generated.
-    Template: dao.mako v0.1.0)
+    Template: dao_insert.mako v0.1.0)
 
     The file provides functions to insert types objects into mongodb. All types that are
     tagged with 'mongodb' are included.

@@ -2,6 +2,7 @@ import * as filter from "filter";
 
 export type ConvertStrValue = (v: string) => string;
 export type ConvertUUIDValue = (v: string) => string;
+export type ConvertEnumValue = (v: string) => string;
 export type ConvertNumValue = (v: number) => string;
 export type ConvertDateValue = (v: Date) => string;
 export type ConvertBooleanValue = (v: boolean) => string;
@@ -11,7 +12,11 @@ export const convertStrValue: ConvertStrValue = (v: string): string => {
 }
 
 export const convertUUIDValue: ConvertUUIDValue = (v: string | any): string => {
-    return v;
+    return v; // TODO
+}
+
+export const convertEnumValue: ConvertEnumValue = (v: string): string => {
+    return v; // TODO
 }
 
 export const convertNumValue: ConvertNumValue = (v: number): string => {
@@ -20,6 +25,7 @@ export const convertNumValue: ConvertNumValue = (v: number): string => {
 export const convertDateValue: ConvertDateValue = (v: Date): string => {
     return String(v);
 };
+
 export const convertBooleanValue: ConvertBooleanValue = (v: boolean): string => {
     return String(v);
 };

@@ -47,6 +47,7 @@ function processNumFilter(field: string, filter: filter.NumericFilter, retObj: o
 }
 function processStringFilter(field: string, filter: filter.StringFilter, retObj: object) {
     // TODO
+    /*
     switch (filter.operator) {
         case :
             break;
@@ -54,6 +55,7 @@ function processStringFilter(field: string, filter: filter.StringFilter, retObj:
             logger.error("unknown string filter operator","processStringFilter");
             return;
     }
+    */
     const eqExpression = {
         "$eq": filter.values[0]
     };

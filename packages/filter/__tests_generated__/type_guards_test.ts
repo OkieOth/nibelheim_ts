@@ -30,6 +30,30 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isTrue(guards.isStringFilterArray([]));
     });
 
+    it('test guards.isEnumFilter', () => {
+        assert.isFalse(guards.isEnumFilter("x"));
+        assert.isTrue(guards.isEnumFilter(null));
+    });
+
+    it('test guards.isEnumFilterArray', () => {
+        assert.isFalse(guards.isEnumFilterArray("x"));
+        assert.isFalse(guards.isEnumFilterArray(["x"]));
+        assert.isTrue(guards.isEnumFilterArray(null));
+        assert.isTrue(guards.isEnumFilterArray([]));
+    });
+
+    it('test guards.isUuidFilter', () => {
+        assert.isFalse(guards.isUuidFilter("x"));
+        assert.isTrue(guards.isUuidFilter(null));
+    });
+
+    it('test guards.isUuidFilterArray', () => {
+        assert.isFalse(guards.isUuidFilterArray("x"));
+        assert.isFalse(guards.isUuidFilterArray(["x"]));
+        assert.isTrue(guards.isUuidFilterArray(null));
+        assert.isTrue(guards.isUuidFilterArray([]));
+    });
+
     it('test guards.isNumericFilter', () => {
         assert.isFalse(guards.isNumericFilter("x"));
         assert.isTrue(guards.isNumericFilter(null));
@@ -88,6 +112,30 @@ describe('Test of type factories and their helper funcs', () => {
         assert.isFalse(guards.isStringFilterOperatorArray(["x"]));
         assert.isTrue(guards.isStringFilterOperatorArray(null));
         assert.isTrue(guards.isStringFilterOperatorArray([]));
+    });
+
+    it('test guards.isEnumFilterOperator', () => {
+        assert.isFalse(guards.isEnumFilterOperator("x"));
+        assert.isTrue(guards.isEnumFilterOperator(null));
+    });
+
+    it('test guards.isEnumFilterOperatorArray', () => {
+        assert.isFalse(guards.isEnumFilterOperatorArray("x"));
+        assert.isFalse(guards.isEnumFilterOperatorArray(["x"]));
+        assert.isTrue(guards.isEnumFilterOperatorArray(null));
+        assert.isTrue(guards.isEnumFilterOperatorArray([]));
+    });
+
+    it('test guards.isUuidFilterOperator', () => {
+        assert.isFalse(guards.isUuidFilterOperator("x"));
+        assert.isTrue(guards.isUuidFilterOperator(null));
+    });
+
+    it('test guards.isUuidFilterOperatorArray', () => {
+        assert.isFalse(guards.isUuidFilterOperatorArray("x"));
+        assert.isFalse(guards.isUuidFilterOperatorArray(["x"]));
+        assert.isTrue(guards.isUuidFilterOperatorArray(null));
+        assert.isTrue(guards.isUuidFilterOperatorArray([]));
     });
 
     it('test guards.isBooleanFilterOperator', () => {
