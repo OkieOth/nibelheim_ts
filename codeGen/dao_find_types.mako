@@ -19,15 +19,15 @@
         return typeStr
 
     def getPropFilterOp(prop):
-        if isinstance(prop, model.UuidType):
+        if isinstance(prop.type, model.UuidType):
             return 'UuidFilterOperator'
-        elif isinstance(prop, model.StringType):
+        elif isinstance(prop.type, model.StringType):
             return 'StringFilterOperator'
-        elif isinstance(prop, model.EnumType):
+        elif isinstance(prop.type, model.EnumType):
             return 'EnumFilterOperator'
-        elif isinstance(prop, model.IntegerType) or isinstance(prop, model.NumberType) or isinstance(prop, model.DateType) or isinstance(prop, model.DateTimeType):
+        elif isinstance(prop.type, model.IntegerType) or isinstance(prop.type, model.NumberType) or isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
             return 'NumericFilterOperator'
-        elif isinstance(prop, model.BooleanType):
+        elif isinstance(prop.type, model.BooleanType):
             return 'BooleanFilterOperator'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
@@ -36,17 +36,17 @@
         return '' if isinstance(prop.type, model.BooleanType) else '[]'
 
     def getFilterAttribName(prop):
-        if isinstance(prop, model.UuidType):
+        if isinstance(prop.type, model.UuidType):
             return 'uuidFilter'
-        elif isinstance(prop, model.StringType):
+        elif isinstance(prop.type, model.StringType):
             return 'strFilter'
-        elif isinstance(prop, model.EnumType):
+        elif isinstance(prop.type, model.EnumType):
             return 'enumFilter'
-        elif isinstance(prop, model.IntegerType) or isinstance(prop, model.NumberType):
+        elif isinstance(prop.type, model.IntegerType) or isinstance(prop.type, model.NumberType):
             return 'numFilter'
-        elif isinstance(prop, model.DateType) or isinstance(prop, model.DateTimeType):
+        elif isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
             return 'dateFilter'
-        elif isinstance(prop, model.BooleanType):
+        elif isinstance(prop.type, model.BooleanType):
             return 'boolFilter'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'

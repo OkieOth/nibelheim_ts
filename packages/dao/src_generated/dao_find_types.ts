@@ -32,10 +32,10 @@ export function createMineFilterTime(op: filter.NumericFilterOperator, v: Date[]
     };
 }
 
-export function createMineFilterDwarfs(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
+export function createMineFilterDwarfs(op: filter.UuidFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "dwarfs",
-        strFilter: {
+        uuidFilter: {
             operator: op,
             values: v
         },
@@ -54,10 +54,10 @@ export function createMineFilterActive(op: filter.BooleanFilterOperator, v: bool
     };
 }
 
-export function createMineSpotRowFilterMine_id(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
+export function createMineSpotRowFilterMine_id(op: filter.UuidFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "mine_id",
-        strFilter: {
+        uuidFilter: {
             operator: op,
             values: v
         },
@@ -98,10 +98,10 @@ export function createDwarfFilterName(op: filter.StringFilterOperator, v: string
     };
 }
 
-export function createDwarfFilterMine_id(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
+export function createDwarfFilterMine_id(op: filter.UuidFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "mine_id",
-        strFilter: {
+        uuidFilter: {
             operator: op,
             values: v
         },
