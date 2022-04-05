@@ -3,9 +3,9 @@ import * as filter from "filter";
 export type ConvertStrValue = (v: string) => string;
 export type ConvertUUIDValue = (v: string) => string;
 export type ConvertEnumValue = (v: string) => string;
-export type ConvertNumValue = (v: number) => string;
-export type ConvertDateValue = (v: Date) => string;
-export type ConvertBooleanValue = (v: boolean) => string;
+export type ConvertNumValue = (v: number) => number;
+export type ConvertDateValue = (v: Date) => Date;
+export type ConvertBooleanValue = (v: boolean) => boolean;
 
 export const convertStrValue: ConvertStrValue = (v: string): string => {
     return v;
@@ -19,18 +19,23 @@ export const convertEnumValue: ConvertEnumValue = (v: string): string => {
     return v; // TODO
 }
 
-export const convertNumValue: ConvertNumValue = (v: number): string => {
-    return String(v);
+export const convertNumValue: ConvertNumValue = (v: number): number => {
+    return v;
 }
-export const convertDateValue: ConvertDateValue = (v: Date): string => {
-    return String(v);
+export const convertDateValue: ConvertDateValue = (v: Date): Date => {
+    return v;
 };
 
-export const convertBooleanValue: ConvertBooleanValue = (v: boolean): string => {
-    return String(v);
+export const convertBooleanValue: ConvertBooleanValue = (v: boolean): boolean => {
+    return v;
 };
 
 export interface DaoFieldFilter extends filter.FieldFilter {
-    convertValue: ConvertStrValue | ConvertUUIDValue | ConvertNumValue | ConvertDateValue | ConvertBooleanValue;
+    convertValue:   ConvertStrValue |
+                    ConvertUUIDValue |
+                    ConvertNumValue |
+                    ConvertDateValue |
+                    ConvertBooleanValue |
+                    ConvertEnumValue;
 }
 
