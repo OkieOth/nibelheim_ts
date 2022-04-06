@@ -11,174 +11,177 @@ export const NO_SORT=[];
 
 type FilterValues = string[] | number [] | Date[] | boolean[];
 
-function createEqualFilter(filterValues: FilterValues, retObj: object) {
-    // TODO
+function createEqualFilter(filterValues: FilterValues): object {
+    return {};// TODO
 }
 
-function createNotEqualFilter(filterValues: FilterValues, retObj: object) {
-    // TODO
+function createNotEqualFilter(filterValues: FilterValues): object {
+    return {};// TODO
 }
 
+function createLessFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
 
-function processDateFilter(field: string, f: filter.DateFilter, convertValue: filterExt.ConvertDateValue, retObj: object) {
+function createLessEqualFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createGreaterFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createGreaterEqualFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createBetweenIncludeFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createBetweenExcludeFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createInFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createNotInFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createMatchFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function createMatchNotFilter(filterValues: FilterValues): object {
+    return {};// TODO
+}
+
+function processDateFilter(field: string, f: filter.DateFilter, convertValue: filterExt.ConvertDateValue): object {
     const filterValues = f.values.map(value => {
         return convertValue(value)
     });
     switch (f.operator) {
         case filter.NumericFilterOperator.EQ:
-            createEqualFilter(filterValues, retObj);
-            return;
+            return createEqualFilter(filterValues);
         case filter.NumericFilterOperator.NE:
-            createNotEqualFilter(filterValues, retObj);
-            return;
+            return createNotEqualFilter(filterValues);
         case filter.NumericFilterOperator.LT:
-            // TODO
-            return;
+            return createLessFilter(filterValues);
         case filter.NumericFilterOperator.LE:
-            // TODO
-            return;
+            return createLessEqualFilter(filterValues);
         case filter.NumericFilterOperator.GT:
-            // TODO
-            return;
+            return createGreaterFilter(filterValues);
         case filter.NumericFilterOperator.GE:
-            // TODO
-            return;
+            return createGreaterEqualFilter(filterValues);
         case filter.NumericFilterOperator.IB:
-            // TODO
-            return;
+            return createBetweenIncludeFilter(filterValues);
         case filter.NumericFilterOperator.EB:
-            // TODO
-            return;
+            return createBetweenExcludeFilter(filterValues);
         case filter.NumericFilterOperator.IN:
-            // TODO
-            return;
+            return createInFilter(filterValues);
         case filter.NumericFilterOperator.NI:
-            // TODO
-            return;
+            return createNotInFilter(filterValues);
         default:
             logger.error("unknown numeric filter operator","processNumFilter");
     }
 }
-function processBooleanFilter(field: string, f: filter.BooleanFilter, convertValue: filterExt.ConvertBooleanValue, retObj: object) {
+function processBooleanFilter(field: string, f: filter.BooleanFilter, convertValue: filterExt.ConvertBooleanValue): object {
     const filterValue = convertValue(f.value);
     switch (f.operator) {
         case filter.BooleanFilterOperator.EQ:
-            createEqualFilter([filterValue], retObj);
-            return;
+            return createEqualFilter([filterValue]);
         case filter.BooleanFilterOperator.NE:
-            createNotEqualFilter([filterValue], retObj);
-            return;
+            return createNotEqualFilter([filterValue]);
         default:
             logger.error("unknown enum boolean operator","processBooleanFilter");
     }
 }
-function processNumFilter(field: string, f: filter.NumericFilter, convertValue: filterExt.ConvertNumValue, retObj: object) {
+function processNumFilter(field: string, f: filter.NumericFilter, convertValue: filterExt.ConvertNumValue): object {
     const filterValues = f.values.map(value => {
         return convertValue(value)
     });
     switch (f.operator) {
         case filter.NumericFilterOperator.EQ:
-            createEqualFilter(filterValues, retObj);
-            return;
+            return createEqualFilter(filterValues);
         case filter.NumericFilterOperator.NE:
-            createNotEqualFilter(filterValues, retObj);
-            return;
+            return createNotEqualFilter(filterValues);
         case filter.NumericFilterOperator.LT:
-            // TODO
-            return;
+            return createLessFilter(filterValues);
         case filter.NumericFilterOperator.LE:
-            // TODO
-            return;
+            return createLessEqualFilter(filterValues);
         case filter.NumericFilterOperator.GT:
-            // TODO
-            return;
+            return createGreaterFilter(filterValues);
         case filter.NumericFilterOperator.GE:
-            // TODO
-            return;
+            return createGreaterEqualFilter(filterValues);
         case filter.NumericFilterOperator.IB:
-            // TODO
-            return;
+            return createBetweenIncludeFilter(filterValues);
         case filter.NumericFilterOperator.EB:
-            // TODO
-            return;
+            return createBetweenExcludeFilter(filterValues);
         case filter.NumericFilterOperator.IN:
-            // TODO
-            return;
+            return createInFilter(filterValues);
         case filter.NumericFilterOperator.NI:
-            // TODO
-            return;
+            return createNotInFilter(filterValues);
         default:
             logger.error("unknown numeric filter operator","processNumFilter");
     }
 }
 
-function processEnumFilter(field: string, f: filter.EnumFilter, convertValue: filterExt.ConvertEnumValue, retObj: object) {
+function processEnumFilter(field: string, f: filter.EnumFilter, convertValue: filterExt.ConvertEnumValue): object {
     const filterValues = f.values.map(value => {
         return convertValue(value)
     });
     switch (f.operator) {
         case filter.EnumFilterOperator.EQ:
-            createEqualFilter(filterValues, retObj);
-            return;
+            return createEqualFilter(filterValues);
         case filter.EnumFilterOperator.NE:
-            createNotEqualFilter(filterValues, retObj);
-            return;
+            return createNotEqualFilter(filterValues);
         case filter.EnumFilterOperator.IN:
-            // TODO
-            return;
+            return createInFilter(filterValues);
         case filter.EnumFilterOperator.NI:
-            // TODO
-            return;
+            return createNotInFilter(filterValues);
         default:
             logger.error("unknown enum filter operator","processEnumFilter");
     }
 }
 
-function processUuidFilter(field: string, f: filter.UuidFilter, convertValue: filterExt.ConvertUUIDValue, retObj: object) {
+function processUuidFilter(field: string, f: filter.UuidFilter, convertValue: filterExt.ConvertUUIDValue): object {
     const filterValues = f.values.map(value => {
         return convertValue(value)
     });
     switch (f.operator) {
         case filter.UuidFilterOperator.EQ:
-            createEqualFilter(filterValues, retObj);
-            return;
+            return createEqualFilter(filterValues);
         case filter.UuidFilterOperator.NE:
-            createNotEqualFilter(filterValues, retObj);
-            return;
+            return createNotEqualFilter(filterValues);
         case filter.UuidFilterOperator.IN:
-            // TODO
-            return;
+            return createInFilter(filterValues);
         case filter.UuidFilterOperator.NI:
-            // TODO
-            return;
+            return createNotInFilter(filterValues);
         default:
             logger.error("unknown uuid filter operator","processUuidFilter");
     }
 }
 
-function processStringFilter(field: string, f: filter.StringFilter, convertValue: filterExt.ConvertStrValue, retObj: object) {
+function processStringFilter(field: string, f: filter.StringFilter, convertValue: filterExt.ConvertStrValue): object {
     const filterValues = f.values.map(value => {
         return convertValue(value)
     });
     switch (f.operator) {
         case filter.StringFilterOperator.EQ:
-            createEqualFilter(filterValues, retObj);
-            return;
+            return createEqualFilter(filterValues);
         case filter.StringFilterOperator.NE:
-            createNotEqualFilter(filterValues, retObj);
-            return;
+            return createNotEqualFilter(filterValues);
         case filter.StringFilterOperator.MA:
-            // TODO
-            return;
+            return createMatchFilter(filterValues);
         case filter.StringFilterOperator.NM:
-            // TODO
-            return;
+            return createMatchNotFilter(filterValues);
         case filter.StringFilterOperator.IN:
-            // TODO
-            return;
+            return createInFilter(filterValues);
         case filter.StringFilterOperator.NI:
-            // TODO
-            return;
+            return createNotInFilter(filterValues);
         default:
             logger.error("unknown string filter operator","processStringFilter");
     }
@@ -186,30 +189,43 @@ function processStringFilter(field: string, f: filter.StringFilter, convertValue
 
 
 export function getMongoFilter(filter: filterExt.DaoFieldFilter[]): object {
-    const retObj = {};
+    let retObj: object = {};
+    if (!filter) {
+        return retObj;
+    }
+    const singleFilter: boolean = filter.length==1;
+    const filterElemArray = [];
     filter.forEach(f => {
+        let mongoFilter: object = {};
         if (f.dateFilter) {
-            processDateFilter(f.field, f.dateFilter, f.convertValue as filterExt.ConvertDateValue, retObj);
+            mongoFilter = processDateFilter(f.field, f.dateFilter, f.convertValue as filterExt.ConvertDateValue);
         }
         else if (f.boolFilter) {
-            processBooleanFilter(f.field, f.boolFilter, f.convertValue as filterExt.ConvertBooleanValue, retObj);
+            mongoFilter = processBooleanFilter(f.field, f.boolFilter, f.convertValue as filterExt.ConvertBooleanValue);
         }
         else if (f.numFilter) {
-            processNumFilter(f.field, f.numFilter, f.convertValue as filterExt.ConvertNumValue, retObj);
+            mongoFilter = processNumFilter(f.field, f.numFilter, f.convertValue as filterExt.ConvertNumValue);
         }
         else if (f.strFilter) {
-            processStringFilter(f.field, f.strFilter, f.convertValue as filterExt.ConvertStrValue, retObj);
+            mongoFilter = processStringFilter(f.field, f.strFilter, f.convertValue as filterExt.ConvertStrValue);
         }
         else if (f.uuidFilter) {
-            processUuidFilter(f.field, f.uuidFilter, f.convertValue as filterExt.ConvertUUIDValue, retObj);
+            mongoFilter = processUuidFilter(f.field, f.uuidFilter, f.convertValue as filterExt.ConvertUUIDValue);
         }
         else if (f.enumFilter) {
-            processEnumFilter(f.field, f.enumFilter, f.convertValue as filterExt.ConvertEnumValue, retObj);
+            mongoFilter = processEnumFilter(f.field, f.enumFilter, f.convertValue as filterExt.ConvertEnumValue);
         }
         else {
             logger.error("unknown filter type","getMongoFilter");
         }
+        if (singleFilter) {
+            return mongoFilter;
+        }
+        else {
+            filterElemArray.push(mongoFilter);
+        }
     });
+    retObj["$and"]=filterElemArray;
     return retObj;
 }
 
