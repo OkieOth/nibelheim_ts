@@ -11,51 +11,55 @@ export const NO_SORT=[];
 
 type FilterValues = string[] | number [] | Date[] | boolean[];
 
-function createEqualFilter(filterValues: FilterValues): object {
+function createEqualFilter(field: string, filterValues: FilterValues): object {
+    const ret = {};
+    const equalObject = {};
+    equalObject["$eq"] = filterValues[0];
+    ret[field] = equalObject;
+    return ret;
+}
+
+function createNotEqualFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createNotEqualFilter(filterValues: FilterValues): object {
+function createLessFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createLessFilter(filterValues: FilterValues): object {
+function createLessEqualFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createLessEqualFilter(filterValues: FilterValues): object {
+function createGreaterFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createGreaterFilter(filterValues: FilterValues): object {
+function createGreaterEqualFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createGreaterEqualFilter(filterValues: FilterValues): object {
+function createBetweenIncludeFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createBetweenIncludeFilter(filterValues: FilterValues): object {
+function createBetweenExcludeFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createBetweenExcludeFilter(filterValues: FilterValues): object {
+function createInFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createInFilter(filterValues: FilterValues): object {
+function createNotInFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createNotInFilter(filterValues: FilterValues): object {
+function createMatchFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
-function createMatchFilter(filterValues: FilterValues): object {
-    return {};// TODO
-}
-
-function createMatchNotFilter(filterValues: FilterValues): object {
+function createMatchNotFilter(field: string, filterValues: FilterValues): object {
     return {};// TODO
 }
 
@@ -65,25 +69,25 @@ function processDateFilter(field: string, f: filter.DateFilter, convertValue: fi
     });
     switch (f.operator) {
         case filter.NumericFilterOperator.EQ:
-            return createEqualFilter(filterValues);
+            return createEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.NE:
-            return createNotEqualFilter(filterValues);
+            return createNotEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.LT:
-            return createLessFilter(filterValues);
+            return createLessFilter(field, filterValues);
         case filter.NumericFilterOperator.LE:
-            return createLessEqualFilter(filterValues);
+            return createLessEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.GT:
-            return createGreaterFilter(filterValues);
+            return createGreaterFilter(field, filterValues);
         case filter.NumericFilterOperator.GE:
-            return createGreaterEqualFilter(filterValues);
+            return createGreaterEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.IB:
-            return createBetweenIncludeFilter(filterValues);
+            return createBetweenIncludeFilter(field, filterValues);
         case filter.NumericFilterOperator.EB:
-            return createBetweenExcludeFilter(filterValues);
+            return createBetweenExcludeFilter(field, filterValues);
         case filter.NumericFilterOperator.IN:
-            return createInFilter(filterValues);
+            return createInFilter(field, filterValues);
         case filter.NumericFilterOperator.NI:
-            return createNotInFilter(filterValues);
+            return createNotInFilter(field, filterValues);
         default:
             logger.error("unknown numeric filter operator","processNumFilter");
     }
@@ -92,9 +96,9 @@ function processBooleanFilter(field: string, f: filter.BooleanFilter, convertVal
     const filterValue = convertValue(f.value);
     switch (f.operator) {
         case filter.BooleanFilterOperator.EQ:
-            return createEqualFilter([filterValue]);
+            return createEqualFilter(field, [filterValue]);
         case filter.BooleanFilterOperator.NE:
-            return createNotEqualFilter([filterValue]);
+            return createNotEqualFilter(field, [filterValue]);
         default:
             logger.error("unknown enum boolean operator","processBooleanFilter");
     }
@@ -105,25 +109,25 @@ function processNumFilter(field: string, f: filter.NumericFilter, convertValue: 
     });
     switch (f.operator) {
         case filter.NumericFilterOperator.EQ:
-            return createEqualFilter(filterValues);
+            return createEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.NE:
-            return createNotEqualFilter(filterValues);
+            return createNotEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.LT:
-            return createLessFilter(filterValues);
+            return createLessFilter(field, filterValues);
         case filter.NumericFilterOperator.LE:
-            return createLessEqualFilter(filterValues);
+            return createLessEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.GT:
-            return createGreaterFilter(filterValues);
+            return createGreaterFilter(field, filterValues);
         case filter.NumericFilterOperator.GE:
-            return createGreaterEqualFilter(filterValues);
+            return createGreaterEqualFilter(field, filterValues);
         case filter.NumericFilterOperator.IB:
-            return createBetweenIncludeFilter(filterValues);
+            return createBetweenIncludeFilter(field, filterValues);
         case filter.NumericFilterOperator.EB:
-            return createBetweenExcludeFilter(filterValues);
+            return createBetweenExcludeFilter(field, filterValues);
         case filter.NumericFilterOperator.IN:
-            return createInFilter(filterValues);
+            return createInFilter(field, filterValues);
         case filter.NumericFilterOperator.NI:
-            return createNotInFilter(filterValues);
+            return createNotInFilter(field, filterValues);
         default:
             logger.error("unknown numeric filter operator","processNumFilter");
     }
@@ -135,13 +139,13 @@ function processEnumFilter(field: string, f: filter.EnumFilter, convertValue: fi
     });
     switch (f.operator) {
         case filter.EnumFilterOperator.EQ:
-            return createEqualFilter(filterValues);
+            return createEqualFilter(field, filterValues);
         case filter.EnumFilterOperator.NE:
-            return createNotEqualFilter(filterValues);
+            return createNotEqualFilter(field, filterValues);
         case filter.EnumFilterOperator.IN:
-            return createInFilter(filterValues);
+            return createInFilter(field, filterValues);
         case filter.EnumFilterOperator.NI:
-            return createNotInFilter(filterValues);
+            return createNotInFilter(field, filterValues);
         default:
             logger.error("unknown enum filter operator","processEnumFilter");
     }
@@ -153,13 +157,13 @@ function processUuidFilter(field: string, f: filter.UuidFilter, convertValue: fi
     });
     switch (f.operator) {
         case filter.UuidFilterOperator.EQ:
-            return createEqualFilter(filterValues);
+            return createEqualFilter(field, filterValues);
         case filter.UuidFilterOperator.NE:
-            return createNotEqualFilter(filterValues);
+            return createNotEqualFilter(field, filterValues);
         case filter.UuidFilterOperator.IN:
-            return createInFilter(filterValues);
+            return createInFilter(field, filterValues);
         case filter.UuidFilterOperator.NI:
-            return createNotInFilter(filterValues);
+            return createNotInFilter(field, filterValues);
         default:
             logger.error("unknown uuid filter operator","processUuidFilter");
     }
@@ -171,17 +175,17 @@ function processStringFilter(field: string, f: filter.StringFilter, convertValue
     });
     switch (f.operator) {
         case filter.StringFilterOperator.EQ:
-            return createEqualFilter(filterValues);
+            return createEqualFilter(field, filterValues);
         case filter.StringFilterOperator.NE:
-            return createNotEqualFilter(filterValues);
+            return createNotEqualFilter(field, filterValues);
         case filter.StringFilterOperator.MA:
-            return createMatchFilter(filterValues);
+            return createMatchFilter(field, filterValues);
         case filter.StringFilterOperator.NM:
-            return createMatchNotFilter(filterValues);
+            return createMatchNotFilter(field, filterValues);
         case filter.StringFilterOperator.IN:
-            return createInFilter(filterValues);
+            return createInFilter(field, filterValues);
         case filter.StringFilterOperator.NI:
-            return createNotInFilter(filterValues);
+            return createNotInFilter(field, filterValues);
         default:
             logger.error("unknown string filter operator","processStringFilter");
     }
@@ -218,15 +222,15 @@ export function getMongoFilter(filter: filterExt.DaoFieldFilter[]): object {
         else {
             logger.error("unknown filter type","getMongoFilter");
         }
-        if (singleFilter) {
-            return mongoFilter;
-        }
-        else {
-            filterElemArray.push(mongoFilter);
-        }
+        filterElemArray.push(mongoFilter);
     });
-    retObj["$and"]=filterElemArray;
-    return retObj;
+    if (singleFilter) {
+        return filterElemArray[0];
+    }
+    else {
+        retObj["$and"]=filterElemArray;
+        return retObj;
+    }
 }
 
 export function getMongoSort(sort: filter.FieldSort[]): mongoDb.Sort {

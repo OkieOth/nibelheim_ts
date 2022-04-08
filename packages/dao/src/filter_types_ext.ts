@@ -1,4 +1,5 @@
 import * as filter from "filter";
+import * as uuid from "uuid-mongodb";
 
 export type ConvertStrValue = (v: string) => string;
 export type ConvertUUIDValue = (v: string) => string;
@@ -11,8 +12,8 @@ export const convertStrValue: ConvertStrValue = (v: string): string => {
     return v;
 }
 
-export const convertUUIDValue: ConvertUUIDValue = (v: string | any): string => {
-    return v; // TODO
+export const convertUUIDValue: ConvertUUIDValue = (v: string | any): string | any => {
+    return uuid.from(v); // TODO
 }
 
 export const convertEnumValue: ConvertEnumValue = (v: string): string => {
