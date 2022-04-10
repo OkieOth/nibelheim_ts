@@ -29,6 +29,9 @@ class Storage {
         IntegerType iron
         IntegerType cupper
         
+        --- // Property-Tags // ---
+        **#daoFilter**: mithril, gold, silver, diamond, 
+iron, cupper
 }
 
 note top: A storage stores produced gems

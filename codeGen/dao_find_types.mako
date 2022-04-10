@@ -12,41 +12,41 @@
     mongoTypes = modelFuncs.getTypesWithTag(modelTypes, ["mongodb"])
 
 
-    def getPropTypeStr(prop):
-        typeStr = typescriptFuncs.printTypescriptType(prop.type, False)
+    def getPropTypeStr(propType):
+        typeStr = typescriptFuncs.printTypescriptType(propType, False)
         if typeStr == 'string | any':
             typeStr = 'string' # handling of UUID types
         return typeStr
 
-    def getPropFilterOp(prop):
-        if isinstance(prop.type, model.UuidType):
+    def getPropFilterOp(propType):
+        if isinstance(propType, model.UuidType):
             return 'UuidFilterOperator'
-        elif isinstance(prop.type, model.StringType):
+        elif isinstance(propType, model.StringType):
             return 'StringFilterOperator'
-        elif isinstance(prop.type, model.EnumType):
+        elif isinstance(propType, model.EnumType):
             return 'EnumFilterOperator'
-        elif isinstance(prop.type, model.IntegerType) or isinstance(prop.type, model.NumberType) or isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
+        elif isinstance(propType, model.IntegerType) or isinstance(prop.type, model.NumberType) or isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
             return 'NumericFilterOperator'
-        elif isinstance(prop.type, model.BooleanType):
+        elif isinstance(propType, model.BooleanType):
             return 'BooleanFilterOperator'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
 
-    def printArrayIfNotBool(prop):
-        return '' if isinstance(prop.type, model.BooleanType) else '[]'
+    def printArrayIfNotBool(propType):
+        return '' if isinstance(propType, model.BooleanType) else '[]'
 
-    def getFilterAttribName(prop):
-        if isinstance(prop.type, model.UuidType):
+    def getFilterAttribName(propType):
+        if isinstance(propType, model.UuidType):
             return 'uuidFilter'
-        elif isinstance(prop.type, model.StringType):
+        elif isinstance(propType, model.StringType):
             return 'strFilter'
-        elif isinstance(prop.type, model.EnumType):
+        elif isinstance(propType, model.EnumType):
             return 'enumFilter'
-        elif isinstance(prop.type, model.IntegerType) or isinstance(prop.type, model.NumberType):
+        elif isinstance(propType, model.IntegerType) or isinstance(propType, model.NumberType):
             return 'numFilter'
-        elif isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
+        elif isinstance(propType, model.DateType) or isinstance(propType, model.DateTimeType):
             return 'dateFilter'
-        elif isinstance(prop.type, model.BooleanType):
+        elif isinstance(propType, model.BooleanType):
             return 'boolFilter'
         else:
             return '!!!UNSUPPORTED_FILTER_TYPE!!!'
@@ -90,10 +90,10 @@ import * as filterExt from "../src/filter_types_ext"
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
         % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop)}, v: ${getPropTypeStr(prop)}${printArrayIfNotBool(prop)}): filterExt.DaoFieldFilter {
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop.type)}, v: ${getPropTypeStr(prop.type)}${printArrayIfNotBool(prop.type)}): filterExt.DaoFieldFilter {
     return {
         field: "${prop.name}",
-        ${getFilterAttribName(prop)}: {
+        ${getFilterAttribName(prop.type)}: {
             operator: op,
             value${'' if isinstance(prop.type, model.BooleanType) else 's'}: v
         },

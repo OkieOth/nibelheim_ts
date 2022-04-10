@@ -15,12 +15,12 @@ package "Collection: Mine" {
             BooleanType active<color:grey>"" // filter""</color>
     }
     class "Storage" as Mine_Storage {
-            IntegerType mithril
-            IntegerType gold
-            IntegerType silver
-            IntegerType diamond
-            IntegerType iron
-            IntegerType cupper
+            IntegerType mithril<color:grey>"" // filter""</color>
+            IntegerType gold<color:grey>"" // filter""</color>
+            IntegerType silver<color:grey>"" // filter""</color>
+            IntegerType diamond<color:grey>"" // filter""</color>
+            IntegerType iron<color:grey>"" // filter""</color>
+            IntegerType cupper<color:grey>"" // filter""</color>
     }
 
     Mine_Mine  *--  Mine_Storage
@@ -73,12 +73,12 @@ package "Collection: Dwarf" {
             DwarfWay[] way
     }
     class "Storage" as Dwarf_Storage {
-            IntegerType mithril
-            IntegerType gold
-            IntegerType silver
-            IntegerType diamond
-            IntegerType iron
-            IntegerType cupper
+            IntegerType mithril<color:grey>"" // filter""</color>
+            IntegerType gold<color:grey>"" // filter""</color>
+            IntegerType silver<color:grey>"" // filter""</color>
+            IntegerType diamond<color:grey>"" // filter""</color>
+            IntegerType iron<color:grey>"" // filter""</color>
+            IntegerType cupper<color:grey>"" // filter""</color>
     }
     class "DwarfWay" as Dwarf_DwarfWay {
             IntegerType row_number
