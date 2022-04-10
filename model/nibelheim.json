@@ -195,22 +195,28 @@
       "type": "object",
       "properties": {
         "mithril": {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         },
         "gold": {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         },
         "silver":  {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         },
         "diamond": {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         },
         "iron":  {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         },
         "cupper":  {
-          "type": "integer"
+          "type": "integer",
+          "x-tags": ["daoFilter"]
         }
       }
     },
