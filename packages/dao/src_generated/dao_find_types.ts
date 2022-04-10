@@ -8,6 +8,7 @@
 */
 import * as filter from "filter";
 import * as filterExt from "../src/filter_types_ext"
+import * as types from "types"
 
 
 export function createMineFilterName(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
@@ -18,6 +19,72 @@ export function createMineFilterName(op: filter.StringFilterOperator, v: string[
             values: v
         },
         convertValue: filterExt.convertStrValue
+    };
+}
+
+export function createMineFilterStorageMithril(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.mithril",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createMineFilterStorageGold(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.gold",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createMineFilterStorageSilver(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.silver",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createMineFilterStorageDiamond(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.diamond",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createMineFilterStorageIron(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.iron",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createMineFilterStorageCupper(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "storage.cupper",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 
@@ -87,6 +154,17 @@ export function createMineSpotRowFilterLevel(op: filter.NumericFilterOperator, v
     };
 }
 
+export function createMineSpotRowFilterColumnsMaterial(op: filter.EnumFilterOperator, v: types.MineSpotMaterial[]): filterExt.DaoFieldFilter {
+    return {
+        field: "columns.material",
+        enumFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertEnumValue
+    };
+}
+
 export function createDwarfFilterName(op: filter.StringFilterOperator, v: string[]): filterExt.DaoFieldFilter {
     return {
         field: "name",
@@ -106,6 +184,72 @@ export function createDwarfFilterMine_id(op: filter.UuidFilterOperator, v: strin
             values: v
         },
         convertValue: filterExt.convertUUIDValue
+    };
+}
+
+export function createDwarfFilterPocketMithril(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.mithril",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createDwarfFilterPocketGold(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.gold",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createDwarfFilterPocketSilver(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.silver",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createDwarfFilterPocketDiamond(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.diamond",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createDwarfFilterPocketIron(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.iron",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
+    };
+}
+
+export function createDwarfFilterPocketCupper(op: filter.NumericFilterOperator, v: number[]): filterExt.DaoFieldFilter {
+    return {
+        field: "pocket.cupper",
+        numFilter: {
+            operator: op,
+            values: v
+        },
+        convertValue: filterExt.convertNumValue
     };
 }
 

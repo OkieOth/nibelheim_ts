@@ -16,7 +16,10 @@
         typeStr = typescriptFuncs.printTypescriptType(propType, False)
         if typeStr == 'string | any':
             typeStr = 'string' # handling of UUID types
-        return typeStr
+        if isinstance(propType, model.EnumType):
+            return "types.{}".format(typeStr)
+        else:
+            return typeStr
 
     def getPropFilterOp(propType):
         if isinstance(propType, model.UuidType):
@@ -25,7 +28,7 @@
             return 'StringFilterOperator'
         elif isinstance(propType, model.EnumType):
             return 'EnumFilterOperator'
-        elif isinstance(propType, model.IntegerType) or isinstance(prop.type, model.NumberType) or isinstance(prop.type, model.DateType) or isinstance(prop.type, model.DateTimeType):
+        elif isinstance(propType, model.IntegerType) or isinstance(propType, model.NumberType) or isinstance(propType, model.DateType) or isinstance(propType, model.DateTimeType):
             return 'NumericFilterOperator'
         elif isinstance(propType, model.BooleanType):
             return 'BooleanFilterOperator'
@@ -75,16 +78,23 @@
             return "!!!UNSUPPORTED_FILTER_TYPE '{}'!!!".format(type)
 
 
-    def getDeepPropertiesThatHasTag(tagName, type, alreadyFound = [], currentPropChain = None):
+    def __getDeepPropertiesThatHasTagImpl(tagName, type, alreadyFound, currentPropChain = None):
         for property in type.properties:
             if isinstance(property.type, model.ComplexType):
                 name = "{}.{}".format(currentPropChain,property.name) if currentPropChain is not None else property.name
-                __traversDeepForTag(tagName, property.type, alreadyFound, name)
-            elif hasTag(tagName, property):
+                __getDeepPropertiesThatHasTagImpl(tagName, property.type, alreadyFound, name)
+            elif modelFuncs.hasTag(tagName, property):
                 name = "{}.{}".format(currentPropChain,property.name) if currentPropChain is not None else property.name
                 alreadyFound.append((name, property.type))
-        return alreadyFound
 
+    def getDeepPropertiesThatHasTag(tagName, type):
+        ret = []
+        __getDeepPropertiesThatHasTagImpl(tagName, type, ret)
+        return ret
+
+    def getFilterNamePart(name):
+        s = stringUtils.toUpperCamelCase(name)
+        return stringUtils.toUpperCamelCase(s, '.')
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -95,19 +105,20 @@
 */
 import * as filter from "filter";
 import * as filterExt from "../src/filter_types_ext"
+import * as types from "types"
 
 
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-        % for prop in getDeepPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(nameTypeTupel[0])}(op: filter.${getPropFilterOp(nameTypeTupel[1])}, v: ${getPropTypeStr(nameTypeTupel[1])}${printArrayIfNotBool(nameTypeTupel[1])}): filterExt.DaoFieldFilter {
+        % for name, type in getDeepPropertiesThatHasTag("daoFilter", currentType):
+export function create${currentType.name}Filter${getFilterNamePart(name)}(op: filter.${getPropFilterOp(type)}, v: ${getPropTypeStr(type)}${printArrayIfNotBool(type)}): filterExt.DaoFieldFilter {
     return {
-        field: "${nameTypeTupel[0]}",
-        ${getFilterAttribName(nameTypeTupel[1])}: {
+        field: "${name}",
+        ${getFilterAttribName(type)}: {
             operator: op,
-            value${'' if isinstance(nameTypeTupel[1], model.BooleanType) else 's'}: v
+            value${'' if isinstance(type, model.BooleanType) else 's'}: v
         },
-        convertValue: filterExt.${convertFunctionByType(nameTypeTupel[1])}
+        convertValue: filterExt.${convertFunctionByType(type)}
     };
 }
 
