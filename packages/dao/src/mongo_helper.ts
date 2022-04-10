@@ -11,7 +11,7 @@ export const NO_SORT=[];
 
 type FilterValues = string[] | number [] | Date[] | boolean[];
 
-function singleValueFilter(field: string, filterValues: FilterValues, operator: string): object {
+export function singleValueFilter(field: string, filterValues: FilterValues, operator: string): object {
     const ret = {};
     const equalObject = {};
     equalObject[operator] = filterValues[0];
@@ -19,7 +19,7 @@ function singleValueFilter(field: string, filterValues: FilterValues, operator: 
     return ret;
 }
 
-function listValueFilter(field: string, filterValues: FilterValues, operator: string): object {
+export function listValueFilter(field: string, filterValues: FilterValues, operator: string): object {
     const ret = {};
     const equalObject = {};    
     equalObject[operator] = filterValues;
@@ -27,7 +27,7 @@ function listValueFilter(field: string, filterValues: FilterValues, operator: st
     return ret;
 }
 
-function twoValueFilter(field: string, filterValues: FilterValues, operator1: string, operator2: string): object {
+export function twoValueFilter(field: string, filterValues: FilterValues, operator1: string, operator2: string): object {
     const ret = {};
     const equalObject = {};    
     equalObject[operator1] = filterValues[0];
@@ -36,49 +36,49 @@ function twoValueFilter(field: string, filterValues: FilterValues, operator1: st
     return ret;
 }
 
-function createEqualFilter(field: string, filterValues: FilterValues): object {
+export function createEqualFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$eq");
 }
 
-function createNotEqualFilter(field: string, filterValues: FilterValues): object {
+export function createNotEqualFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$ne");
 }
 
-function createLessFilter(field: string, filterValues: FilterValues): object {
+export function createLessFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$lt");
 }
 
-function createLessEqualFilter(field: string, filterValues: FilterValues): object {
+export function createLessEqualFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$lte");
 }
 
-function createGreaterFilter(field: string, filterValues: FilterValues): object {
+export function createGreaterFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$gt");
 }
 
-function createGreaterEqualFilter(field: string, filterValues: FilterValues): object {
+export function createGreaterEqualFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$gte");
 }
 
-function createBetweenIncludeFilter(field: string, filterValues: FilterValues): object {
+export function createBetweenIncludeFilter(field: string, filterValues: FilterValues): object {
     // { "storage.gold": {"$gte": 0, "$lte": 10000}}
     return twoValueFilter(field, filterValues, "$gte", "$lte");
 }
 
-function createBetweenExcludeFilter(field: string, filterValues: FilterValues): object {
+export function createBetweenExcludeFilter(field: string, filterValues: FilterValues): object {
     // { "storage.gold": {"$gt": 0, "$lt": 10000}}
     return twoValueFilter(field, filterValues, "$gt", "$lt");
 }
 
-function createInFilter(field: string, filterValues: FilterValues): object {
+export function createInFilter(field: string, filterValues: FilterValues): object {
     return listValueFilter(field, filterValues, "$in");
 }
 
-function createNotInFilter(field: string, filterValues: FilterValues): object {
+export function createNotInFilter(field: string, filterValues: FilterValues): object {
     return listValueFilter(field, filterValues, "$nin");
 }
 
-function createMatchFilter(field: string, filterValues: FilterValues): object {
+export function createMatchFilter(field: string, filterValues: FilterValues): object {
     return singleValueFilter(field, filterValues,"$regex");
 }
 
