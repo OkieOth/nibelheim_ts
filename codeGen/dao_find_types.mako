@@ -85,12 +85,6 @@
                 alreadyFound.append((name, property.type))
         return alreadyFound
 
-
-        ret = [] # tupel of name, type
-        for property in type.properties:
-            if isinstance(property.type, model.ComplexType):
-                __traversDeepForTag(tagName, type, ret, property.name):
-        return ret
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
