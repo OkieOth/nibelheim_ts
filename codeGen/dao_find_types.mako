@@ -75,6 +75,22 @@
             return "!!!UNSUPPORTED_FILTER_TYPE '{}'!!!".format(type)
 
 
+    def getDeepPropertiesThatHasTag(tagName, type, alreadyFound = [], currentPropChain = None):
+        for property in type.properties:
+            if isinstance(property.type, model.ComplexType):
+                name = "{}.{}".format(currentPropChain,property.name) if currentPropChain is not None else property.name
+                __traversDeepForTag(tagName, property.type, alreadyFound, name)
+            elif hasTag(tagName, property):
+                name = "{}.{}".format(currentPropChain,property.name) if currentPropChain is not None else property.name
+                alreadyFound.append((name, property.type))
+        return alreadyFound
+
+
+        ret = [] # tupel of name, type
+        for property in type.properties:
+            if isinstance(property.type, model.ComplexType):
+                __traversDeepForTag(tagName, type, ret, property.name):
+        return ret
 %>/**
     This file is generated.
     Template: ${templateFile} v${templateVersion})
@@ -89,15 +105,15 @@ import * as filterExt from "../src/filter_types_ext"
 
 % for currentType in mongoTypes:
     % if modelFuncs.hasPropertyWithTag("daoFilter", currentType):
-        % for prop in modelFuncs.getPropertiesThatHasTag("daoFilter", currentType):
-export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(prop.name)}(op: filter.${getPropFilterOp(prop.type)}, v: ${getPropTypeStr(prop.type)}${printArrayIfNotBool(prop.type)}): filterExt.DaoFieldFilter {
+        % for prop in getDeepPropertiesThatHasTag("daoFilter", currentType):
+export function create${currentType.name}Filter${stringUtils.toUpperCamelCase(nameTypeTupel[0])}(op: filter.${getPropFilterOp(nameTypeTupel[1])}, v: ${getPropTypeStr(nameTypeTupel[1])}${printArrayIfNotBool(nameTypeTupel[1])}): filterExt.DaoFieldFilter {
     return {
-        field: "${prop.name}",
-        ${getFilterAttribName(prop.type)}: {
+        field: "${nameTypeTupel[0]}",
+        ${getFilterAttribName(nameTypeTupel[1])}: {
             operator: op,
-            value${'' if isinstance(prop.type, model.BooleanType) else 's'}: v
+            value${'' if isinstance(nameTypeTupel[1], model.BooleanType) else 's'}: v
         },
-        convertValue: filterExt.${convertFunctionByType(prop.type)}
+        convertValue: filterExt.${convertFunctionByType(nameTypeTupel[1])}
     };
 }
 
