@@ -11,56 +11,75 @@ export const NO_SORT=[];
 
 type FilterValues = string[] | number [] | Date[] | boolean[];
 
-function createEqualFilter(field: string, filterValues: FilterValues): object {
+function singleValueFilter(field: string, filterValues: FilterValues, operator: string): object {
     const ret = {};
     const equalObject = {};
-    equalObject["$eq"] = filterValues[0];
+    equalObject[operator] = filterValues[0];
     ret[field] = equalObject;
     return ret;
 }
 
+function listValueFilter(field: string, filterValues: FilterValues, operator: string): object {
+    const ret = {};
+    const equalObject = {};    
+    equalObject[operator] = filterValues;
+    ret[field] = equalObject;
+    return ret;
+}
+
+function twoValueFilter(field: string, filterValues: FilterValues, operator1: string, operator2: string): object {
+    const ret = {};
+    const equalObject = {};    
+    equalObject[operator1] = filterValues[0];
+    equalObject[operator2] = filterValues[1];
+    ret[field] = equalObject;
+    return ret;
+}
+
+function createEqualFilter(field: string, filterValues: FilterValues): object {
+    return singleValueFilter(field, filterValues,"$eq");
+}
+
 function createNotEqualFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$ne");
 }
 
 function createLessFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$lt");
 }
 
 function createLessEqualFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$lte");
 }
 
 function createGreaterFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$gt");
 }
 
 function createGreaterEqualFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$gte");
 }
 
 function createBetweenIncludeFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    // { "storage.gold": {"$gte": 0, "$lte": 10000}}
+    return twoValueFilter(field, filterValues, "$gte", "$lte");
 }
 
 function createBetweenExcludeFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    // { "storage.gold": {"$gt": 0, "$lt": 10000}}
+    return twoValueFilter(field, filterValues, "$gt", "$lt");
 }
 
 function createInFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return listValueFilter(field, filterValues, "$in");
 }
 
 function createNotInFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return listValueFilter(field, filterValues, "$nin");
 }
 
 function createMatchFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
-}
-
-function createMatchNotFilter(field: string, filterValues: FilterValues): object {
-    return {};// TODO
+    return singleValueFilter(field, filterValues,"$regex");
 }
 
 function processDateFilter(field: string, f: filter.DateFilter, convertValue: filterExt.ConvertDateValue): object {
@@ -180,8 +199,6 @@ function processStringFilter(field: string, f: filter.StringFilter, convertValue
             return createNotEqualFilter(field, filterValues);
         case filter.StringFilterOperator.MA:
             return createMatchFilter(field, filterValues);
-        case filter.StringFilterOperator.NM:
-            return createMatchNotFilter(field, filterValues);
         case filter.StringFilterOperator.IN:
             return createInFilter(field, filterValues);
         case filter.StringFilterOperator.NI:

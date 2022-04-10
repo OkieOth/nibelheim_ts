@@ -19,12 +19,11 @@
             ]
         },
         "StringFilterOperator": {
-            "description": "EQ: ==, NE: !=, MA: regex match, NM: not match regex , IN: in, NI: not in",
+            "description": "EQ: ==, NE: !=, MA: regex match, IN: in, NI: not in",
             "enum": [
                 "EQ",
                 "NE",
                 "MA",
-                "NM",
                 "IN",
                 "NI"
             ]

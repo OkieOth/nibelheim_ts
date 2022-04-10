@@ -51,7 +51,7 @@ describe('some filter tests', async () => {
             Promise.all(promises).then(function(){
             */
                 // all inserts are done
-                const f: DaoFieldFilter = findTypes.createMineFilterDwarfs(filter.UuidFilterOperator.EQ, ["bdc3d2b9-72f9-46e3-981f-864e44e1b9c1"])
+                const f: DaoFieldFilter = findTypes.createMineFilterDwarfs(filter.UuidFilterOperator.NE, ["bdc3d2b9-72f9-46e3-981f-864e44e1b9c1"])
                 dao_find.findMine([f], NO_SORT, 0, NO_LIMIT,testDb)
                 .then(found => {
                     mongoConnection.closeDefaultConnection();
