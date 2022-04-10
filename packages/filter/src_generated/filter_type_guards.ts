@@ -460,8 +460,6 @@ export function isStringFilterOperator(value: any): value is types.StringFilterO
         return true;
     if (value  == "MA")
         return true;
-    if (value  == "NM")
-        return true;
     if (value  == "IN")
         return true;
     if (value  == "NI")

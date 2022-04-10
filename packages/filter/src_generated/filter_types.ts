@@ -60,7 +60,6 @@ export enum StringFilterOperator {
         EQ = "EQ",
         NE = "NE",
         MA = "MA",
-        NM = "NM",
         IN = "IN",
         NI = "NI",
 }

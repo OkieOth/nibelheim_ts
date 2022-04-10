@@ -67,7 +67,6 @@ enum StringFilterOperator {
     EQ
     NE
     MA
-    NM
     IN
     NI
 }
